@@ -3,9 +3,9 @@ var addEventListener = document.addEventListener;
 var Canvas = document.getElementById("c");
 
 // Disables right click context menu.
-addEventListener("contextmenu", function(e) {}
+addEventListener("contextmenu", function(e) {
 	e.preventDefault();
-);
+});
 
 // Create Mouse object.
 // IIFE. Sets up events and returns basic object.
