@@ -1,0 +1,13 @@
+Feel free to append ideas to this. It's just so we have a solid record of ideas and what we've discussed.
+
+"Offline" Theme:
+1. Towers are connected by nodes that transport material/ammo accross the map to the towers. Nodes properly connected are considered "online", while those that aren't, and thus can't function, are considered "offline". If the player can be forced to construct transport lines across areas where the enemy travels, then the enemies could be able to block routes, forcing any nodes "downstream" to become "offline". This concept works easiest with the Tower Defense map system (see below.)
+
+Map Systems:
+1. Tower Defense. Linear path(s). Enemies travel along the path. Points; no path-finding, easy to have designed puzzle-like maps, common idea/easy to grasp.
+2. Base defense. Free/dynamic movement. Enemies travel to targets and around obstacles. Points; can still have designed maps but they're more freeform/sandbox than puzzles, requires path-finding, needs thought on how to apply "offline" theme.
+
+Additional Ideas:
+1. Direct node travel. Nodes are connected solely by distance, just like yorg.io.
+2. Relay node travel. Nodes "shoot" their package in a given direction, passing it to whatever node first gets it. This would require multiple travel nodes that determine travel direction and possible splitting of routes. Or maybe a single travel node that is configurable (like have a compass where you can set allowed directions). Maybe too awkward?
+3. Explicit links. Nodes are connected explicitly by the player. Allowing routes to be changed and cancelled. Could be handy in a situation where the enemy can take some group of towers, or upstream nodes offline, and the player can compensate by re-routing supply.
