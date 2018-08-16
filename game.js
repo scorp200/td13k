@@ -57,19 +57,17 @@ var last = 0;
 	if (timestamp > nextTick) {
 		let timeSinceTick = timestamp - lastTick;
 		var numTicks = Math.floor(timeSinceTick / tickLength);
-		for (var n=0; n<Math.min(numTicks, 60); n++) {
-			//lastTick = lastTick + tickLength;
-			update();
-		}
-		lastTick = performance.now();
+		update(Math.min(numTicks, 60));
+		lastTick = timestamp;
 	}
 
 	render();
 
 })();
 
-function update() {
+function update(repeat) {
 	planets.forEach(function(e) { e.update(); })
+	--repeat && update(repeat);
 }
 
 function render() {
