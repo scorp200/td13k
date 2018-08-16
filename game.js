@@ -46,10 +46,10 @@ var Mouse = (function() {
 	return object;
 
 })();
-update();
 
-function update() {
+// Update game.
+(function update() {
 	requestAnimationFrame(update);
 	ctx.clearRect(0, 0, w, h)
 	planets.forEach(function(e) { e.update(); })
-}
+})();
