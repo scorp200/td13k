@@ -1,11 +1,12 @@
 // Cache stuff.
-var addEventListener = document.addEventListener;
-var Canvas = document.getElementById("c");
-var ctx = Canvas.getContext("2d");
-var log = console.log;
-var cr = 2 * Math.PI;
-var w = 1200,
-	h = 800;
+var addEventListener = document.addEventListener,
+	Canvas = document.getElementById("c"),
+	ctx = Canvas.getContext("2d"),
+	log = console.log,
+	cr = 2 * Math.PI,
+	w = 1200,
+	h = 800,
+	planets = [];
 Canvas.width = w;
 Canvas.height = h;
 ctx.fillStyle = '#4d4d4d';
@@ -15,11 +16,11 @@ ctx.clearRect(0, 0, 1200, 800);
 addEventListener("contextmenu", function(e) {
 	e.preventDefault();
 });
-var p = new Planet('#ffe200', 40, w / 2, h / 2);
-var p2 = new Planet('#77c3c3', 10, 0, 0);
-var p3 = new Planet('#666666', 5, 0, 0);
-p.addOrbit(p2, 200, 0.005);
-p2.addOrbit(p3, 50, -0.01);
+planets.push(new Planet('#ffe200', 40, w / 2, h / 2));
+planets.push(new Planet('#77c3c3', 10, 0, 0));
+planets.push(new Planet('#666666', 5, 0, 0));
+planets[0].addOrbit(planets[1], 200, 0.005);
+planets[1].addOrbit(planets[2], 50, -0.01);
 // Create Mouse object.
 // IIFE. Sets up events and returns basic object.
 var Mouse = (function() {
@@ -50,7 +51,5 @@ update();
 function update() {
 	requestAnimationFrame(update);
 	ctx.clearRect(0, 0, w, h)
-	p.update();
-	p2.update();
-	p3.update();
+	planets.forEach(function(e) { e.update(); })
 }
