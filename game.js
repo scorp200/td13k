@@ -58,9 +58,10 @@ var last = 0;
 		let timeSinceTick = timestamp - lastTick;
 		var numTicks = Math.floor(timeSinceTick / tickLength);
 		for (var n=0; n<Math.min(numTicks, 60); n++) {
-			lastTick = lastTick + tickLength;
+			//lastTick = lastTick + tickLength;
 			update();
 		}
+		lastTick = performance.now();
 	}
 
 	render();
