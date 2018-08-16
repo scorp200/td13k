@@ -1,27 +1,17 @@
 // Cache stuff.
-var doc = document;
 var addEventListener = doc.addEventListener;
-var Canvas = doc.getElementById("c");
-var ctx = Canvas.getContext("2d");
 var log = console.log;
 var cr = 2 * Math.PI;
-var w = 1200;
-var h = 800;
-var planets = [];
+var w = Canvas.width;
+var h = Canvas.height;
 
 // Disables right click context menu.
 addEventListener("contextmenu", function(e) {
 	e.preventDefault();
 });
 
-// Setup Canvas (move to graphics.js)
-Canvas.width = w;
-Canvas.height = h;
-ctx.fillStyle = '#4d4d4d';
-ctx.fillRect(0, 0, 1200, 1200);
-ctx.clearRect(0, 0, 1200, 800);
-
 // Setup planets (procgen this?)
+var planets = [];
 planets.push(new Planet('#ffe200', 40, w / 2, h / 2));
 planets.push(new Planet('#77c3c3', 10, 0, 0));
 planets.push(new Planet('#666666', 5, 0, 0));
