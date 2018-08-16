@@ -3,6 +3,8 @@ var Planet = function(color, size, x, y) {
 	t.orbits = [];
 	t.x = x;
 	t.y = y;
+	t.color = color;
+	t.size = size;
 	t.update = function() {
 		t.orbits.forEach(function(e) {
 			e.angle += e.speed;
@@ -12,11 +14,7 @@ var Planet = function(color, size, x, y) {
 
 	};
 	t.render = function() {
-		ctx.beginPath();
-		ctx.fillStyle = color;
-		ctx.arc(t.x, t.y, size, 0, cr);
-		ctx.closePath();
-		ctx.fill();
+		renderOrb(t);
 	}
 	t.addOrbit = function(planet, distance, speed, angle = 0) {
 		if (planet == t || (t.orbits.indexOf(planet) > -1)) return;
