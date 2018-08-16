@@ -68,6 +68,7 @@ var last = 0;
 		let timeSinceTick = timestamp - lastTick;
 		var numTicks = Math.floor(timeSinceTick / tickLength);
 		for (var n=0; n<Math.min(numTicks, 60); n++) {
+			lastTick = lastTick + tickLength;
 			update();
 		}
 	}
@@ -77,10 +78,10 @@ var last = 0;
 })();
 
 function update() {
-	//planets.forEach(function(e) { e.update(); })
+	planets.forEach(function(e) { e.update(); })
 }
 
 function render() {
 	ctx.clearRect(0, 0, w, h);
-	planets.forEach(function(e) { e.update(); })
+	planets.forEach(function(e) { e.render(); })
 }
