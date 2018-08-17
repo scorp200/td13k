@@ -22,38 +22,35 @@ function cache(width, height) {
 }
 
 // Generic circle
-function drawCircle(x, y, rx, ry, color) {
+function drawCircle(ctx, type, x, y, r, tilt, color, alpha, lineWidth, sColor, blur, start, end, angle, dir) {
+    if (alpha === UNDEF) alpha = "ff";
+    if (start === UNDEF) start = 0;
+    if (end === UNDEF) end = cr;
+    if (angle === UNDEF) angle = 0;
+    if (dir === UNDEF) dir = false;
+    if (blur === UNDEF) blur = 0;
     ctx.beginPath();
-    ctx.setLineDash([5,5])
-    ctx.strokeStyle = color + "33";
-    ctx.lineWidth = 2;
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 2;
-    ctx.ellipse(x, y, rx, ry, 0, 0, cr);
-    ctx.stroke();
-    ctx.setLineDash([]);
+    ctx[type+"Style"] = color + alpha;
+    ctx.lineWidth = lineWidth;
+    ctx.shadowColor = sColor;
+    ctx.shadowBlur = blur;
+    ctx.ellipse(x, y, r, r*(tilt?0.5:1), angle, start, end, dir);
+    ctx[type]();
 }
 
 // Render orbit
 function renderOrbit(body) {
     var orbit = body.orbit;
     if (orbit) {
-        drawCircle(
+        ctx.setLineDash([5,5]);
+        drawCircle(ctx, STROKE,
             orbit.planet.x,
             orbit.planet.y,
             orbit.distance,
-            orbit.distance/2,
-            body.color
+            true,
+            body.color, "33", 1
         );
-        //ctx.beginPath();
-        //ctx.setLineDash([5,5])
-        //ctx.strokeStyle = body.color + "33";
-        //ctx.lineWidth = 2;
-        //ctx.shadowColor = body.color;
-        //ctx.shadowBlur = 2;
-        //ctx.ellipse(orbit.planet.x, orbit.planet.y, orbit.distance, orbit.distance/2, 0, 0, cr);
-        //ctx.stroke();
-        //ctx.setLineDash([]);
+        ctx.setLineDash([]);
     }
 }
 
@@ -61,40 +58,45 @@ function renderOrbit(body) {
 function renderTrail(body) {
     var orbit = body.orbit;
     if (orbit) {
-        ctx.beginPath();
-        ctx.strokeStyle = body.color + "55";
-        ctx.lineWidth = 4;
-        ctx.shadowColor = body.color;
-        ctx.shadowBlur = 10;
-        ctx.ellipse(orbit.planet.x, orbit.planet.y, orbit.distance, orbit.distance/2, 0, orbit.angle-orbit.speed*orbit.distance, orbit.angle, orbit.speed<0);
-        ctx.stroke();
+        drawCircle(ctx, STROKE,
+            orbit.planet.x,
+            orbit.planet.y,
+            orbit.distance, true,
+            body.color, "33", 3,
+            body.color, 5,
+            orbit.angle-orbit.speed*orbit.distance,
+            orbit.angle, 0,
+            orbit.speed<0
+        );
     }
 }
 
 // Render body (star, planet, death star)
 function renderBody(body) {
     if (!body.cache) {
-        body.cache = cache(128, 128);
+        body.cache = cache(256, 256);
         var context = body.cache.getContext("2d");
-
-        context.beginPath();
-        context.shadowBlur = body.size;
-        context.shadowColor = body.color;
-        context.fillStyle = body.color;
-        if (body.isSun===true) context.filter = "blur(4px)";
-        context.arc(64, 64, body.size, 0, cr);
-        context.fill();
+        var color = body.isSun ? WHITE : body.color;
+        var glow = body.isSun ? 50 : body.size/10;
+        if (body.isSun) context.filter = "blur(4px)";
+        drawCircle(context, FILL,
+            128, 128,
+            body.size,
+            false,
+            color, "ff", 0,
+            body.color, glow,
+        );
 
         if (body.orbit) {
-            var sun = orbitals[0];
-            var angle = Math.atan2((body.y - sun.y)*2, body.x - sun.x);
-            context.beginPath();
-            context.filter = "blur(4px)";
-            context.shadowBlur = body.size;
-            context.shadowColor = "black";
-            context.fillStyle = "#000000AA";
-            context.arc(64, 64, body.size, -cr/4, cr/4);
-            context.fill();
+            context.filter = "blur(3px)";
+            drawCircle(context, FILL,
+                128, 128,
+                body.size,
+                false,
+                BLACK, "88", 0,
+                body.color, 2,
+                -cr/4, cr/4
+            );
         }
 
         context.filter = "none";
@@ -108,6 +110,6 @@ function renderBody(body) {
         var scale = 1+rand()*0.03;
         ctx.scale(scale, scale);
     }
-    ctx.drawImage(body.cache, -64, -64);
+    ctx.drawImage(body.cache, -128, -128);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
 }
