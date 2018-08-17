@@ -1,23 +1,29 @@
 var Planet = function(color, size, x, y) {
 	var t = this;
-	t.orbits = [];
+	t.orbit = null;
 	t.x = x;
 	t.y = y;
 	t.color = color;
 	t.size = size;
 	t.update = function() {
-		t.orbits.forEach(function(e) {
+		if (t.orbit) {
+			var e = t.orbit;
 			e.angle += e.speed;
-			e.planet.x = e.distance * Math.cos(e.angle) + t.x;
-			e.planet.y = e.distance * Math.sin(e.angle) + t.y;
-		});
-
+			t.x = e.distance * Math.cos(e.angle) + e.planet.x;
+			t.y = e.distance * 0.5 * Math.sin(e.angle) + e.planet.y;
+		}
 	};
 	t.render = function() {
-		renderOrb(t);
+		renderOrbit(t);
+		renderBody(t);
 	}
 	t.addOrbit = function(planet, distance, speed, angle = 0) {
-		if (planet == t || (t.orbits.indexOf(planet) > -1)) return;
-		t.orbits.push({ planet: planet, distance: distance, speed: speed, angle: angle });
+		if (planet == t || t.orbit) return;
+		t.orbit = {
+			planet: planet,
+			distance: distance,
+			speed: speed,
+			angle: angle
+		};
 	}
 }

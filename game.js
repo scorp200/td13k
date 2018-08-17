@@ -13,10 +13,18 @@ addEventListener("contextmenu", function(e) {
 // Setup planets (procgen this?)
 var planets = [];
 planets.push(new Planet('#ffe200', 40, w / 2, h / 2));
+
 planets.push(new Planet('#77c3c3', 10, 0, 0));
 planets.push(new Planet('#666666', 5, 0, 0));
-planets[0].addOrbit(planets[1], 200, 0.005);
-planets[1].addOrbit(planets[2], 50, -0.01);
+planets[1].addOrbit(planets[0], 200, 0.005);
+planets[2].addOrbit(planets[1], 50, -0.01);
+
+planets.push(new Planet('#f64749', 20, 0, 0));
+planets[3].addOrbit(planets[0], 500, 0.0025);
+planets.push(new Planet('#77ff55', 10, 0, 0));
+planets.push(new Planet('#666666', 5, 0, 0));
+planets[4].addOrbit(planets[3], 150, 0.005);
+planets[5].addOrbit(planets[4], 50, -0.01);
 
 // Create Mouse object.
 // IIFE. Sets up events and returns basic object.
