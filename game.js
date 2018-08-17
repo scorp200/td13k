@@ -11,26 +11,13 @@ addEventListener("contextmenu", function(e) {
 });
 
 // Setup planets (procgen this?)
-var orbitals = [];
-/*planets.push(new Planet('#ffe200', 40, w / 2, h / 2));
-
-planets.push(new Planet('#77c3c3', 10, 0, 0));
-planets.push(new Planet('#666666', 5, 0, 0));
-planets[1].addOrbit(planets[0], 200, 0.005);
-planets[2].addOrbit(planets[1], 50, -0.01);
-
-planets.push(new Planet('#f64749', 20, 0, 0));
-planets[3].addOrbit(planets[0], 500, 0.0025);
-planets.push(new Planet('#77ff55', 10, 0, 0));
-planets.push(new Planet('#666666', 5, 0, 0));
-planets[4].addOrbit(planets[3], 150, 0.005);
-planets[5].addOrbit(planets[4], 50, -0.01);*/
-orbitals.push(Orbital.sun('#ffe200', 40, w / 2, h / 2));
-orbitals.push(Orbital.planet('#77c3c3', 10, orbitals[0], 200, 0.005));
-orbitals.push(Orbital.planet('#666666', 5, orbitals[1], 50, -0.01));
-orbitals.push(Orbital.planet('#f64749', 20, orbitals[0], 500, 0.0025));
-orbitals.push(Orbital.planet('#77ff55', 10, orbitals[3], 150, 0.005));
-orbitals.push(Orbital.planet('#666666', 5, orbitals[4], 50, -0.01));
+Orbital.sun('#ffe200', 40, w / 2, h / 2);
+Orbital.planet('#77c3c3', 10, orbitals[0], 200, 0.005);
+Orbital.planet('#666666', 5, orbitals[1], 50, -0.01);
+Orbital.planet('#f64749', 20, orbitals[0], 500, 0.0025);
+Orbital.planet('#ff0055', 5, orbitals[3], 80, 0.05);
+Orbital.planet('#77ff55', 10, orbitals[3], 150, 0.005);
+Orbital.planet('#666666', 5, orbitals[5], 50, -0.01);
 
 
 // Create Mouse object.

@@ -1,3 +1,4 @@
+var orbitals = [];
 var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	var t = {};
 	t.x = x;
@@ -21,13 +22,16 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	}
 	t.render = function() {
 		renderOrbit(t);
+		renderTrail(t);
 		renderBody(t);
 	}
+	orbitals.push(t);
 	return t;
 };
 
 Orbital.sun = function(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null);
+	t.isSun = true;
 	t.update = function() {
 		//fancy sun code
 	}

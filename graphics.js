@@ -38,7 +38,7 @@ function renderTrail(body) {
         ctx.shadowColor = body.color;
         ctx.lineWidth = 4;
         ctx.strokeStyle = body.color + "55";
-        ctx.ellipse(orbit.planet.x, orbit.planet.y, orbit.distance, orbit.distance/2, 0, orbit.angle-orbit.speed*200, orbit.angle, orbit.speed<0);
+        ctx.ellipse(orbit.planet.x, orbit.planet.y, orbit.distance, orbit.distance/2, 0, orbit.angle-orbit.speed*orbit.distance, orbit.angle, orbit.speed<0);
         ctx.stroke();
     }
 }
@@ -49,18 +49,21 @@ function renderBody(body) {
     ctx.shadowBlur = body.size;
     ctx.shadowColor = body.color;
     ctx.fillStyle = body.color;
-    ctx.arc(body.x, body.y, body.size, 0, cr);
+    if (body.isSun===true) ctx.filter = "blur(4px)";
+    ctx.arc(body.x, body.y, body.size+Math.random()*(body.isSun===true), 0, cr);
     ctx.fill();
 
     if (body.orbit) {
         var sun = orbitals[0];
         var angle = Math.atan2((body.y - sun.y)*2, body.x - sun.x);
         ctx.beginPath();
-        ctx.filter = "blur";
+        ctx.filter = "blur(4px)";
         ctx.shadowBlur = body.size;
         ctx.shadowColor = "black";
         ctx.fillStyle = "#000000AA";
         ctx.arc(body.x, body.y, body.size, angle-cr/4, angle+cr/2-cr/4);
         ctx.fill();
     }
+
+    ctx.filter = "none";
 }
