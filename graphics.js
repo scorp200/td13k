@@ -53,11 +53,14 @@ function renderBody(body) {
     ctx.fill();
 
     if (body.orbit) {
+        var sun = orbitals[0];
+        var angle = Math.atan2((body.y - sun.y)*2, body.x - sun.x);
         ctx.beginPath();
+        ctx.filter = "blur";
         ctx.shadowBlur = body.size;
         ctx.shadowColor = "black";
         ctx.fillStyle = "#000000AA";
-        ctx.arc(body.x, body.y, body.size, body.orbit.angle-cr/4, body.orbit.angle+cr/2-cr/4);
+        ctx.arc(body.x, body.y, body.size, angle-cr/4, angle+cr/2-cr/4);
         ctx.fill();
     }
 }
