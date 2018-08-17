@@ -5,6 +5,7 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	t.y = y;
 	t.color = color;
 	t.size = size;
+	t.isSun = false;
 	if (orbit)
 		t.orbit = {
 			planet: orbit,

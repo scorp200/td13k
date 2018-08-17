@@ -1,6 +1,7 @@
 // Cache stuff.
 var addEventListener = doc.addEventListener;
 var log = console.log;
+var rand = Math.random;
 var cr = 2 * Math.PI;
 var w = Canvas.width;
 var h = Canvas.height;
@@ -11,13 +12,13 @@ addEventListener("contextmenu", function(e) {
 });
 
 // Setup planets (procgen this?)
-Orbital.sun('#ffe200', 40, w / 2, h / 2);
-Orbital.planet('#77c3c3', 10, orbitals[0], 200, 0.005);
-Orbital.planet('#666666', 5, orbitals[1], 50, -0.01);
-Orbital.planet('#f64749', 20, orbitals[0], 500, 0.0025);
-Orbital.planet('#ff0055', 5, orbitals[3], 80, 0.05);
-Orbital.planet('#77ff55', 10, orbitals[3], 150, 0.005);
-Orbital.planet('#666666', 5, orbitals[5], 50, -0.01);
+var s = Orbital.sun('#ffe200', 38, w / 2, h / 2);
+var s1 = Orbital.planet('#77c3c3', 10, s, 200, 0.005);
+var s1a = Orbital.planet('#666666', 5, s1, 50, -0.01);
+var s2 = Orbital.planet('#f64749', 20, s, 500, 0.0025);
+var s2a = Orbital.planet('#ff0055', 5, s2, 80, 0.05);
+var s2b = Orbital.planet('#77ff55', 10, s2, 150, 0.005);
+var s2b1 = Orbital.planet('#666666', 5, s2b, 50, -0.01);
 
 
 // Create Mouse object.
