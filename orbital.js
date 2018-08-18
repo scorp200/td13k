@@ -16,9 +16,9 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	t.update = function() {
 
 		// Mouse over
-		var a = (Mouse.x-Canvas.width/2) - t.x;
-		var b = (Mouse.y-Canvas.height/2) - t.y;
-		var c = Math.sqrt(a*a + b*b);
+		var a = (Mouse.x - Canvas.width / 2) - t.x;
+		var b = (Mouse.y - Canvas.height / 2) - t.y;
+		var c = Math.sqrt(a * a + b * b);
 		if (c < t.size) {
 			console.log("mouse over");
 		}
@@ -39,6 +39,13 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	return t;
 };
 
+function extend(f1, f2) {
+	return function() {
+		f1();
+		f2();
+	}
+}
+
 Orbital.sun = function(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null);
 	t.isSun = true;
@@ -50,5 +57,8 @@ Orbital.sun = function(color, size, x, y) {
 
 Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
 	var t = Orbital(color, size, 0, 0, orbit, distance, speed, angle);
+	t.update = extend(t.update, function() {
+		
+	})
 	return t;
 }
