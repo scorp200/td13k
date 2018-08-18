@@ -1,3 +1,4 @@
+var DOCUMENT = document;
 var UNDEF = undefined;
 var STROKE = "stroke";
 var FILL = "fill";

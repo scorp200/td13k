@@ -1,7 +1,6 @@
 // Setup Canvas (move to graphics.js)
-var doc = document;
-var AddEventListener = doc.addEventListener;
-var Canvas = doc.getElementById("c");
+var AddEventListener = DOCUMENT.addEventListener;
+var Canvas = DOCUMENT.getElementById("c");
 var ctx = Canvas.getContext("2d");
 var View = { x: 0, y: 0, zoom: 1 };
 
@@ -15,7 +14,7 @@ function resize() {
 };
 
 // Starscape
-var starCanvas = doc.createElement(CANVAS);
+var starCanvas = DOCUMENT.createElement(CANVAS);
 
 // Cache drawing
 function cache(width, height) {
@@ -123,5 +122,6 @@ function drawDebug() {
     ctx.textBaseline = "top";
     ctx.fillStyle = "#ffffff";
     ctx.fillText("#js13k tower defense prototype", 20, 20);
-    ctx.fillText("framerate: " + fps, 20, 40);
+    ctx.fillText("https://github.com/scorp200/td13k", 20, 40);
+    ctx.fillText("framerate: " + fps, 20, 60);
 }
