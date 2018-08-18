@@ -58,7 +58,7 @@ Orbital.sun = function(color, size, x, y) {
 Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
 	var t = Orbital(color, size, 0, 0, orbit, distance, speed, angle);
 	t.update = extend(t.update, function() {
-		
+
 	})
 	return t;
 }
