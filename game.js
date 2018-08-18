@@ -60,11 +60,15 @@ var allFps = [];
 	allFps.push(1/((timestamp - lastTick) / 1000));
 	if (allFps.length > 60) {
 		var sum = 0;
+		var min = 1000;
+		var max = 0;
 		allFps.shift();
 		allFps.forEach(function(value) {
 			sum += value;
+			min = Math.min(min, value);
+			max = Math.max(max, value);
 		});
-		fps = Math.floor(sum/60);
+		fps = Math.floor(sum/60) + ", " + ~~min + " - " + ~~max;
 	}
 
 	if (timestamp > nextTick) {
