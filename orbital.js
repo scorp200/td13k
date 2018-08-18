@@ -1,6 +1,8 @@
 var orbitals = [];
-var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
+var Orbital = function(color, size, x, y, orbit, distance, speed, angle) {
+	if (angle === UNDEF) angle = 0;
 	var t = {};
+	t.name = "Some Shithole Planet";
 	t.x = x;
 	t.y = y;
 	t.color = color;
@@ -20,6 +22,7 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 		var b = (Mouse.y - Canvas.height / 2) - t.y;
 		var c = Math.sqrt(a * a + b * b);
 		if (c < t.size) {
+			hoverName = t.name;
 			console.log("mouse over");
 		}
 
@@ -49,9 +52,9 @@ function extend(f1, f2) {
 Orbital.sun = function(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null);
 	t.isSun = true;
-	t.update = function() {
+	//t.update = function() {
 		//fancy sun code
-	}
+	//}
 	return t;
 }
 

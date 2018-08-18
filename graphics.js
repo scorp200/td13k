@@ -1,4 +1,5 @@
 // Setup Canvas (move to graphics.js)
+var hoverName = "";
 var AddEventListener = DOCUMENT.addEventListener;
 var Canvas = DOCUMENT.getElementById("c");
 var ctx = Canvas.getContext("2d");
@@ -143,4 +144,5 @@ function drawDebug() {
     ctx.fillText("framerate: " + fps, 20, 60);
     ctx.fillText("mouse (gui): " + Mouse.x + ", " + Mouse.y, 20, 80);
     ctx.fillText("mouse (view): " + (Mouse.x-Canvas.width/2) + ", " + (Mouse.y-Canvas.height/2), 20, 100);
+    ctx.fillText("planet name: " + hoverName, 20, 120);
 }

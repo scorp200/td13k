@@ -83,6 +83,7 @@ var allFps = [];
 })();
 
 function update(repeat) {
+	hoverName = "";
 	orbitals.forEach(function(e) { e.update(); });
 	--repeat && update(repeat);
 }
