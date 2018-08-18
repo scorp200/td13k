@@ -11,7 +11,7 @@ AddEventListener("contextmenu", function(e) {
 });
 
 // Setup planets (procgen this?)
-var s = Orbital.sun('#ffe200', 38, w / 2, h / 2);
+var s = Orbital.sun('#ffe200', 38, 0, 0);
 var s1 = Orbital.planet('#77c3c3', 10, s, 200, 0.005);
 var s1a = Orbital.planet('#666666', 5, s1, 50, -0.01);
 var s2 = Orbital.planet('#f64749', 20, s, 500, 0.0025);
@@ -70,12 +70,14 @@ var fps = 0;
 })();
 
 function update(repeat) {
-	orbitals.forEach(function(e) { e.update(); })
-		--repeat && update(repeat);
+	orbitals.forEach(function(e) { e.update(); });
+	--repeat && update(repeat);
 }
 
 function render() {
-	ctx.clearRect(0, 0, w, h);
-	orbitals.forEach(function(e) { e.render(); })
+	View.clear();
+	View.position();
+	orbitals.forEach(function(e) { e.render(); });
+	View.reset();
 	drawDebug();
 }

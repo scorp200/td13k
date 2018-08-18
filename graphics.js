@@ -2,7 +2,23 @@
 var AddEventListener = DOCUMENT.addEventListener;
 var Canvas = DOCUMENT.getElementById("c");
 var ctx = Canvas.getContext("2d");
-var View = { x: 0, y: 0, zoom: 1 };
+var View = {
+    x: 0,
+    y: 0,
+    zoom: 1,
+    clear: function() {
+        View.reset();
+        ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+    },
+    reset: function() {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+    },
+    position: function() {
+        var x = -View.x + Canvas.width / 2;
+        var y = -View.y + Canvas.height / 2;
+        ctx.setTransform(View.zoom, 0, 0, View.zoom, x, y);
+    }
+};
 
 // Keep canvas same size as window.
 resize();
@@ -15,6 +31,7 @@ function resize() {
 
 // Starscape
 var starCanvas = DOCUMENT.createElement(CANVAS);
+
 
 // Cache drawing
 function cache(width, height) {
@@ -114,7 +131,7 @@ function renderBody(body) {
         ctx.scale(scale, scale);
     }
     ctx.drawImage(body.cache, -128, -128);
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    View.position();
 }
 
 function drawDebug() {
@@ -124,4 +141,6 @@ function drawDebug() {
     ctx.fillText("#js13k tower defense prototype", 20, 20);
     ctx.fillText("https://github.com/scorp200/td13k", 20, 40);
     ctx.fillText("framerate: " + fps, 20, 60);
+    ctx.fillText("mouse (gui): " + Mouse.x + ", " + Mouse.y, 20, 80);
+    ctx.fillText("mouse (view): " + (Mouse.x-Canvas.width/2) + ", " + (Mouse.y-Canvas.height/2), 20, 100);
 }

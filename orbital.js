@@ -14,6 +14,15 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 			angle: angle
 		};
 	t.update = function() {
+
+		// Mouse over
+		var a = (Mouse.x-Canvas.width/2) - t.x;
+		var b = (Mouse.y-Canvas.height/2) - t.y;
+		var c = Math.sqrt(a*a + b*b);
+		if (c < t.size) {
+			console.log("mouse over");
+		}
+
 		if (t.orbit) {
 			var e = t.orbit;
 			e.angle += e.speed;
