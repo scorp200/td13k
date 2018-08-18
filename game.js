@@ -1,5 +1,4 @@
 // Cache stuff.
-var addEventListener = doc.addEventListener;
 var log = console.log;
 var rand = Math.random;
 var cr = 2 * Math.PI;
@@ -7,7 +6,7 @@ var w = Canvas.width;
 var h = Canvas.height;
 
 // Disables right click context menu.
-addEventListener("contextmenu", function(e) {
+AddEventListener("contextmenu", function(e) {
 	e.preventDefault();
 });
 
@@ -30,14 +29,14 @@ var Mouse = (function() {
 
 	// Update mouse position.
 	// Can probably remove "rect" stuff if canvas is whole window.
-	addEventListener("mousemove", function(e) {
+	AddEventListener("mousemove", function(e) {
 		var rect = Canvas.getBoundingClientRect();
 		object.x = e.clientX - rect.left;
 		object.y = e.clientY - rect.top;
 	});
 
 	//
-	addEventListener("mousedown", function(e) {
+	AddEventListener("mousedown", function(e) {
 		// ADD AN "ONCLICK" FUNCTION HERE.
 		e.preventDefault();
 	});
@@ -51,11 +50,13 @@ var Mouse = (function() {
 var lastTick = performance.now();
 var tickLength = 1000 / 60; // Logic steps per second
 var last = 0;
+var fps = 0;
 (function frame(timestamp) {
 
 	requestAnimationFrame(frame);
 	var nextTick = lastTick + tickLength;
 	var numTicks = 0;
+	fps = ~~(1/((timestamp - lastTick) / 1000));
 
 	if (timestamp > nextTick) {
 		let timeSinceTick = timestamp - lastTick;
@@ -76,4 +77,5 @@ function update(repeat) {
 function render() {
 	ctx.clearRect(0, 0, w, h);
 	orbitals.forEach(function(e) { e.render(); })
+	drawDebug();
 }

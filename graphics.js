@@ -1,21 +1,25 @@
 // Setup Canvas (move to graphics.js)
 var doc = document;
+var AddEventListener = doc.addEventListener;
 var Canvas = doc.getElementById("c");
 var ctx = Canvas.getContext("2d");
 var View = { x: 0, y: 0, zoom: 1 };
 
 // Keep canvas same size as window.
+resize();
+AddEventListener("resize", resize);
 function resize() {
     Canvas.width = window.innerWidth;
     Canvas.height = window.innerHeight;
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
 };
-resize();
-addEventListener("resize", resize);
+
+// Starscape
+var starCanvas = doc.createElement(CANVAS);
 
 // Cache drawing
 function cache(width, height) {
-    var canvas = document.createElement("CANVAS");
+    var canvas = document.createElement(CANVAS);
     canvas.width = width;
     canvas.height = height;
     return canvas;
@@ -84,7 +88,7 @@ function renderBody(body) {
             body.size,
             false,
             color, "ff", 0,
-            body.color, glow,
+            body.color, glow
         );
 
         if (body.orbit) {
@@ -112,4 +116,12 @@ function renderBody(body) {
     }
     ctx.drawImage(body.cache, -128, -128);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
+}
+
+function drawDebug() {
+    ctx.font="14px monospace";
+    ctx.textBaseline = "top";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("#js13k tower defense prototype", 20, 20);
+    ctx.fillText("framerate: " + fps, 20, 40);
 }
