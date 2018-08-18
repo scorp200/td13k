@@ -51,12 +51,21 @@ var lastTick = performance.now();
 var tickLength = 1000 / 60; // Logic steps per second
 var last = 0;
 var fps = 0;
+var allFps = [];
 (function frame(timestamp) {
 
 	requestAnimationFrame(frame);
 	var nextTick = lastTick + tickLength;
 	var numTicks = 0;
-	fps = ~~(1/((timestamp - lastTick) / 1000));
+	allFps.push(1/((timestamp - lastTick) / 1000));
+	if (allFps.length > 60) {
+		var sum = 0;
+		allFps.shift();
+		allFps.forEach(function(value) {
+			sum += value;
+		});
+		fps = Math.floor(sum/60);
+	}
 
 	if (timestamp > nextTick) {
 		let timeSinceTick = timestamp - lastTick;
