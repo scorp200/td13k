@@ -113,7 +113,7 @@ function renderBody(body) {
             var o = body.size;
             while (repeat--) {
     			drawCircle(context, FILL,
-    				128+(body.size-o)/2, 128,
+    				128-o/2+(body.size-o)/2, 128,
     				o--*2,
     				false,
     				BLACK, 0.05, 0,
