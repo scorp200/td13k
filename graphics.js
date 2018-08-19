@@ -28,8 +28,7 @@ var View = {
 
 // Keep canvas same size as window.
 resize();
-AddEventListener("resize", resize);
-
+window.addEventListener("resize", resize, false);
 function resize() {
 	Canvas.width = window.innerWidth;
 	Canvas.height = window.innerHeight;
@@ -167,7 +166,7 @@ function drawDebug() {
 	ctx.fillText("https://github.com/scorp200/td13k", 20, 40);
 	ctx.fillText("framerate: " + fps, 20, 60);
 	ctx.fillText("mouse (gui): " + Mouse.x + ", " + Mouse.y, 20, 80);
-	ctx.fillText("mouse (view): " + (Mouse.x - Canvas.width / 2) + ", " + (Mouse.y - Canvas.height / 2), 20, 100);
+	ctx.fillText("mouse (view): " + Mouse.vx + ", " + Mouse.vy, 20, 100);
 	ctx.fillText("planet name: " + hoverName, 20, 120);
     ctx.fillText("zoom: " + View.zoom, 20, 140);
 	ctx.fillText("minerals: " + Math.floor(minerals * 100) / 100, 20, 180);

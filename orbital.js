@@ -21,9 +21,9 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	t.update = function() {
 
 		// Mouse over
-		var a = (Mouse.x - Canvas.width / 2) - t.x;
-		var b = (Mouse.y - Canvas.height / 2) - t.y;
-		var c = Math.sqrt(a * a + b * b);
+		var a = Mouse.vx - t.x;
+		var b = Mouse.vy - t.y;
+		var c = Math.sqrt(a*a + b*b);
 		if (c < t.size + buffer) {
 			hoverName = t.name;
 			if (Mouse.click && !pop.display) {

@@ -39,9 +39,16 @@ var Mouse = (function() {
 	var object = {
 		x: 0,
 		y: 0,
+		vx: 0,
+		vy: 0,
 		click: false,
 		scrollOut: false,
-		scrollIn: false
+		scrollIn: false,
+		update: function() {
+			object.click = false;
+			object.scrollIn = false;
+			object.scrollOut = false;
+		}
 	};
 
 	// Update mouse position.
@@ -50,6 +57,8 @@ var Mouse = (function() {
 		var rect = Canvas.getBoundingClientRect();
 		object.x = e.clientX - rect.left;
 		object.y = e.clientY - rect.top;
+		object.vx = (object.x - Canvas.width / 2) / View.zoom;
+		object.vy = (object.y - Canvas.height / 2) / View.zoom;
 	});
 
 	//
@@ -109,9 +118,7 @@ function update(repeat) {
 	View.update();
 	orbitals.forEach(function(e) { e.update(); });
 	gui.forEach(function(e) { e.update(); });
-	Mouse.click = false;
-	Mouse.scrollIn = false;
-	Mouse.scrollOut = false;
+	Mouse.update();
 	--repeat && update(repeat);
 }
 
@@ -120,6 +127,7 @@ function render() {
 	drawStarscape();
 	View.position();
 	orbitals.forEach(function(e) { e.render(); });
+	ctx.setTransform(1, 0, 0, 1, Canvas.width / 2, Canvas.height / 2);
 	gui.forEach(function(e) { e.render(); });
 	View.reset();
 	drawDebug();
