@@ -20,7 +20,7 @@ var s2b = Orbital.planet('#77ff55', 10, s2, 150, 0.005);
 var s2b1 = Orbital.planet('#666666', 5, s2b, 50, -0.01);
 var ms = Orbital.miningStation(s1);
 var st = Orbital.satellite(s);
-var st2 = Orbital.satellite(s);
+var st4 = Orbital.satellite(s);
 var st2 = Orbital.satellite(s);
 var st3 = Orbital.satellite(s2);
 // Create Mouse object.
