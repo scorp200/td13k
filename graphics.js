@@ -40,14 +40,15 @@ function cache(width, height) {
 
 // Generic circle
 function drawCircle(ctx, type, x, y, r, tilt, color, alpha, lineWidth, sColor, blur, start, end, angle, dir) {
-    if (alpha === UNDEF) alpha = "ff";
+    if (alpha === UNDEF) alpha = 1;
     if (start === UNDEF) start = 0;
     if (end === UNDEF) end = cr;
     if (angle === UNDEF) angle = 0;
     if (dir === UNDEF) dir = false;
     if (blur === UNDEF) blur = 0;
     ctx.beginPath();
-    ctx[type+"Style"] = color + alpha;
+    ctx.globalAlpha = alpha;
+    ctx[type+"Style"] = color;// + alpha;
     ctx.lineWidth = lineWidth;
     ctx.shadowColor = sColor;
     ctx.shadowBlur = blur;
@@ -65,7 +66,7 @@ function renderOrbit(body) {
             orbit.planet.y,
             orbit.distance,
             true,
-            body.color, "33", 1
+            body.color, 0.3, 1
         );
         ctx.setLineDash([]);
     }
@@ -79,7 +80,7 @@ function renderTrail(body) {
             orbit.planet.x,
             orbit.planet.y,
             orbit.distance, true,
-            body.color, "33", 3,
+            body.color, 0.3, 3,
             body.color, 5,
             orbit.angle-orbit.speed*orbit.distance,
             orbit.angle, 0,
@@ -100,7 +101,7 @@ function renderBody(body) {
             128, 128,
             body.size,
             false,
-            color, "ff", 0,
+            color, 1, 0,
             body.color, glow
         );
 
@@ -110,7 +111,7 @@ function renderBody(body) {
                 128, 128,
                 body.size,
                 false,
-                BLACK, "88", 0,
+                BLACK, 0.8, 0,
                 body.color, 2,
                 -cr/4, cr/4
             );
@@ -121,6 +122,7 @@ function renderBody(body) {
 
     var sun = orbitals[0];
     var angle = Math.atan2((body.y - sun.y)*2, body.x - sun.x);
+    ctx.globalAlpha = 1;
     ctx.translate(body.x, body.y);
     ctx.rotate(angle);
     if (body.isSun) {
