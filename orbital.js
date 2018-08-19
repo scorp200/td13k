@@ -87,8 +87,9 @@ Orbital.satellite = function(orbit) {
 	t.render = extend(t.render, function() {
 		for (var i = t.index; i < coms.length; i++) {
 			var e = coms[i];
-			if (e != t && getDistance(e, t) <= 300)
+			if (e != t && getDistance(e, t) <= 400) {
 				renderComLine(t, e);
+			}
 		}
 	})
 	return t;

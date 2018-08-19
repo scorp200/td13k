@@ -7,6 +7,7 @@ var View = {
 	x: 0,
 	y: 0,
 	zoom: 1,
+    tilt: 2,
 	clear: function() {
 		View.reset();
 		ctx.clearRect(0, 0, Canvas.width, Canvas.height);
@@ -33,7 +34,7 @@ function resize() {
 
 // Cache drawing
 function cache(width, height) {
-	var canvas = document.createElement(CANVAS);
+	var canvas = DOCUMENT.createElement(CANVAS);
 	canvas.width = width;
 	canvas.height = height;
 	return canvas;
