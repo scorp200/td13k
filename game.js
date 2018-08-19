@@ -94,7 +94,7 @@ function update(repeat) {
 
 function render() {
 	View.clear();
-	ctx.drawImage(starCanvas, 0, 0);
+	drawStarscape();
 	View.position();
 	orbitals.forEach(function(e) { e.render(); });
 	View.reset();
