@@ -6,11 +6,28 @@ var ctx = Canvas.getContext("2d");
 var View = {
 	x: 0,
 	y: 0,
+    anchorX: 0,
+    anchorY: 0,
+    anchorMouseX: 0,
+    anchorMouseY: 0,
 	zoom: 1,
     tilt: 2,
     update: function() {
         if (Mouse.scrollIn) View.zoom = Math.min(View.zoom+0.1, 2);
         if (Mouse.scrollOut) View.zoom = Math.max(View.zoom-0.1, 0.1);
+        if (Mouse.click) {
+            View.drag = true;
+            View.anchorX = View.x;
+            View.anchorY = View.y;
+            View.anchorMouseX = Mouse.x;
+            View.anchorMouseY = Mouse.y;
+        }
+        if (Mouse.down && View.drag) {
+            View.x = View.anchorX + (View.anchorMouseX - Mouse.x);
+            View.y = View.anchorY + (View.anchorMouseY - Mouse.y);
+        } else {
+            View.drag = false;
+        }
     },
 	clear: function() {
 		View.reset();

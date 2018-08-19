@@ -57,20 +57,26 @@ var Mouse = (function() {
 		var rect = Canvas.getBoundingClientRect();
 		object.x = e.clientX - rect.left;
 		object.y = e.clientY - rect.top;
-		object.vx = (object.x - Canvas.width / 2) / View.zoom;
-		object.vy = (object.y - Canvas.height / 2) / View.zoom;
-	});
+		object.vx = (object.x + View.x - Canvas.width / 2) / View.zoom;
+		object.vy = (object.y + View.y - Canvas.height / 2) / View.zoom;
+	}, false);
 
 	//
 	AddEventListener("mousedown", function(e) {
 		object.click = true;
-	});
+		object.down = true;
+	}, false);
+
+	//
+	AddEventListener("mouseup", function(e) {
+		object.down = false;
+	}, false);
 
 	//
 	AddEventListener("mousewheel", function(e) {
 		object.scrollOut = e.deltaY > 0;
 		object.scrollIn = e.deltaY < 0;
-	});
+	}, false);
 
 	// Return our object.
 	return object;
