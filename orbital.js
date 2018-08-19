@@ -86,13 +86,9 @@ Orbital.satellite = function(orbit) {
 	t.render = extend(t.render, function() {
 		for (var i = t.index; i < orbitals.length; i++) {
 			var e = orbitals[i];
-		}
-		orbitals.forEach(function(e) {
-			if (e.name == 'satellite' && e != t) {
+			if (e.name == 'satellite' && e != t)
 				renderComLine(t, e);
-			}
-			return;
-		});
+		}
 	})
 	return t;
 }
