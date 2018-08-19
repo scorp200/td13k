@@ -21,7 +21,15 @@ var s2b1 = Orbital.planet('#666666', 5, s2b, 50, -0.01);
 var ms = Orbital.miningStation(s1);
 var st = Orbital.satellite(s1);
 var st1 = Orbital.satellite(s);
-var st2 = Orbital.satellite(s2);
+var st2 = Orbital.satellite(s);
+var st3 = Orbital.satellite(s);
+var st4 = Orbital.satellite(s2);
+var st5 = Orbital.satellite(s2);
+var st6 = Orbital.satellite(s2);
+var ds = Orbital.defenseStation(s1);
+var ds1 = Orbital.defenseStation(s1);
+var ds2 = Orbital.defenseStation(s1);
+log(coms.length);
 // Create Mouse object.
 // IIFE. Sets up events and returns basic object.
 var Mouse = (function() {

@@ -1,5 +1,6 @@
 var orbitals = [];
 var coms = [];
+var def = [];
 var buffer = 5;
 var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	if (angle === UNDEF) angle = 0;
@@ -67,13 +68,9 @@ Orbital.miningStation = function(orbit) {
 }
 
 Orbital.satellite = function(orbit) {
-	var angle = 0;
-	coms.forEach(function(e) {
-		if (e.name == 'satellite' && e != t && e.orbit.planet == orbit) {
-			angle = e.orbit.angle + cr / 3;
-		}
+	var angle = splitToMax(3, orbit, coms);
+	if (angle === UNDEF)
 		return;
-	});
 	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.005, angle);
 	t.name = 'satellite';
 	t.index = coms.length;
@@ -84,6 +81,20 @@ Orbital.satellite = function(orbit) {
 			if (e != t && getDistance(e, t) <= 300)
 				renderComLine(t, e);
 		}
+	})
+	return t;
+}
+
+Orbital.defenseStation = function(orbit) {
+	var angle = splitToMax(2, orbit, def);
+	if (angle === UNDEF)
+		return;
+	var t = Orbital('#ff8d00', 2, 0, 0, orbit, orbit.size * 4, 0.005, angle);
+	t.name = 'defense';
+	t.index = def.length;
+	def.push(t);
+	t.render = extend(t.render, function() {
+		//code to kill dem enemies
 	})
 	return t;
 }
