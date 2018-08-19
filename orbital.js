@@ -1,6 +1,6 @@
 var orbitals = [];
 var buffer = 5;
-var Orbital = function(color, size, x, y, orbit, distance, speed, angle) {
+var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	if (angle === UNDEF) angle = 0;
 	var t = {};
 	t.name = "Some Shithole Planet";
@@ -65,9 +65,34 @@ Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
 }
 
 Orbital.miningStation = function(orbit) {
-	var t = Orbital('#f0f7ff', 5, 0, 0, orbit, 100, 0.005);
+	var t = Orbital('#f0f7ff', 2, 0, 0, orbit, 30, 0.005);
 	t.update = extend(t.update, function() {
 		minerals += 0.01;
+	})
+	return t;
+}
+
+Orbital.satellite = function(orbit) {
+	var angle = 0;
+	orbitals.forEach(function(e) {
+		if (e.name == 'satellite' && e != t && e.orbit.planet == orbit) {
+			angle = e.orbit.angle + cr / 3;
+		}
+		return;
+	});
+	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.005, angle);
+	t.name = 'satellite';
+	t.index = orbitals.length - 1;
+	t.render = extend(t.render, function() {
+		for (var i = t.index; i < orbitals.length; i++) {
+			var e = orbitals[i];
+		}
+		orbitals.forEach(function(e) {
+			if (e.name == 'satellite' && e != t) {
+				renderComLine(t, e);
+			}
+			return;
+		});
 	})
 	return t;
 }
