@@ -26,7 +26,11 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 		var c = Math.sqrt(a * a + b * b);
 		if (c < t.size + buffer) {
 			hoverName = t.name;
-			console.log("mouse over");
+			if (Mouse.click && !pop.display) {
+				Mouse.click = false;
+				log('clicked ' + t.name);
+				pop.show(t);
+			}
 		}
 
 		if (t.orbit) {
@@ -47,12 +51,14 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 
 Orbital.sun = function(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null);
+	t.name = 'sun';
 	t.isSun = true;
 	return t;
 }
 
 Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
 	var t = Orbital(color, size, 0, 0, orbit, distance, speed, angle);
+	t.name = 'planet';
 	t.update = extend(t.update, function() {
 
 	})
@@ -60,7 +66,10 @@ Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
 }
 
 Orbital.miningStation = function(orbit) {
-	var t = Orbital('#f0f7ff', 2, 0, 0, orbit, 30, 0.005);
+	var angle = splitToMax(4, orbit, coms);
+	if (angle === UNDEF)
+		return;
+	var t = Orbital('#f0f7ff', 2, 0, 0, orbit, orbit.size * 2, -0.005);
 	t.update = extend(t.update, function() {
 		minerals += 0.01;
 	})
@@ -71,7 +80,7 @@ Orbital.satellite = function(orbit) {
 	var angle = splitToMax(3, orbit, coms);
 	if (angle === UNDEF)
 		return;
-	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.005, angle);
+	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.01, angle);
 	t.name = 'satellite';
 	t.index = coms.length;
 	coms.push(t);
