@@ -57,7 +57,8 @@ var allFps = [];
 	requestAnimationFrame(frame);
 	var nextTick = lastTick + tickLength;
 	var numTicks = 0;
-	allFps.push(1/((timestamp - lastTick) / 1000));
+	allFps.push(1/((timestamp - last) / 1000));
+	last = timestamp;
 	if (allFps.length > 60) {
 		var sum = 0;
 		var min = 1000;
@@ -74,6 +75,7 @@ var allFps = [];
 	if (timestamp > nextTick) {
 		let timeSinceTick = timestamp - lastTick;
 		var numTicks = Math.floor(timeSinceTick / tickLength);
+		console.log(numTicks);
 		update(Math.min(numTicks, 60));
 		lastTick = timestamp;
 	}
