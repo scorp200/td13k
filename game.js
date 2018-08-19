@@ -75,7 +75,6 @@ var allFps = [];
 	if (timestamp > nextTick) {
 		let timeSinceTick = timestamp - lastTick;
 		var numTicks = Math.floor(timeSinceTick / tickLength);
-		console.log(numTicks);
 		update(Math.min(numTicks, 60));
 		lastTick = timestamp;
 	}
@@ -92,6 +91,7 @@ function update(repeat) {
 
 function render() {
 	View.clear();
+	ctx.drawImage(starCanvas, 0, 0);
 	View.position();
 	orbitals.forEach(function(e) { e.render(); });
 	View.reset();

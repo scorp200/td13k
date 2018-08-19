@@ -30,10 +30,6 @@ function resize() {
     ctx.clearRect(0, 0, Canvas.width, Canvas.height);
 };
 
-// Starscape
-var starCanvas = DOCUMENT.createElement(CANVAS);
-
-
 // Cache drawing
 function cache(width, height) {
     var canvas = document.createElement(CANVAS);
