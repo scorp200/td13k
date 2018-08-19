@@ -1,4 +1,5 @@
 var orbitals = [];
+var coms = [];
 var buffer = 5;
 var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	if (angle === UNDEF) angle = 0;
@@ -43,13 +44,6 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	return t;
 };
 
-function extend(f1, f2) {
-	return function() {
-		f1();
-		f2();
-	}
-}
-
 Orbital.sun = function(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null);
 	t.isSun = true;
@@ -74,7 +68,7 @@ Orbital.miningStation = function(orbit) {
 
 Orbital.satellite = function(orbit) {
 	var angle = 0;
-	orbitals.forEach(function(e) {
+	coms.forEach(function(e) {
 		if (e.name == 'satellite' && e != t && e.orbit.planet == orbit) {
 			angle = e.orbit.angle + cr / 3;
 		}
@@ -82,11 +76,12 @@ Orbital.satellite = function(orbit) {
 	});
 	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.005, angle);
 	t.name = 'satellite';
-	t.index = orbitals.length - 1;
+	t.index = coms.length;
+	coms.push(t);
 	t.render = extend(t.render, function() {
-		for (var i = t.index; i < orbitals.length; i++) {
-			var e = orbitals[i];
-			if (e.name == 'satellite' && e != t)
+		for (var i = t.index; i < coms.length; i++) {
+			var e = coms[i];
+			if (e != t && getDistance(e, t) <= 300)
 				renderComLine(t, e);
 		}
 	})
