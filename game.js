@@ -2,10 +2,9 @@
 var log = console.log.bind(console);
 var rand = Math.random;
 var cr = 2 * Math.PI;
-var w = Canvas.width;
-var h = Canvas.height;
 var minerals = 0;
 var pop = createPop();
+
 // Disables right click context menu.
 AddEventListener("contextmenu", function(e) {
 	e.preventDefault();
@@ -30,58 +29,6 @@ var st6 = Orbital.satellite(s2);
 var ds = Orbital.defenseStation(s1);
 var ds1 = Orbital.defenseStation(s1);
 var ds2 = Orbital.defenseStation(s1);
-
-// Create Mouse object.
-// IIFE. Sets up events and returns basic object.
-var Mouse = (function() {
-
-	// Basic object setup.
-	var object = {
-		x: 0,
-		y: 0,
-		vx: 0,
-		vy: 0,
-		click: false,
-		scrollOut: false,
-		scrollIn: false,
-		update: function() {
-			object.click = false;
-			object.scrollIn = false;
-			object.scrollOut = false;
-		}
-	};
-
-	// Update mouse position.
-	// Can probably remove "rect" stuff if canvas is whole window.
-	AddEventListener("mousemove", function(e) {
-		var rect = Canvas.getBoundingClientRect();
-		object.x = e.clientX - rect.left;
-		object.y = e.clientY - rect.top;
-		object.vx = (object.x + View.x - Canvas.width / 2) / View.zoom;
-		object.vy = (object.y + View.y - Canvas.height / 2) / View.zoom;
-	}, false);
-
-	//
-	AddEventListener("mousedown", function(e) {
-		object.click = true;
-		object.down = true;
-	}, false);
-
-	//
-	AddEventListener("mouseup", function(e) {
-		object.down = false;
-	}, false);
-
-	//
-	AddEventListener("mousewheel", function(e) {
-		object.scrollOut = e.deltaY > 0;
-		object.scrollIn = e.deltaY < 0;
-	}, false);
-
-	// Return our object.
-	return object;
-
-})();
 
 // Update game.
 var lastTick = performance.now();

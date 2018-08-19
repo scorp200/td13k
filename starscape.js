@@ -29,14 +29,16 @@ while (numberOfStars--) {
 var offset = 0;
 var starPattern = ctx.createPattern(starCanvas, "repeat");
 function drawStarscape() {
-    offset += 0.1;
+    offset += 0.01;
     ctx.rect(0, 0, Canvas.width, Canvas.height);
     ctx.fillStyle = starPattern;
     ctx.save();
+    ctx.translate(Canvas.width/2, Canvas.height/2);
     ctx.scale(0.5, 0.5);
-    ctx.translate(offset/2, 0);
+    ctx.rotate(offset/200);
+    ctx.translate(-View.x/25+offset/2, -View.y/25);
     ctx.fill();
-    ctx.translate(offset, 0);
+    ctx.translate(-View.x/25+offset, -View.y/25);
     ctx.scale(2, 2);
     ctx.fill();
     ctx.restore();
