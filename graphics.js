@@ -108,7 +108,6 @@ function renderBody(body, x, y) {
 		);
 
 		if (body.orbit) {
-
             var repeat = body.size;
             var o = body.size;
             while (repeat--) {
@@ -126,14 +125,12 @@ function renderBody(body, x, y) {
 	}
 
 	var sun = orbitals[0];
-	var angle = Math.atan2((body.y - sun.y) * 2, body.x - sun.x);
+	var angle = getAngle(body, sun);
 	ctx.globalAlpha = 1;
 	ctx.shadowBlur = 0;
-	if (x === UNDEF)
-		x = body.x
-	if (y === UNDEF)
-		y = body.y
-	ctx.translate(x, y || y);
+	if (x === UNDEF) x = body.x;
+	if (y === UNDEF) y = body.y;
+	ctx.translate(x, y);
 	ctx.rotate(angle);
 	if (body.isSun) {
 		var scale = 1 + rand() * 0.03;
@@ -148,7 +145,6 @@ function renderComLine(from, to) {
 	ctx.beginPath();
 	ctx.globalAlpha = 0.2;
 	ctx.moveTo(from.x, from.y);
-	//ctx.lineTo(to.x, to.y);
     ctx.bezierCurveTo(from.x, from.y-50, to.x, to.y-50, to.x, to.y);
 	ctx.lineWidth = 1;
 	ctx.strokeStyle = from.color;
