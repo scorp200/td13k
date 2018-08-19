@@ -96,7 +96,7 @@ function renderBody(body) {
 		body.cache = cache(256, 256);
 		var context = body.cache.getContext("2d");
 		var color = body.isSun ? WHITE : body.color;
-		var glow = body.isSun ? 50 : body.size / 10;
+		var glow = body.isSun ? 50 : body.size;
 		if (body.isSun) context.filter = "blur(4px)";
 
 		drawCircle(context, FILL,
@@ -108,14 +108,18 @@ function renderBody(body) {
 		);
 
 		if (body.orbit) {
-			context.filter = "blur(3px)";
-			drawCircle(context, FILL,
-				128, 128,
-				body.size,
-				false,
-				BLACK, 0.8, 0,
-				body.color, 2, -cr / 4, cr / 4
-			);
+
+            var repeat = body.size;
+            var o = body.size;
+            while (repeat--) {
+    			drawCircle(context, FILL,
+    				128+(body.size-o)/2, 128,
+    				o--*2,
+    				false,
+    				BLACK, 0.05, 0,
+    				BLACK, 10, -cr / 4, cr / 4
+    			);
+            }
 		}
 
 		context.filter = "none";
@@ -136,14 +140,17 @@ function renderBody(body) {
 }
 
 function renderComLine(from, to) {
+    ctx.setLineDash([1, 1]);
 	ctx.beginPath();
 	ctx.globalAlpha = 0.2;
 	ctx.moveTo(from.x, from.y);
-	ctx.lineTo(to.x, to.y);
-	ctx.lineWidth = 0.5;
-	ctx.strokeStyle = '#f0f7ff';
+	//ctx.lineTo(to.x, to.y);
+    ctx.bezierCurveTo(from.x, from.y-50, to.x, to.y-50, to.x, to.y);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = from.color;
 	ctx.stroke();
 	ctx.globalAlpha = 1;
+    ctx.setLineDash([]);
 }
 
 function drawDebug() {
