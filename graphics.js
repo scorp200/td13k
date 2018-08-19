@@ -140,14 +140,17 @@ function renderBody(body) {
 }
 
 function renderComLine(from, to) {
+    ctx.setLineDash([1, 1]);
 	ctx.beginPath();
 	ctx.globalAlpha = 0.2;
 	ctx.moveTo(from.x, from.y);
-	ctx.lineTo(to.x, to.y);
-	ctx.lineWidth = 0.5;
-	ctx.strokeStyle = '#f0f7ff';
+	//ctx.lineTo(to.x, to.y);
+    ctx.bezierCurveTo(from.x, from.y-50, to.x+10, to.y-50, to.x+10, to.y);
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = from.color;
 	ctx.stroke();
 	ctx.globalAlpha = 1;
+    ctx.setLineDash([]);
 }
 
 function drawDebug() {
