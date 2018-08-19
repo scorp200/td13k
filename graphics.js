@@ -91,7 +91,7 @@ function renderTrail(body) {
 }
 
 // Render body (star, planet, death star)
-function renderBody(body) {
+function renderBody(body, x, y) {
 	if (!body.cache) {
 		body.cache = cache(256, 256);
 		var context = body.cache.getContext("2d");
@@ -129,7 +129,11 @@ function renderBody(body) {
 	var angle = Math.atan2((body.y - sun.y) * 2, body.x - sun.x);
 	ctx.globalAlpha = 1;
 	ctx.shadowBlur = 0;
-	ctx.translate(body.x, body.y);
+	if (x === UNDEF)
+		x = body.x
+	if (y === UNDEF)
+		y = body.y
+	ctx.translate(x, y || y);
 	ctx.rotate(angle);
 	if (body.isSun) {
 		var scale = 1 + rand() * 0.03;
@@ -156,6 +160,7 @@ function renderComLine(from, to) {
 function drawDebug() {
 	ctx.font = "14px monospace";
 	ctx.textBaseline = "top";
+	ctx.textAlign = 'left';
 	ctx.fillStyle = "#ffffff";
 	ctx.fillText("#js13k tower defense prototype", 20, 20);
 	ctx.fillText("https://github.com/scorp200/td13k", 20, 40);

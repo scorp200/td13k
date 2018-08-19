@@ -5,6 +5,7 @@ var cr = 2 * Math.PI;
 var w = Canvas.width;
 var h = Canvas.height;
 var minerals = 0;
+var pop = new Pop();
 // Disables right click context menu.
 AddEventListener("contextmenu", function(e) {
 	e.preventDefault();
@@ -29,14 +30,12 @@ var st6 = Orbital.satellite(s2);
 var ds = Orbital.defenseStation(s1);
 var ds1 = Orbital.defenseStation(s1);
 var ds2 = Orbital.defenseStation(s1);
-log(coms.length);
 // Create Mouse object.
 // IIFE. Sets up events and returns basic object.
 var Mouse = (function() {
 
 	// Basic object setup.
-	var object = { x: 0, y: 0 };
-
+	var object = { x: 0, y: 0, click: false };
 	// Update mouse position.
 	// Can probably remove "rect" stuff if canvas is whole window.
 	AddEventListener("mousemove", function(e) {
@@ -48,6 +47,7 @@ var Mouse = (function() {
 	//
 	AddEventListener("mousedown", function(e) {
 		// ADD AN "ONCLICK" FUNCTION HERE.
+		object.click = true;
 		e.preventDefault();
 	});
 
@@ -96,6 +96,8 @@ var allFps = [];
 function update(repeat) {
 	hoverName = "";
 	orbitals.forEach(function(e) { e.update(); });
+	gui.forEach(function(e) { e.update(); });
+	Mouse.click = false;
 	--repeat && update(repeat);
 }
 
@@ -104,6 +106,7 @@ function render() {
 	ctx.drawImage(starCanvas, 0, 0);
 	View.position();
 	orbitals.forEach(function(e) { e.render(); });
+	gui.forEach(function(e) { e.render(); });
 	View.reset();
 	drawDebug();
 }
