@@ -145,7 +145,7 @@ function renderComLine(from, to) {
 	ctx.globalAlpha = 0.2;
 	ctx.moveTo(from.x, from.y);
 	//ctx.lineTo(to.x, to.y);
-    ctx.bezierCurveTo(from.x, from.y-50, to.x+10, to.y-50, to.x+10, to.y);
+    ctx.bezierCurveTo(from.x, from.y-50, to.x, to.y-50, to.x, to.y);
 	ctx.lineWidth = 1;
 	ctx.strokeStyle = from.color;
 	ctx.stroke();
