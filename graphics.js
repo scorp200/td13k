@@ -1,6 +1,6 @@
 // Setup Canvas (move to graphics.js)
 var hoverName = "";
-var AddEventListener = DOCUMENT.addEventListener;
+var AddEventListener = DOCUMENT.addEventListener.bind(DOCUMENT);
 var Canvas = DOCUMENT.getElementById("c");
 var ctx = Canvas.getContext("2d");
 var View = {

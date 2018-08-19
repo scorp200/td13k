@@ -1,11 +1,11 @@
 // Cache stuff.
-var log = console.log;
+var log = console.log.bind(console);
 var rand = Math.random;
 var cr = 2 * Math.PI;
 var w = Canvas.width;
 var h = Canvas.height;
 var minerals = 0;
-var pop = new Pop();
+var pop = createPop();
 // Disables right click context menu.
 AddEventListener("contextmenu", function(e) {
 	e.preventDefault();
@@ -66,7 +66,6 @@ var allFps = [];
 
 	requestAnimationFrame(frame);
 	var nextTick = lastTick + tickLength;
-	var numTicks = 0;
 	allFps.push(1 / ((timestamp - last) / 1000));
 	last = timestamp;
 	if (allFps.length > 60) {
@@ -91,7 +90,7 @@ var allFps = [];
 
 	render();
 
-})();
+})(lastTick);
 
 function update(repeat) {
 	hoverName = "";
