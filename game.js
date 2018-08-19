@@ -4,7 +4,7 @@ var rand = Math.random;
 var cr = 2 * Math.PI;
 var w = Canvas.width;
 var h = Canvas.height;
-
+var minerals = 0;
 // Disables right click context menu.
 AddEventListener("contextmenu", function(e) {
 	e.preventDefault();
@@ -18,7 +18,7 @@ var s2 = Orbital.planet('#f64749', 20, s, 500, 0.0025);
 var s2a = Orbital.planet('#ff0055', 5, s2, 80, 0.05);
 var s2b = Orbital.planet('#77ff55', 10, s2, 150, 0.005);
 var s2b1 = Orbital.planet('#666666', 5, s2b, 50, -0.01);
-
+var ms = Orbital.miningStation(s1);
 
 // Create Mouse object.
 // IIFE. Sets up events and returns basic object.
@@ -57,7 +57,7 @@ var allFps = [];
 	requestAnimationFrame(frame);
 	var nextTick = lastTick + tickLength;
 	var numTicks = 0;
-	allFps.push(1/((timestamp - last) / 1000));
+	allFps.push(1 / ((timestamp - last) / 1000));
 	last = timestamp;
 	if (allFps.length > 60) {
 		var sum = 0;
@@ -69,7 +69,7 @@ var allFps = [];
 			min = Math.min(min, value);
 			max = Math.max(max, value);
 		});
-		fps = Math.floor(sum/60) + ", " + ~~min + " - " + ~~max;
+		fps = Math.floor(sum / 60) + ", " + ~~min + " - " + ~~max;
 	}
 
 	if (timestamp > nextTick) {
