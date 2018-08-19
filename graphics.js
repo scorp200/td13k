@@ -8,6 +8,10 @@ var View = {
 	y: 0,
 	zoom: 1,
     tilt: 2,
+    update: function() {
+        if (Mouse.scrollIn) View.zoom = Math.min(View.zoom+0.1, 2);
+        if (Mouse.scrollOut) View.zoom = Math.max(View.zoom-0.1, 0.1);
+    },
 	clear: function() {
 		View.reset();
 		ctx.clearRect(0, 0, Canvas.width, Canvas.height);
@@ -165,5 +169,6 @@ function drawDebug() {
 	ctx.fillText("mouse (gui): " + Mouse.x + ", " + Mouse.y, 20, 80);
 	ctx.fillText("mouse (view): " + (Mouse.x - Canvas.width / 2) + ", " + (Mouse.y - Canvas.height / 2), 20, 100);
 	ctx.fillText("planet name: " + hoverName, 20, 120);
-	ctx.fillText("Minerals: " + Math.floor(minerals * 100) / 100, 20, 140);
+    ctx.fillText("zoom: " + View.zoom, 20, 140);
+	ctx.fillText("minerals: " + Math.floor(minerals * 100) / 100, 20, 180);
 }

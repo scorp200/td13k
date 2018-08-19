@@ -30,12 +30,20 @@ var st6 = Orbital.satellite(s2);
 var ds = Orbital.defenseStation(s1);
 var ds1 = Orbital.defenseStation(s1);
 var ds2 = Orbital.defenseStation(s1);
+
 // Create Mouse object.
 // IIFE. Sets up events and returns basic object.
 var Mouse = (function() {
 
 	// Basic object setup.
-	var object = { x: 0, y: 0, click: false };
+	var object = {
+		x: 0,
+		y: 0,
+		click: false,
+		scrollOut: false,
+		scrollIn: false
+	};
+
 	// Update mouse position.
 	// Can probably remove "rect" stuff if canvas is whole window.
 	AddEventListener("mousemove", function(e) {
@@ -46,9 +54,13 @@ var Mouse = (function() {
 
 	//
 	AddEventListener("mousedown", function(e) {
-		// ADD AN "ONCLICK" FUNCTION HERE.
 		object.click = true;
-		e.preventDefault();
+	});
+
+	//
+	AddEventListener("mousewheel", function(e) {
+		object.scrollOut = e.deltaY > 0;
+		object.scrollIn = e.deltaY < 0;
 	});
 
 	// Return our object.
@@ -94,9 +106,12 @@ var allFps = [];
 
 function update(repeat) {
 	hoverName = "";
+	View.update();
 	orbitals.forEach(function(e) { e.update(); });
 	gui.forEach(function(e) { e.update(); });
 	Mouse.click = false;
+	Mouse.scrollIn = false;
+	Mouse.scrollOut = false;
 	--repeat && update(repeat);
 }
 
