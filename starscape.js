@@ -18,8 +18,24 @@ function Star(x, y) {
 
 Star.prototype.draw = function() {
     starContext.beginPath();
-    starContext.ellipse(this.x, this.y, 0.5, 0.5, 0, 0, 2 * Math.PI);
+    starContext.arc(this.x, this.y, 0.5, 0, 2 * Math.PI);
     starContext.fill();
+}
+
+var offset = 0;
+function drawStarscape() {
+    offset += 0.1;
+    var pat = ctx.createPattern(starCanvas, "repeat");
+    ctx.rect(0, 0, Canvas.width, Canvas.height);
+    ctx.fillStyle = pat;
+    ctx.save();
+    ctx.scale(0.5, 0.5);
+    ctx.translate(offset/2, 0);
+    ctx.fill();
+    ctx.translate(offset, 0);
+    ctx.scale(2, 2);
+    ctx.fill();
+    ctx.restore();
 }
 
 // Create stars
