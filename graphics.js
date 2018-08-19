@@ -98,6 +98,7 @@ function renderBody(body) {
 		var color = body.isSun ? WHITE : body.color;
 		var glow = body.isSun ? 50 : body.size / 10;
 		if (body.isSun) context.filter = "blur(4px)";
+
 		drawCircle(context, FILL,
 			128, 128,
 			body.size,
@@ -123,6 +124,7 @@ function renderBody(body) {
 	var sun = orbitals[0];
 	var angle = Math.atan2((body.y - sun.y) * 2, body.x - sun.x);
 	ctx.globalAlpha = 1;
+	ctx.shadowBlur = 0;
 	ctx.translate(body.x, body.y);
 	ctx.rotate(angle);
 	if (body.isSun) {
