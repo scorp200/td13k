@@ -80,8 +80,22 @@ function update(repeat) {
 
 function render() {
 	View.clear();
+
+	ctx.save();
+	var x = Canvas.width / 2 - View.x;
+	var y = Canvas.height / 2 - View.y;
+	var grd = ctx.createRadialGradient(x, y, 0, x, y, 4000);
+	grd.addColorStop(0, "#141e28");
+	grd.addColorStop(1, "#000000");
+	ctx.fillStyle = grd;
+	ctx.rect(0, 0, Canvas.width, Canvas.height);
+	ctx.fill();
+	ctx.restore()
+
+	View.reset();
 	drawStarscape();
 	View.position();
+
 	orbitals.forEach(function(e) { e.render(); });
 	ctx.setTransform(1, 0, 0, 1, Canvas.width / 2, Canvas.height / 2);
 	gui.forEach(function(e) { e.render(); });
