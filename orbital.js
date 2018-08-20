@@ -2,7 +2,7 @@ var orbitals = [];
 var coms = [];
 var def = [];
 var buffer = 5;
-var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
+var Orbital = function(color, size, x, y, orbit, distance, speed, angle) {
 	if (angle === UNDEF) angle = 0;
 	var t = {};
 	t.name = "Some Shithole Planet";
@@ -55,7 +55,8 @@ Orbital.sun = function(color, size, x, y) {
 	return t;
 }
 
-Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
+Orbital.planet = function(color, size, orbit, distance, speed, angle) {
+	if (angle === UNDEF) angle = 0;
 	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, angle);
 	t.name = t.type = 'planet';
 	t.update = extend(t.update, function() {

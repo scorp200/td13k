@@ -2,6 +2,27 @@
 var pop = createPop();
 var base = null;
 
+// Start music, TEST!
+var player = new CPlayer();
+player.init(song);
+
+// Generate music...
+var done = false;
+setInterval(function () {
+	if (done) {
+      	return;
+    }
+
+    done = player.generate() >= 1;
+
+    if (done) {
+		var wave = player.createWave();
+		var audio = document.createElement("audio");
+		audio.src = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
+		audio.play();
+    }
+}, 0);
+
 // Disables right click context menu.
 AddEventListener("contextmenu", function(e) {
 	e.preventDefault();
@@ -56,7 +77,7 @@ var allFps = [];
 	}
 
 	if (timestamp > nextTick) {
-		let timeSinceTick = timestamp - lastTick;
+		var timeSinceTick = timestamp - lastTick;
 		var numTicks = Math.floor(timeSinceTick / tickLength);
 		update(Math.min(numTicks, 60));
 		lastTick = timestamp;
