@@ -186,5 +186,5 @@ function drawDebug() {
 	ctx.fillText("mouse (view): " + Mouse.vx + ", " + Mouse.vy, 20, 100);
 	ctx.fillText("planet name: " + hoverName, 20, 120);
     ctx.fillText("zoom: " + View.zoom, 20, 140);
-	ctx.fillText("minerals: " + Math.floor(minerals * 100) / 100, 20, 180);
+	ctx.fillText("minerals: " + Math.floor(base.minerals * 100) / 100, 20, 180);
 }

@@ -7,7 +7,7 @@ var createPop = function() {
 	t.h = 400;
 	t.target = null;
 	t.show = function(planet) {
-		if (!Mouse.drag && !pop.display && planet.name == 'planet') {
+		if (!Mouse.drag && !pop.display && planet.type == 'planet') {
 			t.display = true;
 			t.target = planet;
 		}
@@ -35,7 +35,7 @@ var createPop = function() {
 		ctx.fillStyle = "#ffffff";
 		ctx.textAlign = 'center';
 		ctx.font = "24px monospace";
-		ctx.fillText((base === t.target ? 'Base' : '') + ' ' + t.target.name, 0, -t.h / 2 + 10);
+		ctx.fillText((base.planet === t.target ? 'Base' : '') + ' ' + t.target.name, 0, -t.h / 2 + 20);
 		renderBody(t.target, 0, -t.h / 2 + 100 + t.target.size / 2);
 	}
 	return t;

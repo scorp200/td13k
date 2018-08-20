@@ -6,6 +6,7 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	if (angle === UNDEF) angle = 0;
 	var t = {};
 	t.name = "Some Shithole Planet";
+	t.type = 'orbital';
 	t.x = x;
 	t.y = y;
 	t.color = color;
@@ -49,14 +50,14 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 
 Orbital.sun = function(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null);
-	t.name = 'sun';
+	t.name = t.type = 'sun';
 	t.isSun = true;
 	return t;
 }
 
 Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
 	var t = Orbital(color, size, 0, 0, orbit, distance, speed, angle);
-	t.name = 'planet';
+	t.name = t.type = 'planet';
 	t.update = extend(t.update, function() {
 
 	})
@@ -68,8 +69,9 @@ Orbital.miningStation = function(orbit) {
 	if (angle === UNDEF)
 		return;
 	var t = Orbital('#f0f7ff', 2, 0, 0, orbit, orbit.size * 2, -0.005);
+	t.name = t.type = 'mining';
 	t.update = extend(t.update, function() {
-		minerals += 0.01;
+		base.minerals += base.mineRate;
 	})
 	return t;
 }
@@ -81,13 +83,13 @@ Orbital.satellite = function(orbit) {
 	if (angle === UNDEF)
 		return;
 	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.01, angle);
-	t.name = 'satellite';
+	t.name = t.type = 'satellite';
 	t.index = coms.length;
 	coms.push(t);
 	t.render = extend(t.render, function() {
 		for (var i = t.index; i < coms.length; i++) {
 			var e = coms[i];
-			if (e != t && getDistance(e, t) <= 400) {
+			if (e != t && getDistance(e, t) <= base.comRange) {
 				renderComLine(t, e);
 			}
 		}
@@ -102,7 +104,7 @@ Orbital.defenseStation = function(orbit) {
 	if (angle === UNDEF)
 		return;
 	var t = Orbital('#ff8d00', 2, 0, 0, orbit, orbit.size * 4, 0.005, angle);
-	t.name = 'defense';
+	t.name = t.type = 'defense';
 	t.index = def.length;
 	def.push(t);
 	t.render = extend(t.render, function() {
