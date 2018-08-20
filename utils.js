@@ -34,6 +34,6 @@ function splitToMax(max, orbit, array) {
 function getHSL(h, s, l) {
 	return 'hsl(' +
 		(h < 0 ? rand() * 360 : h) + ',' +
-		(s < 0 ? rand() * 100 : s) + '%, ' +
+		(s < 0 ? rand() * 100 : s) + '%,' +
 		(l < 0 ? rand() * 100 : l) + '%)';
 }
