@@ -64,7 +64,7 @@ Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
 }
 
 Orbital.miningStation = function(orbit) {
-	var angle = splitToMax(this.max, orbit, coms);
+	var angle = splitToMax(Orbital.miningStation.max, orbit, coms);
 	if (angle === UNDEF)
 		return;
 	var t = Orbital('#f0f7ff', 2, 0, 0, orbit, orbit.size * 2, -0.005);
@@ -77,8 +77,7 @@ Orbital.miningStation = function(orbit) {
 Orbital.miningStation.max = 4;
 
 Orbital.satellite = function(orbit) {
-	log(this.max);
-	var angle = splitToMax(4, orbit, coms);
+	var angle = splitToMax(Orbital.satellite.max, orbit, coms);
 	if (angle === UNDEF)
 		return;
 	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.01, angle);
@@ -96,8 +95,10 @@ Orbital.satellite = function(orbit) {
 	return t;
 }
 
+Orbital.satellite.max = 3;
+
 Orbital.defenseStation = function(orbit) {
-	var angle = splitToMax(2, orbit, def);
+	var angle = splitToMax(Orbital.defenseStation.max, orbit, def);
 	if (angle === UNDEF)
 		return;
 	var t = Orbital('#ff8d00', 2, 0, 0, orbit, orbit.size * 4, 0.005, angle);
@@ -109,3 +110,5 @@ Orbital.defenseStation = function(orbit) {
 	})
 	return t;
 }
+
+Orbital.defenseStation.max = 2;
