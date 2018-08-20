@@ -11,7 +11,7 @@ AddEventListener("contextmenu", function(e) {
 var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);
 var s1 = Orbital.planet(getHSL(180, 39, 62), 10, s, 500, 0.003, rand() * cr);
 base = Base(s1);
-var param = { s: 39, l: 62 };
+var param = { s: 60, l: 70 };
 var s1a = Orbital.planet(getRandomColor(param), 5, s1, 100, -0.002, rand() * cr);
 var s2 = Orbital.planet(getRandomColor(param), 20, s, 1123, 0.0015, rand() * cr);
 var s2a = Orbital.planet(getRandomColor(param), 5, s2, s2.size * 8, 0.01, rand() * cr);

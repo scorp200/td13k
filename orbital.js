@@ -10,7 +10,6 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 	t.x = x;
 	t.y = y;
 	t.color = color;
-	log(color);
 	t.size = size;
 	t.isSun = false;
 	if (orbit)
@@ -37,7 +36,7 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 			var e = t.orbit;
 			e.angle += e.speed;
 			t.x = e.distance * Math.cos(e.angle) + e.planet.x;
-			t.y = e.distance * 0.5 * Math.sin(e.angle) + e.planet.y;
+			t.y = e.distance / View.tilt * Math.sin(e.angle) + e.planet.y;
 		}
 	}
 	t.render = function() {

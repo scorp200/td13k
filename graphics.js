@@ -13,8 +13,15 @@ var View = {
 	zoom: 1,
     tilt: 2,
     update: function() {
-        if (Mouse.scrollIn) View.zoom = Math.min(View.zoom+0.1, 2);
-        if (Mouse.scrollOut) View.zoom = Math.max(View.zoom-0.1, 0.1);
+        if (Mouse.scrollIn || Mouse.scrollOut) {
+            var zoomDelta = View.zoom;
+            var shift = Mouse.scrollIn ? 1 : -1;
+            View.zoom = Math.max(0.1, Math.min(View.zoom+0.1*shift, 2));
+            zoomDelta = Math.abs(zoomDelta - View.zoom);
+            View.x += Mouse.vx * zoomDelta * shift;
+            View.y += Mouse.vy * zoomDelta * shift;
+        }
+        View.tilt = Math.min(1 + (View.zoom - 0.1), 2);
         if (Mouse.click && !pop.display) {
             View.drag = true;
             View.anchorX = View.x;
@@ -74,7 +81,7 @@ function drawCircle(ctx, type, x, y, r, tilt, color, alpha, lineWidth, sColor, b
 	ctx.lineWidth = lineWidth / View.zoom;
 	ctx.shadowColor = sColor;
 	ctx.shadowBlur = blur;
-	ctx.ellipse(x, y, r, r * (tilt ? 0.5 : 1), angle, start, end, dir);
+	ctx.ellipse(x, y, r, r * (tilt ? 1/View.tilt : 1), angle, start, end, dir);
 	ctx[type]();
 }
 
@@ -167,11 +174,11 @@ function renderBody(body, x, y) {
 function renderComLine(from, to) {
     ctx.setLineDash([1, 1]);
 	ctx.beginPath();
-	ctx.globalAlpha = 0.2;
+	ctx.globalAlpha = 0.2 / View.zoom;
 	ctx.moveTo(from.x, from.y);
     ctx.bezierCurveTo(from.x, from.y-50, to.x, to.y-50, to.x, to.y);
-	ctx.lineWidth = 1;
-	ctx.strokeStyle = from.color;
+	ctx.lineWidth = 1 / View.zoom * 2;
+	ctx.strokeStyle = "#00FF00";
 	ctx.stroke();
 	ctx.globalAlpha = 1;
     ctx.setLineDash([]);
