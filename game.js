@@ -4,6 +4,7 @@ var rand = Math.random;
 var cr = 2 * Math.PI;
 var minerals = 0;
 var pop = createPop();
+var base = null;
 
 // Disables right click context menu.
 AddEventListener("contextmenu", function(e) {
@@ -12,7 +13,7 @@ AddEventListener("contextmenu", function(e) {
 
 // Setup planets (procgen this?)
 var s = Orbital.sun('#ffe200', 38, 0, 0);
-var s1 = Orbital.planet('#77c3c3', 10, s, 200, 0.005);
+var s1 = base = Orbital.planet('#77c3c3', 10, s, 200, 0.005);
 var s1a = Orbital.planet('#666666', 5, s1, 50, -0.01);
 var s2 = Orbital.planet('#f64749', 20, s, 500, 0.0025);
 var s2a = Orbital.planet('#ff0055', 5, s2, 80, 0.05);
@@ -69,8 +70,8 @@ var allFps = [];
 function update(repeat) {
 	hoverName = "";
 	View.update();
-	orbitals.forEach(function(e) { e.update(); });
 	gui.forEach(function(e) { e.update(); });
+	orbitals.forEach(function(e) { e.update(); });
 	Mouse.update();
 	--repeat && update(repeat);
 }

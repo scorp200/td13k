@@ -15,17 +15,17 @@ var View = {
     update: function() {
         if (Mouse.scrollIn) View.zoom = Math.min(View.zoom+0.1, 2);
         if (Mouse.scrollOut) View.zoom = Math.max(View.zoom-0.1, 0.1);
-        if (Mouse.click) {
+        if (Mouse.click && !pop.display) {
             View.drag = true;
             View.anchorX = View.x;
             View.anchorY = View.y;
             View.anchorMouseX = Mouse.x;
             View.anchorMouseY = Mouse.y;
         }
-        if (Mouse.down && View.drag) {
+        if (Mouse.drag && View.drag) {
             View.x = View.anchorX + (View.anchorMouseX - Mouse.x);
             View.y = View.anchorY + (View.anchorMouseY - Mouse.y);
-        } else {
+        } else if(Mouse.release) {
             View.drag = false;
         }
     },

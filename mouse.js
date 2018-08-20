@@ -9,10 +9,13 @@ var Mouse = (function() {
 		vx: 0,
 		vy: 0,
 		click: false,
+		drag: false,
+		release: false,
 		scrollOut: false,
 		scrollIn: false,
 		update: function() {
 			object.click = false;
+			object.release = false;
 			object.scrollIn = false;
 			object.scrollOut = false;
 		}
@@ -26,6 +29,8 @@ var Mouse = (function() {
 		object.y = e.clientY - rect.top;
 		object.vx = (object.x + View.x - Canvas.width / 2) / View.zoom;
 		object.vy = (object.y + View.y - Canvas.height / 2) / View.zoom;
+		if(object.down)
+			object.drag = true;
 	}, false);
 
 	//
@@ -37,6 +42,9 @@ var Mouse = (function() {
 	//
 	window.addEventListener("mouseup", function(e) {
 		object.down = false;
+		if(!object.drag)
+			object.release = true;
+		object.drag = false;
 	}, false);
 
 	//

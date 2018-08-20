@@ -23,12 +23,10 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle = 0) {
 		// Mouse over
 		var a = Mouse.vx - t.x;
 		var b = Mouse.vy - t.y;
-		var c = Math.sqrt(a*a + b*b);
+		var c = Math.sqrt(a * a + b * b);
 		if (c < t.size + buffer) {
 			hoverName = t.name;
-			if (Mouse.click && !pop.display) {
-				Mouse.click = false;
-				log('clicked ' + t.name);
+			if (Mouse.release) {
 				pop.show(t);
 			}
 		}
@@ -66,7 +64,7 @@ Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
 }
 
 Orbital.miningStation = function(orbit) {
-	var angle = splitToMax(4, orbit, coms);
+	var angle = splitToMax(this.max, orbit, coms);
 	if (angle === UNDEF)
 		return;
 	var t = Orbital('#f0f7ff', 2, 0, 0, orbit, orbit.size * 2, -0.005);
@@ -76,8 +74,11 @@ Orbital.miningStation = function(orbit) {
 	return t;
 }
 
+Orbital.miningStation.max = 4;
+
 Orbital.satellite = function(orbit) {
-	var angle = splitToMax(3, orbit, coms);
+	log(this.max);
+	var angle = splitToMax(4, orbit, coms);
 	if (angle === UNDEF)
 		return;
 	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.01, angle);
