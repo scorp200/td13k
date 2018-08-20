@@ -34,12 +34,10 @@ var View = {
         }
 
         var zoomDelta = View.zoom;
-		View.zoom = clamp(View.zoom + (View.zoomTarget - View.zoom) / 10, 0.1, 2);
+		View.zoom = View.zoom + (View.zoomTarget - View.zoom) / 10;
         zoomDelta = View.zoom - zoomDelta;
         View.x += Mouse.vx * zoomDelta;
         View.y += Mouse.vy * zoomDelta;
-        console.log(View.zoom);
-
     },
 	clear: function() {
 		View.reset();
