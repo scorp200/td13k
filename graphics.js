@@ -117,7 +117,7 @@ function renderBody(body, x, y) {
 		body.cache = cache(256, 256);
 		var context = body.cache.getContext("2d");
 		var color = body.isSun ? WHITE : body.color;
-		var glow = body.isSun ? 50 : body.size;
+		var glow = body.isSun ? 50 : 10;
 		if (body.isSun) context.filter = "blur(4px)";
 
 		drawCircle(context, FILL,
@@ -131,6 +131,9 @@ function renderBody(body, x, y) {
 		if (body.orbit) {
             var repeat = body.size;
             var o = body.size;
+            context.beginPath();
+            context.arc(128, 128, body.size, 0, 2*Math.PI, false);
+            context.clip();
             while (repeat--) {
     			drawCircle(context, FILL,
     				128-o/2+(body.size-o)/2, 128,
