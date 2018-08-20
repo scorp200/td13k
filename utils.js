@@ -37,3 +37,11 @@ function getHSL(h, s, l) {
 		(s < 0 ? rand() * 100 : s) + '%,' +
 		(l < 0 ? rand() * 100 : l) + '%)';
 }
+
+function lerp(a, b, t) {
+	return a + t * (b - a);
+}
+
+function clamp(value, min, max) {
+	return value > max ? max : value < min ? min : value;
+}

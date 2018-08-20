@@ -11,12 +11,13 @@ var View = {
     anchorMouseX: 0,
     anchorMouseY: 0,
 	zoom: 1,
+	zoomTarget: 1,
     tilt: 2,
     update: function() {
         if (Mouse.scrollIn || Mouse.scrollOut) {
             var zoomDelta = View.zoom;
             var shift = Mouse.scrollIn ? 1 : -1;
-            View.zoom = Math.max(0.1, Math.min(View.zoom+0.1*shift, 2));
+            View.zoomTarget = clamp(View.zoomTarget+0.1*shift, 0.1, 2);
             zoomDelta = Math.abs(zoomDelta - View.zoom);
             View.x += Mouse.vx * zoomDelta * shift;
             View.y += Mouse.vy * zoomDelta * shift;
@@ -35,6 +36,7 @@ var View = {
         } else if(Mouse.release) {
             View.drag = false;
         }
+		View.zoom = clamp(View.zoom + (View.zoomTarget - View.zoom) / 20, 0.1, 2);
     },
 	clear: function() {
 		View.reset();
