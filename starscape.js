@@ -8,11 +8,9 @@ var starContext = starCanvas.getContext("2d");
 starContext.shadowBlur = 1;
 starContext.globalAlpha = 0.5;
 
-// Colors
-var starColors = ["55", "66", "77", "88", "AA", "BB", "CC", "DD", "EE", "FF"];
-
+// Draw stars
 function drawStar(x, y) {
-    var color = "#" + starColors[Math.floor(Math.random()*11)] + starColors[Math.floor(Math.random()*11)] + starColors[Math.floor(Math.random()*11)];
+    var color = getRandomColor(6, 14);
     starContext.fillStyle = color;
     starContext.shadowColor = color;
     starContext.beginPath();

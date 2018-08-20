@@ -25,3 +25,16 @@ function splitToMax(max, orbit, array) {
 		return UNDEF;
 	return angle;
 }
+
+// Generate a random color.
+// min and max should define a range between 0 and 14.
+var starColors = "00 11 22 33 44 55 66 77 88 AA BB CC DD EE FF".split(" ");
+function getRandomColor(min, max) {
+	max++;
+	var r = starColors[min+~~(Math.random()*(max-min))];
+	var g = starColors[min+~~(Math.random()*(max-min))];
+	var b = starColors[min+~~(Math.random()*(max-min))];
+	console.log("#" + r + g + b);
+	return color = "#" + r + g + b;
+
+}
