@@ -26,20 +26,22 @@ while (numberOfStars--) {
     drawStar(Math.random() * 512, Math.random() * 512);
 }
 
-var offset = 0;
 var starPattern = ctx.createPattern(starCanvas, "repeat");
 function drawStarscape() {
-    offset += 0.01;
+    var offset = performance.now() / 2000;
     ctx.rect(0, 0, Canvas.width, Canvas.height);
     ctx.fillStyle = starPattern;
     ctx.save();
     ctx.translate(Canvas.width/2, Canvas.height/2);
     ctx.scale(0.5, 0.5);
-    ctx.rotate(offset/200);
     ctx.translate(-View.x/25+offset/2, -View.y/25);
+    ctx.save();
+    ctx.rotate(offset/200);
     ctx.fill();
-    ctx.translate(-View.x/25+offset, -View.y/25);
+    ctx.restore();
     ctx.scale(2, 2);
+    ctx.translate(-View.x/25+offset, -View.y/25);
+    ctx.rotate(offset/200);
     ctx.fill();
     ctx.restore();
 }
