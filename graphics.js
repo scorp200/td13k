@@ -190,7 +190,8 @@ function renderComLine(from, to) {
 	ctx.beginPath();
 	ctx.globalAlpha = 0.2 / View.zoom;
 	ctx.moveTo(from.x, from.y);
-    ctx.bezierCurveTo(from.x, from.y-50, to.x, to.y-50, to.x, to.y);
+    var up = 75 * (View.tilt - 1);
+    ctx.bezierCurveTo(from.x, from.y-up, to.x, to.y-up, to.x, to.y);
 	ctx.lineWidth = 1 / View.zoom * 2;
 	ctx.strokeStyle = "#00FF00";
 	ctx.stroke();
@@ -209,6 +210,11 @@ function drawDebug() {
 	ctx.fillText("mouse (gui): " + Mouse.x + ", " + Mouse.y, 20, 80);
 	ctx.fillText("mouse (view): " + Mouse.vx + ", " + Mouse.vy, 20, 100);
 	ctx.fillText("planet name: " + hoverName, 20, 120);
-    ctx.fillText("zoom: " + View.zoom, 20, 140);
-	ctx.fillText("minerals: " + Math.floor(base.minerals * 100) / 100, 20, 180);
+
+    ctx.fillText("view x: " + View.x, 20, 160);
+    ctx.fillText("view y: " + View.y, 20, 180);
+    ctx.fillText("view zoom: " + View.zoom, 20, 200);
+    ctx.fillText("view tilt: " + View.tilt, 20, 220);
+
+	ctx.fillText("minerals: " + Math.floor(base.minerals * 100) / 100, 20, 260);
 }
