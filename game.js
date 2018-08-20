@@ -11,12 +11,11 @@ AddEventListener("contextmenu", function(e) {
 var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);
 var s1 = Orbital.planet(getHSL(180, 39, 62), 10, s, 500, 0.003, rand() * cr);
 base = Base(s1);
-var param = { s: 60, l: 70 };
-var s1a = Orbital.planet(getRandomColor(param), 5, s1, 100, -0.002, rand() * cr);
-var s2 = Orbital.planet(getRandomColor(param), 20, s, 1123, 0.0015, rand() * cr);
-var s2a = Orbital.planet(getRandomColor(param), 5, s2, s2.size * 8, 0.01, rand() * cr);
-var s2b = Orbital.planet(getRandomColor(param), 10, s2, s2.size * 9, 0.005);
-var s3 = Orbital.planet(getRandomColor(param), 30, s, 2532, -0.001, rand() * cr);
+var s1a = Orbital.planet(getHSL(-1,60,70), 5, s1, 100, -0.002, rand() * cr);
+var s2 = Orbital.planet(getHSL(-1,60,70), 20, s, 1123, 0.0015, rand() * cr);
+var s2a = Orbital.planet(getHSL(-1,60,70), 5, s2, s2.size * 8, 0.01, rand() * cr);
+var s2b = Orbital.planet(getHSL(-1,60,70), 10, s2, s2.size * 9, 0.005);
+var s3 = Orbital.planet(getHSL(-1,60,70), 30, s, 2532, -0.001, rand() * cr);
 var ms = Orbital.miningStation(s1);
 var ms2 = Orbital.miningStation(s2);
 var st = Orbital.satellite(s1);

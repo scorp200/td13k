@@ -10,7 +10,7 @@ starContext.globalAlpha = 0.5;
 
 // Draw stars
 function drawStar(x, y) {
-    var color = getHSL(rand()*360, 100, 90);
+    var color = getHSL(-1, 100, 90);
     starContext.fillStyle = color;
     starContext.shadowColor = color;
     starContext.beginPath();

@@ -31,15 +31,9 @@ function splitToMax(max, orbit, array) {
 	return angle;
 }
 
-// Generate a random color.
-function getRandomColor(param) {
-	param.h = param.h === UNDEF ? rand() * 360 : param.h;
-	param.s = param.s === UNDEF ? rand() * 100 : param.s;
-	param.l = param.l === UNDEF ? rand() * 100 : param.l;
-	return getHSL(rond(param.h), rond(param.s), rond(param.l)) + '';
-
-}
-
 function getHSL(h, s, l) {
-	return 'hsl(' + h + ',' + s + '%, ' + l + '%)';
+	return 'hsl(' +
+		(h < 0 ? rand() * 360 : h) + ',' +
+		(s < 0 ? rand() * 100 : s) + '%, ' +
+		(l < 0 ? rand() * 100 : l) + '%)';
 }
