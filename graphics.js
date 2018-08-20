@@ -15,12 +15,8 @@ var View = {
     tilt: 2,
     update: function() {
         if (Mouse.scrollIn || Mouse.scrollOut) {
-            var zoomDelta = View.zoom;
             var shift = Mouse.scrollIn ? 1 : -1;
             View.zoomTarget = clamp(View.zoomTarget+0.1*shift, 0.1, 2);
-            zoomDelta = Math.abs(zoomDelta - View.zoom);
-            View.x += Mouse.vx * zoomDelta * shift;
-            View.y += Mouse.vy * zoomDelta * shift;
         }
         View.tilt = Math.min(1 + (View.zoom - 0.1), 2);
         if (Mouse.click && !pop.display) {
@@ -36,7 +32,14 @@ var View = {
         } else if(Mouse.release) {
             View.drag = false;
         }
-		View.zoom = clamp(View.zoom + (View.zoomTarget - View.zoom) / 20, 0.1, 2);
+
+        var zoomDelta = View.zoom;
+		View.zoom = clamp(View.zoom + (View.zoomTarget - View.zoom) / 10, 0.1, 2);
+        zoomDelta = View.zoom - zoomDelta;
+        View.x += Mouse.vx * zoomDelta;
+        View.y += Mouse.vy * zoomDelta;
+        console.log(View.zoom);
+
     },
 	clear: function() {
 		View.reset();
