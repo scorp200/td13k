@@ -26,7 +26,6 @@ while (numberOfStars--) {
 
 var starPattern = ctx.createPattern(starCanvas, "repeat");
 function drawStarscape() {
-    ctx.beginPath();
     var offset = performance.now() / 2000;
     ctx.rect(0, 0, Canvas.width, Canvas.height);
     ctx.fillStyle = starPattern;

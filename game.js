@@ -79,6 +79,7 @@ function render() {
 	View.clear();
 
 	ctx.save();
+	ctx.beginPath();
 	var x = Canvas.width / 2 - View.x;
 	var y = Canvas.height / 2 - View.y;
 	var grd = ctx.createRadialGradient(x, y, 0, x, y, 4000);
