@@ -5,7 +5,7 @@ var Base = function(planet){
     t.attackRange = 300;
     t.shieldHP = 0;
     t.shieldRegen = 0;
-    t.comRange = 400;
+    t.comRange = 1000;
     t.minerals = 0;
     return t;
 }
