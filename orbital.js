@@ -56,7 +56,7 @@ Orbital.sun = function(color, size, x, y) {
 }
 
 Orbital.planet = function(color, size, orbit, distance, speed, angle = 0) {
-	var t = Orbital(color, size, 0, 0, orbit, distance, speed, angle);
+	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, angle);
 	t.name = t.type = 'planet';
 	t.update = extend(t.update, function() {
 
@@ -68,7 +68,7 @@ Orbital.miningStation = function(orbit) {
 	var angle = splitToMax(Orbital.miningStation.max, orbit, coms);
 	if (angle === UNDEF)
 		return;
-	var t = Orbital('#f0f7ff', 2, 0, 0, orbit, orbit.size * 2, -0.005);
+	var t = Orbital('#f0f7ff', 2, 0, 0, orbit, orbit.size * 3, -0.005);
 	t.name = t.type = 'mining';
 	t.update = extend(t.update, function() {
 		base.minerals += base.mineRate;
@@ -82,7 +82,7 @@ Orbital.satellite = function(orbit) {
 	var angle = splitToMax(Orbital.satellite.max, orbit, coms);
 	if (angle === UNDEF)
 		return;
-	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 3, 0.01, angle);
+	var t = Orbital('#00ffab', 2, 0, 0, orbit, orbit.size * 5, 0.01, angle);
 	t.name = t.type = 'satellite';
 	t.index = coms.length;
 	coms.push(t);
@@ -103,7 +103,7 @@ Orbital.defenseStation = function(orbit) {
 	var angle = splitToMax(Orbital.defenseStation.max, orbit, def);
 	if (angle === UNDEF)
 		return;
-	var t = Orbital('#ff8d00', 2, 0, 0, orbit, orbit.size * 4, 0.005, angle);
+	var t = Orbital('#ff8d00', 2, 0, 0, orbit, orbit.size * 7, 0.005, angle);
 	t.name = t.type = 'defense';
 	t.index = def.length;
 	def.push(t);

@@ -11,15 +11,16 @@ AddEventListener("contextmenu", function(e) {
 });
 
 // Setup planets (procgen this?)
-var s = Orbital.sun('#ffe200', 38, 0, 0);
-var s1 = Orbital.planet('#77c3c3', 10, s, 200, 0.005);
+var s = Orbital.sun('#ffe200', 50, 0, 0);
+var s1 = Orbital.planet('#77c3c3', 10, s, 500, 0.003, rand() * cr);
 base = Base(s1);
-var s1a = Orbital.planet('#666666', 5, s1, 50, -0.01);
-var s2 = Orbital.planet('#f64749', 20, s, 500, 0.0025);
-var s2a = Orbital.planet('#ff0055', 5, s2, 80, 0.05);
-var s2b = Orbital.planet('#77ff55', 10, s2, 150, 0.005);
-var s2b1 = Orbital.planet('#666666', 5, s2b, 50, -0.01);
+var s1a = Orbital.planet('#666666', 5, s1, 100, -0.002, rand() * cr);
+var s2 = Orbital.planet('#f64749', 20, s, 1123, 0.0015, rand() * cr);
+var s2a = Orbital.planet('#ff0055', 5, s2, s2.size * 8, 0.01, rand() * cr);
+var s2b = Orbital.planet('#77ff55', 10, s2, s2.size * 9, 0.005);
+var s3 = Orbital.planet('#666666', 30, s, 2532, -0.001, rand() * cr);
 var ms = Orbital.miningStation(s1);
+var ms2 = Orbital.miningStation(s2);
 var st = Orbital.satellite(s1);
 var st1 = Orbital.satellite(s);
 var st2 = Orbital.satellite(s);
@@ -30,6 +31,7 @@ var st6 = Orbital.satellite(s2);
 var ds = Orbital.defenseStation(s1);
 var ds1 = Orbital.defenseStation(s1);
 var ds2 = Orbital.defenseStation(s1);
+var ds3 = Orbital.defenseStation(s2);
 
 // Update game.
 var lastTick = performance.now();
