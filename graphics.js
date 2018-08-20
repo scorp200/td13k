@@ -6,6 +6,8 @@ var ctx = Canvas.getContext("2d");
 var View = {
 	x: 0,
 	y: 0,
+    xTarget: 0,
+    yTarget: 0,
     anchorX: 0,
     anchorY: 0,
     anchorMouseX: 0,
@@ -13,10 +15,11 @@ var View = {
 	zoom: 1,
 	zoomTarget: 1,
     tilt: 2,
+    smooth: 5,
     update: function() {
         if (Mouse.scrollIn || Mouse.scrollOut) {
-            var shift = Mouse.scrollIn ? 1 : -1;
-            View.zoomTarget = clamp(View.zoomTarget+0.1*shift, 0.1, 2);
+            var shift = Mouse.scrollIn ? 0.1 : -0.1;
+            View.zoomTarget = clamp(View.zoomTarget+shift, 0.1, 2);
         }
         View.tilt = Math.min(1 + (View.zoom - 0.1), 2);
         if (Mouse.click && !pop.display) {
@@ -27,17 +30,25 @@ var View = {
             View.anchorMouseY = Mouse.y;
         }
         if (Mouse.drag && View.drag) {
-            View.x = View.anchorX + (View.anchorMouseX - Mouse.x);
-            View.y = View.anchorY + (View.anchorMouseY - Mouse.y);
+            View.xTarget = View.anchorX + (View.anchorMouseX - Mouse.x);
+            View.yTarget = View.anchorY + (View.anchorMouseY - Mouse.y);
         } else if(Mouse.release) {
             View.drag = false;
         }
 
         var zoomDelta = View.zoom;
-		View.zoom = View.zoom + (View.zoomTarget - View.zoom) / 10;
+		View.zoom = View.zoom + (View.zoomTarget - View.zoom) / View.smooth;
         zoomDelta = View.zoom - zoomDelta;
-        View.x += Mouse.vx * zoomDelta;
-        View.y += Mouse.vy * zoomDelta;
+        if (Math.abs(zoomDelta) > 0.001) {
+            View.x += Mouse.vx * zoomDelta;
+            View.y += Mouse.vy * zoomDelta;
+            View.xTarget = View.x;
+            View.yTarget = View.y;
+        }
+
+        View.x += (View.xTarget - View.x) / View.smooth;
+        View.y += (View.yTarget - View.y) / View.smooth;
+
     },
 	clear: function() {
 		View.reset();
