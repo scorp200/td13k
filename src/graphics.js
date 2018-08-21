@@ -144,6 +144,20 @@ function renderComLine(from, to) {
     ctx.setLineDash([]);
 }
 
+var comsLineDash = [1, 1];
+function renderComLines() {
+	var up = 75 * (View.tilt - 1);
+	for (var n=0; n<coms.length; n++) {
+		var t = coms[n];
+		for (var i=n; i<coms.length; i++) {
+			var e = coms[i];
+			if (e != t && getDistance(e, t) <= base.comRange) {
+				renderComLine(t, e);
+			}
+		}
+	}
+}
+
 function drawDebug() {
 	ctx.font = "14px monospace";
 	ctx.textBaseline = "top";

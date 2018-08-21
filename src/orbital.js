@@ -88,14 +88,14 @@ Orbital.satellite = function(orbit) {
 	t.name = t.type = 'satellite';
 	t.index = coms.length;
 	coms.push(t);
-	t.render = extend(t.render, function() {
+	/*t.render = extend(t.render, function() {
 		for (var i = t.index; i < coms.length; i++) {
 			var e = coms[i];
 			if (e != t && getDistance(e, t) <= base.comRange) {
 				renderComLine(t, e);
 			}
 		}
-	})
+	})*/
 	return t;
 }
 
