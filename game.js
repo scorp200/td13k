@@ -1,6 +1,9 @@
 // Cache stuff.
 var pop = createPop();
 var base = null;
+var STATE_LOADING = 0;
+var STATE_RUNNING = 1;
+var gameState = STATE_LOADING;
 
 // Disables right click context menu.
 window.addEventListener("contextmenu", function(e) {
@@ -67,36 +70,58 @@ var allFps = [];
 })(lastTick);
 
 function update(repeat) {
-	hoverName = "";
-	View.update();
-	gui.forEach(function(e) { e.update(); });
-	orbitals.forEach(function(e) { e.update(); });
+	if (gameState === STATE_LOADING) {
+		if (!Music.loading) {
+			if (Mouse.click) {
+				gameState = STATE_RUNNING;
+			}
+		}
+	} else {
+		hoverName = "";
+		View.update();
+		gui.forEach(function(e) { e.update(); });
+		orbitals.forEach(function(e) { e.update(); });
+	}
+
 	Mouse.update();
 	--repeat && update(repeat);
+
 }
 
 function render() {
-	View.clear();
+	if (gameState === STATE_LOADING) {
+		View.clear();
+		drawBackground();
+		View.reset();
+		drawStarscape();
+		View.reset();
 
-	ctx.save();
-	ctx.beginPath();
-	var x = Canvas.width / 2 - View.x;
-	var y = Canvas.height / 2 - View.y;
-	var grd = ctx.createRadialGradient(x, y, 0, x, y, 4000);
-	grd.addColorStop(0, "#141e28");
-	grd.addColorStop(1, "#000000");
-	ctx.fillStyle = grd;
-	ctx.rect(0, 0, Canvas.width, Canvas.height);
-	ctx.fill();
-	ctx.restore()
+		ctx.fillStyle = "#FFFFFF";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
+		ctx.font = "small-caps 700 256px monospace";
+		ctx.fillText("ex0xe", Canvas.width/2, Canvas.height/2);
 
-	View.reset();
-	drawStarscape();
-	View.position();
+		ctx.font = "small-caps 700 32px monospace";
+		if (Music.loading) {
+			ctx.fillText("Loading music...", Canvas.width/2, Canvas.height/2+128);
+		} else {
+			ctx.fillText("Click to continue!", Canvas.width/2, Canvas.height/2+128);
+		}
 
-	orbitals.forEach(function(e) { e.render(); });
-	ctx.setTransform(1, 0, 0, 1, Canvas.width / 2, Canvas.height / 2);
-	gui.forEach(function(e) { e.render(); });
-	View.reset();
-	drawDebug();
+		ctx.font = "small-caps 700 16px monospace";
+		ctx.fillText("Create by Jack and his dog! :P", Canvas.width/2, Canvas.height-32);
+
+	} else {
+		View.clear();
+		drawBackground();
+		View.reset();
+		drawStarscape();
+		View.position();
+		orbitals.forEach(function(e) { e.render(); });
+		ctx.setTransform(1, 0, 0, 1, Canvas.width / 2, Canvas.height / 2);
+		gui.forEach(function(e) { e.render(); });
+		View.reset();
+		drawDebug();
+	}
 }
