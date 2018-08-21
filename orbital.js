@@ -29,6 +29,7 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle) {
 			hoverName = t.name;
 			if (Mouse.release) {
 				pop.show(t);
+				sndClick.play();
 			}
 		}
 

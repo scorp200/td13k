@@ -70,12 +70,9 @@ var allFps = [];
 })(lastTick);
 
 function update(repeat) {
+
 	if (gameState === STATE_LOADING) {
-		if (!Music.loading) {
-			if (Mouse.click) {
-				gameState = STATE_RUNNING;
-			}
-		}
+		LoadingScreen.update();
 	} else {
 		hoverName = "";
 		View.update();
@@ -89,37 +86,21 @@ function update(repeat) {
 }
 
 function render() {
+
+	// Draw background
+	View.clear();
+	drawBackground();
+	drawStarscape();
+
 	if (gameState === STATE_LOADING) {
-		View.clear();
-		drawBackground();
 		View.reset();
-		drawStarscape();
-		View.reset();
-
-		ctx.fillStyle = "#FFFFFF";
-		ctx.textAlign = "center";
-		ctx.textBaseline = "middle";
-		ctx.font = "small-caps 700 256px monospace";
-		ctx.fillText("ex0xe", Canvas.width/2, Canvas.height/2);
-
-		ctx.font = "small-caps 700 32px monospace";
-		if (Music.loading) {
-			ctx.fillText("Loading music...", Canvas.width/2, Canvas.height/2+128);
-		} else {
-			ctx.fillText("Click to continue!", Canvas.width/2, Canvas.height/2+128);
-		}
-
-		ctx.font = "small-caps 700 16px monospace";
-		ctx.fillText("Create by ai Doge and his graffik person! :P", Canvas.width/2, Canvas.height-32);
-
+		LoadingScreen.render();
 	} else {
-		View.clear();
-		drawBackground();
-		View.reset();
-		drawStarscape();
 		View.position();
 		orbitals.forEach(function(e) { e.render(); });
-		ctx.setTransform(1, 0, 0, 1, Canvas.width / 2, Canvas.height / 2);
+		var centerX = Canvas.width / 2;
+		var centerY = Canvas.height / 2;
+		ctx.setTransform(1, 0, 0, 1, centerX, centerY);
 		gui.forEach(function(e) { e.render(); });
 		View.reset();
 		drawDebug();
