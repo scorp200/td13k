@@ -42,8 +42,8 @@ var View = {
         if (Math.abs(zoomDelta) > 0.001) {
             View.x += Mouse.vx * zoomDelta;
             View.y += Mouse.vy * zoomDelta;
-            View.xTarget = View.x;
-            View.yTarget = View.y;
+            View.xTarget += Mouse.vx * zoomDelta;
+            View.yTarget += Mouse.vy * zoomDelta;
         }
 
         View.x += lerp(View.x, View.xTarget, View.smooth, 0.001);
