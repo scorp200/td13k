@@ -2,31 +2,10 @@
 var pop = createPop();
 var base = null;
 
-// Start music, TEST!
-var player = new CPlayer();
-player.init(song);
-
-// Generate music...
-var done = false;
-setInterval(function () {
-	if (done) {
-      	return;
-    }
-
-    done = player.generate() >= 1;
-
-    if (done) {
-		var wave = player.createWave();
-		var audio = document.createElement("audio");
-		audio.src = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
-		audio.play();
-    }
-}, 0);
-
 // Disables right click context menu.
-AddEventListener("contextmenu", function(e) {
+window.addEventListener("contextmenu", function(e) {
 	e.preventDefault();
-});
+}, false);
 
 // Setup planets (procgen this?)
 var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);
