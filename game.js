@@ -110,7 +110,7 @@ function render() {
 		}
 
 		ctx.font = "small-caps 700 16px monospace";
-		ctx.fillText("Create by Jack and his dog! :P", Canvas.width/2, Canvas.height-32);
+		ctx.fillText("Create by ai Doge and his graffik person! :P", Canvas.width/2, Canvas.height-32);
 
 	} else {
 		View.clear();
