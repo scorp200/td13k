@@ -35,7 +35,10 @@ function drawCircle(ctx, type, x, y, r, tilt, color, alpha, lineWidth, sColor, b
 	ctx.lineWidth = lineWidth / View.zoom;
 	ctx.shadowColor = sColor;
 	ctx.shadowBlur = blur;
-	ctx.ellipse(x, y, r, r * (tilt ? 1/View.tilt : 1), angle, start, end, dir);
+	ctx.save();
+	ctx.transform(1, 0, 0, (tilt ? 1/View.tilt : 1), x, y)
+	ctx.arc(0, 0, r, start, end, dir);
+	ctx.restore();
 	ctx[type]();
 }
 
