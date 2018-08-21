@@ -2,7 +2,7 @@
 var hoverName = "";
 var AddEventListener = DOCUMENT.addEventListener.bind(DOCUMENT);
 var Canvas = DOCUMENT.getElementById("c");
-var ctx = Canvas.getContext("2d");
+var ctx = Canvas.getContext("2d", { alpha: false });
 
 // Keep canvas same size as window.
 resize();
@@ -146,16 +146,26 @@ function renderComLine(from, to) {
 
 var comsLineDash = [1, 1];
 function renderComLines() {
-	var up = 75 * (View.tilt - 1);
-	for (var n=0; n<coms.length; n++) {
-		var t = coms[n];
-		for (var i=n; i<coms.length; i++) {
-			var e = coms[i];
-			if (e != t && getDistance(e, t) <= base.comRange) {
-				renderComLine(t, e);
-			}
-		}
-	}
+    var up = 75 * (View.tilt - 1);
+    ctx.setLineDash(comsLineDash);
+    ctx.beginPath();
+    ctx.globalAlpha = 0.2 / View.zoom;
+    var up = 75 * (View.tilt - 1);
+    for (var n=0; n<coms.length; n++) {
+        var t = coms[n];
+        for (var i=n; i<coms.length; i++) {
+            var e = coms[i];
+            if (e != t && getDistance(e, t) <= base.comRange) {
+                ctx.moveTo(t.x, t.y);
+                ctx.bezierCurveTo(t.x, t.y-up, e.x, e.y-up, e.x, e.y);
+            }
+        }
+    }
+    ctx.lineWidth = 1 / View.zoom * 2;
+    ctx.strokeStyle = "#00FF00";
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.setLineDash(dashStyleReset);
 }
 
 function drawDebug() {

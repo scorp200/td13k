@@ -109,9 +109,9 @@ Orbital.defenseStation = function(orbit) {
 	t.name = t.type = 'defense';
 	t.index = def.length;
 	def.push(t);
-	t.render = extend(t.render, function() {
+	//t.render = extend(t.render, function() {
 		//code to kill dem enemies
-	})
+	//})
 	return t;
 }
 

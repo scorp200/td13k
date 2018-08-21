@@ -41,8 +41,8 @@ var fps = 0;
 var allFps = [];
 (function frame(timestamp) {
 
-	//requestAnimationFrame(frame);
-	setTimeout(function(){frame(performance.now())}, 0);
+	requestAnimationFrame(frame);
+	//setTimeout(function(){frame(performance.now())}, 1);
 	var nextTick = lastTick + tickLength;
 	allFps.push(1 / ((timestamp - last) / 1000));
 	last = timestamp;
@@ -63,12 +63,9 @@ var allFps = [];
 		var timeSinceTick = timestamp - lastTick;
 		var numTicks = Math.floor(timeSinceTick / tickLength);
 		update(Math.min(numTicks, 60));
+		render();
 		lastTick = timestamp;
 	}
-
-	var repeat = 1;
-	while (repeat--)
-		render();
 
 })(lastTick);
 

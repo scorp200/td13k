@@ -43,6 +43,7 @@ function drawStarscape() {
     ctx.fill();
 }
 
+/*
 function drawBackground() {
 	ctx.beginPath();
 	var x = Canvas.width / 2 - View.x;
@@ -52,4 +53,31 @@ function drawBackground() {
 	grd.addColorStop(1, "#000000");
 	ctx.fillStyle = grd;
 	ctx.fillRect(0, 0, Canvas.width, Canvas.height);
-}
+}*/
+
+//*
+var cBackground = document.createElement(CANVAS);
+var ctxBackground = cBackground.getContext("2d", { alpha: false });
+cBackground.width = 256;
+cBackground.height = 256;
+ctxBackground.beginPath();
+var x = 128;
+var y = 128;
+var grd = ctxBackground.createRadialGradient(x, y, 0, x, y, 128);
+grd.addColorStop(0, "#141e28");
+grd.addColorStop(1, "#000000");
+ctxBackground.fillStyle = grd;
+ctxBackground.fillRect(0, 0, 256, 256);
+function drawBackground() {
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = "#000000";
+    ctx.fillRect(0, 0, Canvas.width, Canvas.height);
+    var x = Canvas.width/2-View.x;
+	var y = Canvas.height/2-View.y;
+    ctx.translate(x, y);
+    ctx.scale(16, 16);
+    ctx.translate(-128, -128);
+	ctx.drawImage(cBackground, 0, 0);
+    ctx.restore();
+}//*/
