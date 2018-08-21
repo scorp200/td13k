@@ -38,8 +38,10 @@ function getHSL(h, s, l) {
 		(l < 0 ? rand() * 100 : l) + '%)';
 }
 
-function lerp(a, b, t) {
-	return a + t * (b - a);
+function lerp(value, target, ease, precision) {
+	if (Math.abs(value - target) < precision)
+		return 0;
+	return (target - value) / ease;
 }
 
 function clamp(value, min, max) {

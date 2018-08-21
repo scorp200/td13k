@@ -15,7 +15,7 @@ var View = {
 	zoom: 1,
 	zoomTarget: 1,
     tilt: 2,
-    smooth: 5,
+    smooth: 10,
     update: function() {
         if (Mouse.scrollIn || Mouse.scrollOut) {
             var shift = Mouse.scrollIn ? 0.1 : -0.1;
@@ -37,7 +37,7 @@ var View = {
         }
 
         var zoomDelta = View.zoom;
-		View.zoom = View.zoom + (View.zoomTarget - View.zoom) / View.smooth;
+		View.zoom += lerp(View.zoom, View.zoomTarget, View.smooth, 0.001);
         zoomDelta = View.zoom - zoomDelta;
         if (Math.abs(zoomDelta) > 0.001) {
             View.x += Mouse.vx * zoomDelta;
@@ -46,8 +46,8 @@ var View = {
             View.yTarget = View.y;
         }
 
-        View.x += (View.xTarget - View.x) / View.smooth;
-        View.y += (View.yTarget - View.y) / View.smooth;
+        View.x += lerp(View.x, View.xTarget, View.smooth, 0.001);
+		View.y += lerp(View.y, View.yTarget, View.smooth, 0.001);
 
     },
 	clear: function() {
