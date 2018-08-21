@@ -40,10 +40,12 @@ function drawCircle(ctx, type, x, y, r, tilt, color, alpha, lineWidth, sColor, b
 }
 
 // Render orbit
+var dashStyle = [5, 5];
+var dashStyleReset = [];
 function renderOrbit(body) {
 	var orbit = body.orbit;
 	if (orbit) {
-		ctx.setLineDash([5, 5]);
+		ctx.setLineDash(dashStyle);
 		drawCircle(ctx, STROKE,
 			orbit.planet.x,
 			orbit.planet.y,
@@ -51,7 +53,7 @@ function renderOrbit(body) {
 			true,
 			body.color, 0.3, 1
 		);
-		ctx.setLineDash([]);
+		ctx.setLineDash(dashStyleReset);
 	}
 }
 
@@ -64,7 +66,7 @@ function renderTrail(body) {
 			orbit.planet.y,
 			orbit.distance, true,
 			body.color, 0.3, 3,
-			body.color, 5,
+			body.color, 0,
 			orbit.angle - orbit.speed * orbit.distance,
 			orbit.angle, 0,
 			orbit.speed < 0
