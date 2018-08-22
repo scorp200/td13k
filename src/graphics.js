@@ -68,7 +68,7 @@ function renderOrbit(body) {
 			body.orbitCache[scaleLevel] = cache;
 
 			// Render.
-			var ctxOrbit = cache.getContext("2d");
+			var ctxOrbit = cache.getContext("2d");//1/View.tilt
 			ctxOrbit.clearRect(0, 0, cache.width, cache.height);
 			ctxOrbit.setLineDash([5 / View.zoom, 5 / View.zoom]);
 			ctxOrbit.beginPath();
@@ -124,15 +124,16 @@ function renderBody(body, x, y) {
 		var context = body.cache.getContext("2d");
 		if (body.isSun) context.filter = "blur(4px)";
 
-		drawCircle(context, FILL,
-			size, size,
-			body.size,
-			false,
-			color, 1, 0,
-			body.color, glow
-		);
+		// Draw planet body.
+		context.beginPath();
+		context.fillStyle = color;
+		context.shadowColor = body.color;
+		context.shadowBlur = glow;
+		context.arc(size, size, body.size, 0, cr, false);
+		context.fill();
 
-		if (body.orbit) {
+		// Draw shadow.
+		if (!body.isSun) {
             var repeat = body.size;
             var o = body.size;
             context.beginPath();
@@ -168,7 +169,7 @@ function renderBody(body, x, y) {
 	View.position();
 }
 
-function renderComLine(from, to) {
+/*function renderComLine(from, to) {
     ctx.setLineDash([1, 1]);
 	ctx.beginPath();
 	ctx.globalAlpha = 0.2 / View.zoom;
@@ -180,7 +181,7 @@ function renderComLine(from, to) {
 	ctx.stroke();
 	ctx.globalAlpha = 1;
     ctx.setLineDash([]);
-}
+}*/
 
 var comsLineDash = [1, 1];
 function renderComLines() {
