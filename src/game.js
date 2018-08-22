@@ -11,27 +11,27 @@ window.addEventListener("contextmenu", function(e) {
 }, false);
 
 // Setup planets (procgen this?)
-var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);
-var s1 = Orbital.planet(getHSL(180, 39, 62), 10, s, 500, 0.003, rand() * cr);
+var s = sun(getHSL(60, 100, 50), 50, 0, 0);
+var s1 = planet(getHSL(180, 39, 62), 10, s, 500, 0.003, rand() * cr);
 base = Base(s1);
-var s1a = Orbital.planet(getHSL(-1,60,70), 5, s1, 100, -0.002, rand() * cr);
-var s2 = Orbital.planet(getHSL(-1,60,70), 20, s, 1123, 0.0015, rand() * cr);
-var s2a = Orbital.planet(getHSL(-1,60,70), 5, s2, s2.size * 8, 0.01, rand() * cr);
-var s2b = Orbital.planet(getHSL(-1,60,70), 10, s2, s2.size * 9, 0.005);
-var s3 = Orbital.planet(getHSL(-1,60,70), 30, s, 2532, -0.001, rand() * cr);
-var ms = Orbital.miningStation(s1);
-var ms2 = Orbital.miningStation(s2);
-var st = Orbital.satellite(s1);
-var st1 = Orbital.satellite(s);
-var st2 = Orbital.satellite(s);
-var st3 = Orbital.satellite(s);
-var st4 = Orbital.satellite(s2);
-var st5 = Orbital.satellite(s2);
-var st6 = Orbital.satellite(s2);
-var ds = Orbital.defenseStation(s1);
-var ds1 = Orbital.defenseStation(s1);
-var ds2 = Orbital.defenseStation(s1);
-var ds3 = Orbital.defenseStation(s2);
+var s1a = planet(getHSL(-1, 60, 70), 5, s1, 100, -0.002, rand() * cr);
+var s2 = planet(getHSL(-1, 60, 70), 20, s, 1123, 0.0015, rand() * cr);
+var s2a = planet(getHSL(-1, 60, 70), 5, s2, s2.size * 8, 0.01, rand() * cr);
+var s2b = planet(getHSL(-1, 60, 70), 10, s2, s2.size * 9, 0.005);
+var s3 = planet(getHSL(-1, 60, 70), 30, s, 2532, -0.001, rand() * cr);
+var ms = miningStation(s1);
+var ms2 = miningStation(s2);
+var st = satellite(s1);
+var st1 = satellite(s);
+var st2 = satellite(s);
+var st3 = satellite(s);
+var st4 = satellite(s2);
+var st5 = satellite(s2);
+var st6 = satellite(s2);
+var ds = defenseStation(s1);
+var ds1 = defenseStation(s1);
+var ds2 = defenseStation(s1);
+var ds3 = defenseStation(s2);
 
 // Update game.
 var lastTick = performance.now();
@@ -66,7 +66,6 @@ var allFps = [];
 		render();
 		lastTick = timestamp;
 	}
-
 })(lastTick);
 
 function update(repeat) {

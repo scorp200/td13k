@@ -2,7 +2,8 @@ var orbitals = [];
 var coms = [];
 var def = [];
 var buffer = 5;
-var Orbital = function(color, size, x, y, orbit, distance, speed, angle) {
+
+function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	if (angle === UNDEF) angle = 0;
 	var t = {};
 	t.name = "Some Shithole Planet";
@@ -42,21 +43,21 @@ var Orbital = function(color, size, x, y, orbit, distance, speed, angle) {
 	}
 	t.render = function() {
 		renderOrbit(t);
-		renderTrail(t);
+		//renderTrail(t);
 		renderBody(t, t.x, t.y);
 	}
 	orbitals.push(t);
 	return t;
 };
 
-Orbital.sun = function(color, size, x, y) {
+function sun(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null);
 	t.name = t.type = 'sun';
 	t.isSun = true;
 	return t;
 }
 
-Orbital.planet = function(color, size, orbit, distance, speed, angle) {
+function planet(color, size, orbit, distance, speed, angle) {
 	if (angle === UNDEF) angle = 0;
 	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, angle);
 	t.name = t.type = 'planet';
@@ -66,8 +67,8 @@ Orbital.planet = function(color, size, orbit, distance, speed, angle) {
 	return t;
 }
 
-Orbital.miningStation = function(orbit) {
-	var angle = splitToMax(Orbital.miningStation.max, orbit, coms);
+function miningStation(orbit) {
+	var angle = splitToMax(miningStation.max, orbit, coms);
 	if (angle === UNDEF)
 		return;
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, orbit.size * 3, -0.005);
@@ -78,41 +79,30 @@ Orbital.miningStation = function(orbit) {
 	return t;
 }
 
-Orbital.miningStation.max = 4;
+miningStation.max = 4;
 
-Orbital.satellite = function(orbit) {
-	var angle = splitToMax(Orbital.satellite.max, orbit, coms);
+function satellite(orbit) {
+	var angle = splitToMax(satellite.max, orbit, coms);
 	if (angle === UNDEF)
 		return;
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, orbit.size * 5, 0.01, angle);
 	t.name = t.type = 'satellite';
 	t.index = coms.length;
 	coms.push(t);
-	/*t.render = extend(t.render, function() {
-		for (var i = t.index; i < coms.length; i++) {
-			var e = coms[i];
-			if (e != t && getDistance(e, t) <= base.comRange) {
-				renderComLine(t, e);
-			}
-		}
-	})*/
 	return t;
 }
 
-Orbital.satellite.max = 3;
+satellite.max = 3;
 
-Orbital.defenseStation = function(orbit) {
-	var angle = splitToMax(Orbital.defenseStation.max, orbit, def);
+function defenseStation(orbit) {
+	var angle = splitToMax(defenseStation.max, orbit, def);
 	if (angle === UNDEF)
 		return;
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, angle);
 	t.name = t.type = 'defense';
 	t.index = def.length;
 	def.push(t);
-	//t.render = extend(t.render, function() {
-		//code to kill dem enemies
-	//})
 	return t;
 }
 
-Orbital.defenseStation.max = 2;
+defenseStation.max = 2;
