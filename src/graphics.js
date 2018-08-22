@@ -21,27 +21,6 @@ function cache(width, height) {
 	return canvas;
 }
 
-// Generic circle
-function drawCircle(ctx, type, x, y, r, tilt, color, alpha, lineWidth, sColor, blur, start, end, angle, dir) {
-	if (alpha === UNDEF) alpha = 1;
-	if (start === UNDEF) start = 0;
-	if (end === UNDEF) end = cr;
-	if (angle === UNDEF) angle = 0;
-	if (dir === UNDEF) dir = false;
-	if (blur === UNDEF) blur = 0;
-	ctx.beginPath();
-	ctx.globalAlpha = alpha;
-	ctx[type + "Style"] = color; // + alpha;
-	ctx.lineWidth = lineWidth / View.zoom;
-	ctx.shadowColor = sColor;
-	ctx.shadowBlur = blur;
-	ctx.save();
-	ctx.transform(1, 0, 0, (tilt ? 1/View.tilt : 1), x, y)
-	ctx.arc(0, 0, r, start, end, dir);
-	ctx.restore();
-	ctx[type]();
-}
-
 // Render orbit
 var dashStyle = [5, 5];
 var dashStyleReset = [];
@@ -74,7 +53,7 @@ function renderOrbit(body) {
 			ctxOrbit.beginPath();
 			ctxOrbit.lineWidth = 2 / View.zoom;
 			ctxOrbit.strokeStyle = body.color;
-			ctxOrbit.globalAlpha = 0.5;
+			ctxOrbit.globalAlpha = 1.0;
 			ctxOrbit.arc(0, 0, orbit.distance, 0, cr/4, false);
 			ctxOrbit.stroke();
 			ctxOrbit.setLineDash(dashStyleReset);
@@ -101,16 +80,17 @@ function renderOrbit(body) {
 function renderTrail(body) {
 	var orbit = body.orbit;
 	if (orbit) {
-		drawCircle(ctx, STROKE,
-			orbit.planet.x,
-			orbit.planet.y,
-			orbit.distance, true,
-			body.color, 0.3, 3,
-			body.color, 0,
-			orbit.angle - orbit.speed * orbit.distance,
-			orbit.angle, 0,
-			orbit.speed < 0
-		);
+		ctx.beginPath();
+		ctx.globalAlpha = 0.5;
+		ctx.strokeStyle = body.color;
+		ctx.lineWidth = 4 / View.zoom;
+		ctx.save();
+		var tilt = 1 / View.tilt;
+		ctx.transform(1, 0, 0, tilt, orbit.planet.x, orbit.planet.y)
+		var trail = orbit.angle - orbit.speed * orbit.distance / 2;
+		ctx.arc(0, 0, orbit.distance, trail, orbit.angle, orbit.speed < 0);
+		ctx.restore();
+		ctx.stroke();
 	}
 }
 
@@ -148,17 +128,18 @@ function renderBody(body) {
             context.arc(size, size, body.size, 0, 2*Math.PI, false);
             context.clip();
             while (repeat--) {
-    			drawCircle(context, FILL,
-    				size-o/2+(body.size-o)/2, size,
-    				o--*2,
-    				false,
-    				BLACK, 0.05, 0,
-    				BLACK, 10, -cr / 4, cr / 4
-    			);
+				context.beginPath();
+				context.globalAlpha = 0.05;
+				context.fillStyle = "#000000";
+				context.shadowColor = "#000000";
+				context.shadowBlur = 10;
+				context.save();
+				context.transform(1, 0, 0, 1, size-o/2+(body.size-o)/2, size);
+				context.arc(0, 0, o--*2, -cr / 4, cr / 4);
+				context.fill();
+				context.restore();
             }
 		}
-
-		context.filter = "none";
 	}
 
 	var angle = getAngle(body, orbitals[0]);

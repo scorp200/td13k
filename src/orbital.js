@@ -43,7 +43,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	}
 	t.render = function() {
 		renderOrbit(t);
-		//renderTrail(t);
+		renderTrail(t);
 		//renderBody(t);
 	}
 	orbitals.push(t);
