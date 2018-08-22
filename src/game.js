@@ -97,6 +97,7 @@ function render() {
 	} else {
 		View.position();
 		orbitals.forEach(function(e) { e.render(); });
+		renderAllBodies();
 		renderComLines();
 		var centerX = Canvas.width / 2;
 		var centerY = Canvas.height / 2;

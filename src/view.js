@@ -10,7 +10,7 @@ var View = {
 	zoom: 1,
 	zoomTarget: 1,
     tilt: 2,
-    smooth: 10,
+    smooth: 5,
     update: function() {
         if (Mouse.scrollIn || Mouse.scrollOut) {
             var shift = Mouse.scrollIn ? 0.1 : -0.1;

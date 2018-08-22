@@ -114,6 +114,14 @@ function renderTrail(body) {
 	}
 }
 
+// Render all bodies.
+function renderAllBodies() {
+	ctx.globalAlpha = 1;
+	for (var n=0; n<orbitals.length; n++) {
+		renderBody(orbitals[n]);
+	}
+}
+
 // Render body (star, planet, death star)
 function renderBody(body) {
 	if (!body.cache) {
@@ -153,18 +161,16 @@ function renderBody(body) {
 		context.filter = "none";
 	}
 
-	var sun = orbitals[0];
-	var angle = getAngle(body, sun);
-	ctx.globalAlpha = 1;
-	ctx.shadowBlur = 0;
+	var angle = getAngle(body, orbitals[0]);
+	ctx.save();
 	ctx.translate(body.x, body.y);
 	ctx.rotate(angle);
 	if (body.isSun) {
-		var scale = 1 + rand() * 0.03;
+		var scale = 1+Math.sin(performance.now()/30)*0.01;//1 + rand() * 0.03;
 		ctx.scale(scale, scale);
 	}
 	ctx.drawImage(body.cache, -body.cache.width/2, -body.cache.height/2);
-	View.position();
+	ctx.restore();
 }
 
 /*function renderComLine(from, to) {
@@ -181,12 +187,9 @@ function renderBody(body) {
     ctx.setLineDash([]);
 }*/
 
-var comsLineDash = [1, 1];
+//
 function renderComLines() {
-    var up = 75 * (View.tilt - 1);
-    ctx.setLineDash(comsLineDash);
-    ctx.beginPath();
-    ctx.globalAlpha = 0.2 / View.zoom;
+	ctx.beginPath();
     var up = 75 * (View.tilt - 1);
     for (var n=0; n<coms.length; n++) {
         var t = coms[n];
@@ -198,11 +201,11 @@ function renderComLines() {
             }
         }
     }
-    ctx.lineWidth = 1 / View.zoom * 2;
+	ctx.globalAlpha = 0.2 / View.zoom;
+    ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 3);
     ctx.strokeStyle = "#00FF00";
-    ctx.stroke();
+	ctx.stroke();
     ctx.globalAlpha = 1;
-    ctx.setLineDash(dashStyleReset);
 }
 
 function drawDebug() {

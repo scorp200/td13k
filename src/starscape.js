@@ -38,7 +38,7 @@ function drawStarscape() {
     ctx.fill();
     ctx.rotate(-offset/200);
     ctx.scale(2, 2);
-    ctx.translate(-View.x/25, -View.y/25);
+    ctx.translate(-View.x/50, -View.y/50);
     ctx.fill();
 }
 
@@ -57,8 +57,8 @@ ctxBackground.fillRect(0, 0, 512, 512);
 function drawBackground() {
 	ctx.drawImage(
         cBackground,
-        Canvas.width*0.5-View.x -256*8,
-        Canvas.height*0.5-View.y -256*8,
+        Math.floor(Canvas.width*0.5-View.x-256*8),
+        Math.floor(Canvas.height*0.5-View.y-256*8),
         512*8,
         512*8
     );
