@@ -115,7 +115,7 @@ function renderTrail(body) {
 }
 
 // Render body (star, planet, death star)
-function renderBody(body, x, y) {
+function renderBody(body) {
 	if (!body.cache) {
 		var color = body.isSun ? WHITE : body.color;
 		var glow = body.isSun ? 50 : 10;
@@ -157,9 +157,7 @@ function renderBody(body, x, y) {
 	var angle = getAngle(body, sun);
 	ctx.globalAlpha = 1;
 	ctx.shadowBlur = 0;
-	if (x === UNDEF) x = body.x;
-	if (y === UNDEF) y = body.y;
-	ctx.translate(x, y);
+	ctx.translate(body.x, body.y);
 	ctx.rotate(angle);
 	if (body.isSun) {
 		var scale = 1 + rand() * 0.03;

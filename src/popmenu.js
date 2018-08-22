@@ -36,7 +36,8 @@ var createPop = function() {
 		ctx.textAlign = 'center';
 		ctx.font = "24px monospace";
 		ctx.fillText((base.planet === t.target ? 'Base' : '') + ' ' + t.target.name, 0, -t.h / 2 + 20);
-		renderBody(t.target, 0, -t.h / 2 + 100 + t.target.size / 2);
+		var image = t.target.cache;
+		ctx.drawImage(image, -image.width/2, -image.height/2);
 	}
 	return t;
 }
