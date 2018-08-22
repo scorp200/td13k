@@ -1,5 +1,5 @@
 // Starscape canvas
-var starCanvas = DOCUMENT.createElement(CANVAS);
+var starCanvas = document.createElement("CANVAS");
 starCanvas.width = 512;
 starCanvas.height = 512;
 
@@ -24,60 +24,42 @@ while (numberOfStars--) {
     drawStar(Math.random() * 512, Math.random() * 512);
 }
 
+// Draw starscape background.
 var starPattern = ctx.createPattern(starCanvas, "repeat");
 function drawStarscape() {
     var offset = performance.now() / 2000;
     ctx.beginPath();
     ctx.rect(0, 0, Canvas.width, Canvas.height);
     ctx.fillStyle = starPattern;
-    ctx.translate(Canvas.width/2, Canvas.height/2);
+    ctx.translate(Canvas.width*0.5, Canvas.height*0.5);
     ctx.scale(0.5, 0.5);
-    ctx.translate(-View.x/25+offset/2, -View.y/25);
-    ctx.save();
+    ctx.translate(-View.x/25, -View.y/25);
     ctx.rotate(offset/200);
     ctx.fill();
-    ctx.restore();
+    ctx.rotate(-offset/200);
     ctx.scale(2, 2);
-    ctx.translate(-View.x/25+offset, -View.y/25);
-    ctx.rotate(offset/200);
+    ctx.translate(-View.x/25, -View.y/25);
     ctx.fill();
 }
 
-/*
-function drawBackground() {
-	ctx.beginPath();
-	var x = Canvas.width / 2 - View.x;
-	var y = Canvas.height / 2 - View.y;
-	var grd = ctx.createRadialGradient(x, y, 0, x, y, 4000);
-	grd.addColorStop(0, "#141e28");
-	grd.addColorStop(1, "#000000");
-	ctx.fillStyle = grd;
-	ctx.fillRect(0, 0, Canvas.width, Canvas.height);
-}*/
-
-//*
+// Draw gradient background (star glow effect).
+// Renders a gradient to a canvas, and draws that scaled up later.
 var cBackground = document.createElement(CANVAS);
 var ctxBackground = cBackground.getContext("2d", { alpha: false });
-cBackground.width = 256;
-cBackground.height = 256;
+cBackground.width = 512;
+cBackground.height = 512;
 ctxBackground.beginPath();
-var x = 128;
-var y = 128;
-var grd = ctxBackground.createRadialGradient(x, y, 0, x, y, 128);
+var grd = ctxBackground.createRadialGradient(256, 256, 0, 256, 256, 256);
 grd.addColorStop(0, "#141e28");
 grd.addColorStop(1, "#000000");
 ctxBackground.fillStyle = grd;
-ctxBackground.fillRect(0, 0, 256, 256);
+ctxBackground.fillRect(0, 0, 512, 512);
 function drawBackground() {
-    ctx.save();
-    ctx.beginPath();
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(0, 0, Canvas.width, Canvas.height);
-    var x = Canvas.width/2-View.x;
-	var y = Canvas.height/2-View.y;
-    ctx.translate(x, y);
-    ctx.scale(16, 16);
-    ctx.translate(-128, -128);
-	ctx.drawImage(cBackground, 0, 0);
-    ctx.restore();
-}//*/
+	ctx.drawImage(
+        cBackground,
+        Canvas.width*0.5-View.x -256*8,
+        Canvas.height*0.5-View.y -256*8,
+        512*8,
+        512*8
+    );
+}
