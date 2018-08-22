@@ -57,40 +57,35 @@ function renderOrbit(body) {
 		}
 
 		// Cache orbit line.
-		var scaleLevel = ~~(View.zoom*10);
-		var cache = cache[scaleLevel];// = body.orbitCache;
+		var scaleLevel = Math.floor(View.zoom*4);
+		cache = cache[scaleLevel];
 		if (!cache) {
+
+			// Create new cache canvas.
 			cache = document.createElement("CANVAS");
 			cache.width = orbit.distance + 40;
 			cache.height = orbit.distance + 40;
-			body.orbitScaleLevel = 0;
 			body.orbitCache[scaleLevel] = cache;
-			//console.log("create");
 
-			//var scaleLevel = ~~(View.zoom*10);
-			if (body.orbitScaleLevel !== scaleLevel) {
-				var ctxOrbit = cache.getContext("2d");
-				//console.log(body.orbitScaleLevel, scaleLevel);
-				ctxOrbit.clearRect(0, 0, cache.width, cache.height);
-				ctxOrbit.setLineDash([5 / View.zoom, 5 / View.zoom]);
-				ctxOrbit.beginPath();
-				ctxOrbit.lineWidth = 2 / View.zoom;
-				ctxOrbit.strokeStyle = body.color;
-				ctxOrbit.globalAlpha = 0.5;
-				ctxOrbit.arc(0, 0, orbit.distance, 0, cr/4, false);
-				ctxOrbit.stroke();
-				ctxOrbit.setLineDash(dashStyleReset);
-				body.orbitScaleLevel = scaleLevel;
-			}
+			// Render.
+			var ctxOrbit = cache.getContext("2d");
+			ctxOrbit.clearRect(0, 0, cache.width, cache.height);
+			ctxOrbit.setLineDash([5 / View.zoom, 5 / View.zoom]);
+			ctxOrbit.beginPath();
+			ctxOrbit.lineWidth = 2 / View.zoom;
+			ctxOrbit.strokeStyle = body.color;
+			ctxOrbit.globalAlpha = 0.5;
+			ctxOrbit.arc(0, 0, orbit.distance, 0, cr/4, false);
+			ctxOrbit.stroke();
+			ctxOrbit.setLineDash(dashStyleReset);
 
 		}
-
 
 		// Draw orbit.
 		ctx.save();
 		ctx.translate(orbit.planet.x, orbit.planet.y);
 		ctx.scale(1, 1/View.tilt);
-		ctx.drawImage(cache, 0, 0);
+		ctx.drawImage(cache, 0, 0, cache.width, cache.height);
 		ctx.scale(-1, 1);
 		ctx.drawImage(cache, 0, 0);
 		ctx.scale(1, -1);
@@ -122,14 +117,15 @@ function renderTrail(body) {
 // Render body (star, planet, death star)
 function renderBody(body, x, y) {
 	if (!body.cache) {
-		body.cache = cache(256, 256);
-		var context = body.cache.getContext("2d");
 		var color = body.isSun ? WHITE : body.color;
 		var glow = body.isSun ? 50 : 10;
+		var size = body.size + glow;
+		body.cache = cache(size*2, size*2);
+		var context = body.cache.getContext("2d");
 		if (body.isSun) context.filter = "blur(4px)";
 
 		drawCircle(context, FILL,
-			128, 128,
+			size, size,
 			body.size,
 			false,
 			color, 1, 0,
@@ -140,11 +136,11 @@ function renderBody(body, x, y) {
             var repeat = body.size;
             var o = body.size;
             context.beginPath();
-            context.arc(128, 128, body.size, 0, 2*Math.PI, false);
+            context.arc(size, size, body.size, 0, 2*Math.PI, false);
             context.clip();
             while (repeat--) {
     			drawCircle(context, FILL,
-    				128-o/2+(body.size-o)/2, 128,
+    				size-o/2+(body.size-o)/2, size,
     				o--*2,
     				false,
     				BLACK, 0.05, 0,
@@ -168,7 +164,7 @@ function renderBody(body, x, y) {
 		var scale = 1 + rand() * 0.03;
 		ctx.scale(scale, scale);
 	}
-	ctx.drawImage(body.cache, -128, -128);
+	ctx.drawImage(body.cache, -body.cache.width/2, -body.cache.height/2);
 	View.position();
 }
 
