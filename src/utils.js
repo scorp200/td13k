@@ -47,3 +47,9 @@ function lerp(value, target, ease, precision) {
 function clamp(value, min, max) {
 	return value > max ? max : value < min ? min : value;
 }
+
+function clicked(x, y, w, h) {
+	var a = (Mouse.x - Canvas.width / 2);
+	var b = (Mouse.y - Canvas.height / 2);
+	return (a > x - w / 2 && a < x + w / 2 && b > y - h / 2 && b < y + h / 2);
+}

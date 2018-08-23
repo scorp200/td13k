@@ -1,7 +1,7 @@
 var orbitals = [];
 var coms = [];
 var def = [];
-var buffer = 5;
+var buffer = 20;
 
 function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	if (angle === UNDEF) angle = 0;

@@ -75,7 +75,7 @@ function update(repeat) {
 	} else {
 		hoverName = "";
 		View.update();
-		gui.forEach(function(e) { e.update(); });
+		guis.forEach(function(e) { if (e.display) e.update(); });
 		orbitals.forEach(function(e) { e.update(); });
 	}
 
@@ -102,7 +102,7 @@ function render() {
 		var centerX = Canvas.width / 2;
 		var centerY = Canvas.height / 2;
 		ctx.setTransform(1, 0, 0, 1, centerX, centerY);
-		gui.forEach(function(e) { e.render(); });
+		guis.forEach(function(e) { if (e.display) e.render(); });
 		View.reset();
 		drawDebug();
 	}
