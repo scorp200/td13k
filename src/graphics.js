@@ -47,11 +47,12 @@ function renderOrbit(body) {
 			body.orbitCache[scaleLevel] = cache;
 
 			// Render.
+			var drawScale = 0.1 + scaleLevel / 4;
 			var ctxOrbit = cache.getContext("2d");//1/View.tilt
 			ctxOrbit.clearRect(0, 0, cache.width, cache.height);
-			ctxOrbit.setLineDash([5 / View.zoom, 5 / View.zoom]);
+			ctxOrbit.setLineDash([5 / drawScale, 5 / drawScale]);
 			ctxOrbit.beginPath();
-			ctxOrbit.lineWidth = 2 / View.zoom;
+			ctxOrbit.lineWidth = 2 / drawScale;
 			ctxOrbit.strokeStyle = body.color;
 			ctxOrbit.globalAlpha = 1.0;
 			ctxOrbit.arc(0, 0, orbit.distance, 0, cr/4, false);
