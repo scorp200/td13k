@@ -77,18 +77,23 @@ function update(repeat) {
 		View.update();
 		guis.forEach(function(e) { if (e.display) e.update(); });
 		orbitals.forEach(function(e) { e.update(); });
-	}
+		EnemyShip.allInstances.forEach(function(e) { e.update(); });
 
-	// FInd closest planet.
-	// Hover + Select.
-	var maxDistance = 64;
-	var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
-	if (getDistance(nearest, {x: Mouse.vx, y: Mouse.vy}) < maxDistance) {
-		hoverName = nearest.name;
-		if (Mouse.release) {
-			speak("selected " + nearest.name);
-			pop.show(nearest);
-			sndClick.play();
+		// Spawn enemies.
+		var angle = Math.random() * cr;
+		new EnemyShip(Math.cos(angle)*3000, Math.sin(angle)*3000);
+
+		// FInd closest planet.
+		// Hover + Select.
+		var maxDistance = 64;
+		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
+		if (getDistance(nearest, {x: Mouse.vx, y: Mouse.vy}) < maxDistance) {
+			hoverName = nearest.name;
+			if (Mouse.release) {
+				speak("selected " + nearest.name);
+				pop.show(nearest);
+				sndClick.play();
+			}
 		}
 	}
 
@@ -110,6 +115,8 @@ function render() {
 	} else {
 		View.position();
 		orbitals.forEach(function(e) { e.render(); });
+		ctx.globalAlpha = 1;
+		EnemyShip.allInstances.forEach(function(e) { e.render(); });
 		renderAllOrbits();
 		renderAllBodies();
 		renderComLines();
