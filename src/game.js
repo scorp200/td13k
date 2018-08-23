@@ -116,9 +116,9 @@ function render() {
 		View.position();
 		orbitals.forEach(function(e) { e.render(); });
 		ctx.globalAlpha = 1;
-		EnemyShip.allInstances.forEach(function(e) { e.render(); });
 		renderAllOrbits();
 		renderAllBodies();
+		EnemyShip.allInstances.forEach(function(e) { e.render(); });
 		renderComLines();
 
 		// Draw line to closer planet.
