@@ -53,3 +53,18 @@ function clicked(x, y, w, h) {
 	var b = (Mouse.y - Canvas.height / 2);
 	return (a > x - w / 2 && a < x + w / 2 && b > y - h / 2 && b < y + h / 2);
 }
+
+function nearestOrbital(x, y) {
+	var pos = {x: x, y: y};
+	var minDistance = 999999;
+	var closest = orbitals[0];
+	var i = orbitals.length;
+	while (i--) {
+		var distance = getDistance(orbitals[i], pos);
+		if (distance < minDistance) {
+			minDistance = distance;
+			closest = i;
+		}
+	}
+	return orbitals[closest];
+}

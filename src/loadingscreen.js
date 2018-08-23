@@ -1,5 +1,6 @@
 var LoadingScreen = {
 
+    ready: false,
     cooldown: 60,
 
     update: function() {
@@ -10,6 +11,10 @@ var LoadingScreen = {
         } else if (Sound.loading) {
             generateSound();
         } else {
+            if (!LoadingScreen.ready) {
+                LoadingScreen.ready = true;
+                speak("Welcum to Exo-ex");
+            }
             if (Mouse.click) {
                 gameState = STATE_RUNNING;
             }

@@ -47,6 +47,7 @@ function generateMusic() {
     		    this.play();
     		}, false);
     		audio.play();
+            audio.volume = 0.5;
         }
     }
     if (loadingProgressMusic >= Music.tracks.length) {

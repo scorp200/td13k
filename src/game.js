@@ -79,6 +79,19 @@ function update(repeat) {
 		orbitals.forEach(function(e) { e.update(); });
 	}
 
+	// FInd closest planet.
+	// Hover + Select.
+	var maxDistance = 64;
+	var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
+	if (getDistance(nearest, {x: Mouse.vx, y: Mouse.vy}) < maxDistance) {
+		hoverName = nearest.name;
+		if (Mouse.release) {
+			speak("selected " + nearest.name);
+			pop.show(nearest);
+			sndClick.play();
+		}
+	}
+
 	Mouse.update();
 	--repeat && update(repeat);
 
@@ -99,6 +112,17 @@ function render() {
 		orbitals.forEach(function(e) { e.render(); });
 		renderAllBodies();
 		renderComLines();
+
+		// Draw line to closer planet.
+		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
+		if (getDistance(nearest, {x: Mouse.vx, y: Mouse.vy}) < 64) {
+			ctx.beginPath();
+			ctx.moveTo(nearest.x, nearest.y);
+			ctx.lineTo(Mouse.vx, Mouse.vy);
+			ctx.strokeStyle = "#ffffff";
+			ctx.stroke();
+		}
+
 		var centerX = Canvas.width / 2;
 		var centerY = Canvas.height / 2;
 		ctx.setTransform(1, 0, 0, 1, centerX, centerY);
