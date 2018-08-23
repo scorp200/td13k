@@ -67,7 +67,7 @@ function getOrbitCache(body) {
 		ctxOrbit.beginPath();
 		ctxOrbit.lineWidth = 2 / drawScale;
 		ctxOrbit.strokeStyle = body.color;
-		ctxOrbit.globalAlpha = 1.0;
+		ctxOrbit.globalAlpha = 0.6;
 		ctxOrbit.arc(0, 0, orbit.distance, 0, cr/4, false);
 		ctxOrbit.stroke();
 		ctxOrbit.setLineDash(dashStyleReset);
@@ -114,7 +114,7 @@ function renderTrail(body) {
 	var orbit = body.orbit;
 	if (orbit) {
 		ctx.beginPath();
-		ctx.globalAlpha = 0.5;
+		ctx.globalAlpha = 0.4;
 		ctx.strokeStyle = body.color;
 		ctx.lineWidth = 4 / View.zoom;
 		ctx.save();
@@ -137,6 +137,18 @@ function renderAllBodies() {
 
 // Render body (star, planet, death star)
 function renderBody(body) {
+
+	if (body.type === "satellite") {
+		var angle = getAngle(body, orbitals[0]);
+		ctx.save();
+		ctx.translate(body.x, body.y);
+		ctx.rotate(angle);
+		ctx.scale(0.2, 0.2);
+		ctx.drawImage(sprSatellite, -sprSatellite.width/2, -sprSatellite.height/2);
+		ctx.restore();
+		return;
+	}
+
 	if (!body.cache) {
 		var color = body.isSun ? WHITE : body.color;
 		var glow = body.isSun ? 50 : 10;
@@ -215,8 +227,8 @@ function renderComLines() {
             }
         }
     }
-	ctx.globalAlpha = 0.2 / View.zoom;
-    ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 3);
+	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.8);
+    ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 4);
     ctx.strokeStyle = "#00FF00";
 	ctx.stroke();
     ctx.globalAlpha = 1;

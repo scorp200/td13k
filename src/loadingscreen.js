@@ -26,12 +26,16 @@ var LoadingScreen = {
         var centerX = Canvas.width / 2;
         var centerY = Canvas.height / 2;
 
+        //ctx.beginPath();
         ctx.fillStyle = "#FFFFFF";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
+        ctx.shadowColor = "#FFFFFF";
+        ctx.shadowBlur = 50 + Math.sin(performance.now()/100)*2;
         ctx.font = "small-caps 700 256px monospace";
         ctx.fillText("X", centerX, centerY-64);
         ctx.fillText("e o", centerX, centerY-90);
+        ctx.shadowBlur = 0;
 
         ctx.font = "small-caps 700 32px monospace";
         if (Music.loading) {
