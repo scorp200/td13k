@@ -9,6 +9,7 @@ function gui(x, y, width, height, cache) {
 	t.h = height;
 	t.cache = cache;
 	t.display = false;
+	t.buttons = [];
 	t.update = function() {
 		if (Mouse.click) {
 			t.onClick();
@@ -28,6 +29,7 @@ function gui(x, y, width, height, cache) {
 
 function createPop() {
 	var t = gui(0, 0, 300, 400);
+	t.buttons.push(Buttons(t, 0, 0, 50, 50, 'Satellite'));
 	t.show = function(planet) {
 		if (!Mouse.drag && !pop.display && planet.type == 'planet') {
 			t.display = true;
@@ -36,7 +38,7 @@ function createPop() {
 	}
 	t.onClick = function() {
 		if (clicked(t.x, t.y, t.w, t.h)) {
-			log('logged menu');
+			t.buttons.forEach(function(e) { if (clicked(e.x, e.y, e.w, e.h)) e.click(); });
 		} else {
 			t.target = null;
 			t.display = false;
@@ -50,7 +52,8 @@ function createPop() {
 		ctx.font = "24px monospace";
 		ctx.fillText((base.planet === t.target ? 'Base' : '') + ' ' + t.target.name, 0, -t.h / 2 + 20);
 		var image = t.target.cache;
-		ctx.drawImage(image, -image.width / 2, -image.height / 2);
+		ctx.drawImage(image, t.x - image.width / 2, t.y - image.height / 2 - t.h / 4);
+		t.buttons.forEach(function(e) { e.render(); });
 	}
 	return t;
 }
