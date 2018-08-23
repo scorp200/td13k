@@ -110,6 +110,7 @@ function render() {
 	} else {
 		View.position();
 		orbitals.forEach(function(e) { e.render(); });
+		renderAllOrbits();
 		renderAllBodies();
 		renderComLines();
 

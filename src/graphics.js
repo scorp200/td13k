@@ -21,49 +21,78 @@ function cache(width, height) {
 	return canvas;
 }
 
+// Render all orbits.
+function renderAllOrbits() {
+	ctx.globalAlpha = 1;
+	var total = 0;
+	for (var n=0; n<orbitals.length; n++) {
+		total += renderOrbit(orbitals[n]) === true;
+	}
+}
+
+// Cache orbits.
+function getOrbitCache(body) {
+
+	//
+	var orbit = body.orbit;
+	if (!orbit) return false;
+
+	//
+	var cache = orbit.planet.orbitCache;
+	if (!cache) {
+		cache = orbit.planet.orbitCache = [];
+	}
+
+	// Create new cache canvas for given level.
+	var scaleLevel = Math.floor(View.zoom*4);
+	cache = cache[scaleLevel];
+	if (!cache) {
+		cache = document.createElement("CANVAS");
+		var maxDist = 0;
+		orbitals.forEach(function(o) {
+			if (o.orbit && o.orbit.planet === orbit.planet)
+				maxDist = Math.max(maxDist, o.orbit.distance + 40);
+		});
+		cache.width = maxDist;
+		cache.height = maxDist;
+		orbit.planet.orbitCache[scaleLevel] = cache;
+		cache.hasBody = [];
+	}
+
+	// Render particular body's orbit line.
+	if (!cache.hasBody[body.id]) {
+		var drawScale = 0.1 + scaleLevel / 4;
+		var ctxOrbit = cache.getContext("2d");
+		ctxOrbit.setLineDash([5 / drawScale, 5 / drawScale]);
+		ctxOrbit.beginPath();
+		ctxOrbit.lineWidth = 2 / drawScale;
+		ctxOrbit.strokeStyle = body.color;
+		ctxOrbit.globalAlpha = 1.0;
+		ctxOrbit.arc(0, 0, orbit.distance, 0, cr/4, false);
+		ctxOrbit.stroke();
+		ctxOrbit.setLineDash(dashStyleReset);
+		cache.hasBody[body.id] = true;
+
+	}
+
+	return cache;
+
+}
+
 // Render orbit
 var dashStyle = [5, 5];
 var dashStyleReset = [];
 function renderOrbit(body) {
 
-	var orbit = body.orbit;
-	if (orbit) {
+	if (body.orbit) {
+		var cache = getOrbitCache(body);
+	}
 
-		//
-		var cache = body.orbitCache;
-		if (!cache) {
-			cache = body.orbitCache = [];
-		}
-
-		// Cache orbit line.
-		var scaleLevel = Math.floor(View.zoom*4);
-		cache = cache[scaleLevel];
-		if (!cache) {
-
-			// Create new cache canvas.
-			cache = document.createElement("CANVAS");
-			cache.width = orbit.distance + 40;
-			cache.height = orbit.distance + 40;
-			body.orbitCache[scaleLevel] = cache;
-
-			// Render.
-			var drawScale = 0.1 + scaleLevel / 4;
-			var ctxOrbit = cache.getContext("2d");//1/View.tilt
-			ctxOrbit.clearRect(0, 0, cache.width, cache.height);
-			ctxOrbit.setLineDash([5 / drawScale, 5 / drawScale]);
-			ctxOrbit.beginPath();
-			ctxOrbit.lineWidth = 2 / drawScale;
-			ctxOrbit.strokeStyle = body.color;
-			ctxOrbit.globalAlpha = 1.0;
-			ctxOrbit.arc(0, 0, orbit.distance, 0, cr/4, false);
-			ctxOrbit.stroke();
-			ctxOrbit.setLineDash(dashStyleReset);
-
-		}
-
-		// Draw orbit.
+	var scaleLevel = Math.floor(View.zoom*4);
+	if (body.orbitCache && body.orbitCache[scaleLevel]) {
+		var cache = body.orbitCache[scaleLevel];
 		ctx.save();
-		ctx.translate(orbit.planet.x, orbit.planet.y);
+		ctx.translate(body.x, body.y);
 		ctx.scale(1, 1/View.tilt);
 		ctx.drawImage(cache, 0, 0, cache.width, cache.height);
 		ctx.scale(-1, 1);
@@ -73,8 +102,11 @@ function renderOrbit(body) {
 		ctx.scale(-1, 1);
 		ctx.drawImage(cache, 0, 0);
 		ctx.restore();
-
+		return true;
 	}
+
+	return false;
+
 }
 
 // Render trail

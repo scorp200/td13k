@@ -13,6 +13,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	t.color = color;
 	t.size = size;
 	t.isSun = false;
+	t.id = orbitals.length.toString();
 	if (orbit)
 		t.orbit = {
 			planet: orbit,
@@ -32,9 +33,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 
 	}
 	t.render = function() {
-		renderOrbit(t);
 		renderTrail(t);
-		//renderBody(t);
 	}
 	orbitals.push(t);
 	return t;
