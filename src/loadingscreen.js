@@ -13,7 +13,7 @@ var LoadingScreen = {
         } else {
             if (!LoadingScreen.ready) {
                 LoadingScreen.ready = true;
-                speak("Welcum to Exo-ex");
+                speak("Welcum to Exo");
             }
             if (Mouse.click) {
                 gameState = STATE_RUNNING;
@@ -30,7 +30,8 @@ var LoadingScreen = {
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
         ctx.font = "small-caps 700 256px monospace";
-        ctx.fillText("ex0ex", centerX, centerY-64);
+        ctx.fillText("X", centerX, centerY-64);
+        ctx.fillText("e o", centerX, centerY-90);
 
         ctx.font = "small-caps 700 32px monospace";
         if (Music.loading) {
