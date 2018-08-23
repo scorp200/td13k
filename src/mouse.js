@@ -44,7 +44,7 @@ window.addEventListener("mouseup", function(e) {
 }, false);
 
 //
-window.addEventListener("mousewheel", function(e) {
+window.addEventListener("wheel", function(e) {
 	Mouse.scrollOut = e.deltaY > 0;
 	Mouse.scrollIn = e.deltaY < 0;
 }, false);
