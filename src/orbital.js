@@ -27,7 +27,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 			var e = t.orbit;
 			e.angle += e.speed;
 			t.x = e.distance * Math.cos(e.angle) + e.planet.x;
-			t.y = e.distance / View.tilt * Math.sin(e.angle) + e.planet.y;
+			t.y = e.distance * Math.sin(e.angle) + e.planet.y;
 		}
 
 	}

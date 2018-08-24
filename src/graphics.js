@@ -92,7 +92,7 @@ function renderOrbit(body) {
 	if (body.orbitCache && body.orbitCache[scaleLevel]) {
 		var cache = body.orbitCache[scaleLevel];
 		ctx.save();
-		ctx.translate(body.x, body.y);
+		ctx.translate(body.x, body.y / View.tilt);
 		ctx.scale(1, 1/View.tilt);
 		ctx.drawImage(cache, 0, 0, cache.width, cache.height);
 		ctx.scale(-1, 1);
@@ -119,7 +119,7 @@ function renderTrail(body) {
 		ctx.lineWidth = 4 / View.zoom;
 		ctx.save();
 		var tilt = 1 / View.tilt;
-		ctx.transform(1, 0, 0, tilt, orbit.planet.x, orbit.planet.y)
+		ctx.transform(1, 0, 0, tilt, orbit.planet.x, orbit.planet.y * tilt)
 		var trail = orbit.angle - orbit.speed * orbit.distance / 2;
 		ctx.arc(0, 0, orbit.distance, trail, orbit.angle, orbit.speed < 0);
 		ctx.restore();
@@ -141,7 +141,7 @@ function renderBody(body) {
 	if (body.type === "satellite") {
 		var angle = getAngle(body, orbitals[0]);
 		ctx.save();
-		ctx.translate(body.x, body.y);
+		ctx.translate(body.x, body.y / View.tilt);
 		ctx.rotate(angle);
 		ctx.scale(0.2, 0.2);
 		ctx.drawImage(sprSatellite, -sprSatellite.width/2, -sprSatellite.height/2);
@@ -189,7 +189,7 @@ function renderBody(body) {
 
 	var angle = getAngle(body, orbitals[0]);
 	ctx.save();
-	ctx.translate(body.x, body.y);
+	ctx.translate(body.x, body.y / View.tilt);
 	ctx.rotate(angle);
 	if (body.isSun) {
 		var scale = 1+Math.sin(performance.now()/30)*0.01;//1 + rand() * 0.03;
@@ -222,8 +222,10 @@ function renderComLines() {
         for (var i=n; i<coms.length; i++) {
             var e = coms[i];
             if (e != t && getDistance(e, t) <= base.comRange) {
-                ctx.moveTo(t.x, t.y);
-                ctx.bezierCurveTo(t.x, t.y-up, e.x, e.y-up, e.x, e.y);
+				var y1 = t.y / View.tilt;
+				var y2 = e.y / View.tilt;
+                ctx.moveTo(t.x, y1);
+                ctx.bezierCurveTo(t.x, y1-up, e.x, y2-up, e.x, y2);
             }
         }
     }
