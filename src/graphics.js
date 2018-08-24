@@ -138,7 +138,7 @@ function renderAllBodies() {
 // Render body (star, planet, death star)
 function renderBody(body) {
 
-	if (body.type === "satellite") {
+	if (body.type === ORBITAL_TYPE.SATELLITE) {
 		var angle = getAngle(body, orbitals[0]);
 		ctx.save();
 		ctx.translate(body.x, body.y / View.tilt);
