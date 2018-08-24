@@ -90,8 +90,8 @@ function update(repeat) {
 	} else {
 		hoverName = "";
 		View.update();
+		gui.updateAll();
 		if (gameState === STATE_RUNNING) {
-			guis.forEach(function(e) { if (e.display) e.update(); });
 			orbitals.forEach(function(e) { e.update(); });
 			WaveManager.update();
 			EnemyShip.updateAll();

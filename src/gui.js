@@ -11,7 +11,7 @@ function gui(x, y, width, height, cache) {
 	t.display = false;
 	t.buttons = [];
 	t.update = function() {
-		if (Mouse.click) {
+		if (t.display && Mouse.click) {
 			t.onClick();
 		}
 	}
@@ -62,4 +62,11 @@ function createPop() {
 		t.buttons.forEach(function(e) { e.render(); });
 	}
 	return t;
+}
+
+gui.updateAll = function() {
+	var n = guis.length;
+	while (n--) {
+		guis[n].update();
+	}
 }
