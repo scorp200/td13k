@@ -10,8 +10,10 @@ if (window.speechSynthesis) {
 	if (voices.length <= 0) {
 		window.speechSynthesis.onvoiceschanged = function() {
 			voices = window.speechSynthesis.getVoices();
+			//console.log(voices);
 		};
 	}
+	//console.log(voices);
 }
 
 // Wrapper for speaking a new sentence.
@@ -19,7 +21,7 @@ function speak(text) {
 	if (speechEnabled) {
 		window.speechSynthesis.cancel();
 		var speech = new SpeechSynthesisUtterance(text);
-		speech.rate = 1.0;
+		speech.rate = 1;
 		speech.pitch = 0.1;
 		speech.lang = 'en-US';
 		speech.voice = voices[voiceIndex];

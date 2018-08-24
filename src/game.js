@@ -4,12 +4,26 @@ var base = null;
 var STATE_LOADING = 0;
 var STATE_RUNNING = 1;
 var STATE_CREATE = 2;
+var STATE_PAUSED = 3;
 var gameState = STATE_LOADING;
 var maxDistance = 64;
+
 // Disables right click context menu.
 window.addEventListener("contextmenu", function(e) {
 	e.preventDefault();
 }, false);
+
+// Pause the game.
+document.addEventListener("keypress", function(e)  {
+	console.log(e.key);
+  	if (e.key === " ") {
+		if (gameState === STATE_PAUSED) {
+			gameState = STATE_RUNNING;
+		} else {
+			gameState = STATE_PAUSED;
+		}
+	}
+});
 
 // Setup planets (procgen this?)
 var s = sun(getHSL(60, 100, 50), 50, 0, 0);
@@ -73,13 +87,15 @@ function update(repeat) {
 
 	if (gameState === STATE_LOADING) {
 		LoadingScreen.update();
-	} else if (gameState === STATE_RUNNING) {
+	} else {
 		hoverName = "";
 		View.update();
-		guis.forEach(function(e) { if (e.display) e.update(); });
-		orbitals.forEach(function(e) { e.update(); });
-		WaveManager.update();
-		EnemyShip.updateAll();
+		if (gameState === STATE_RUNNING) {
+			guis.forEach(function(e) { if (e.display) e.update(); });
+			orbitals.forEach(function(e) { e.update(); });
+			WaveManager.update();
+			EnemyShip.updateAll();
+		}
 
 		// FInd closest planet.
 		// Hover + Select.

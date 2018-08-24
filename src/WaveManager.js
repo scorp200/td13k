@@ -9,6 +9,14 @@ var WaveManager = {
     // Wave spawning.
     spawnCount: 100,
 
+    // Speech flavor.
+    speechFlavor: [
+        "enemies, approaching",
+        "we are under attack",
+        "enemy, in-bound",
+        "hostiles detected"
+    ],
+
     //
     init: function() {
         WaveManager.timer = WaveManager.cooldown * 60;
@@ -19,6 +27,7 @@ var WaveManager = {
         if (!WaveManager.timer--) {
     		WaveManager.spawn();
             WaveManager.init();
+            speak(WaveManager.speechFlavor[Math.floor(Math.random()*WaveManager.speechFlavor.length)]);
         }
     },
 
