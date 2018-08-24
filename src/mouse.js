@@ -9,6 +9,7 @@ var Mouse = {
 	release: false,
 	scrollOut: false,
 	scrollIn: false,
+	target: null,
 	update: function() {
 		Mouse.click = false;
 		Mouse.release = false;

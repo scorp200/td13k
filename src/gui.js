@@ -28,29 +28,35 @@ function gui(x, y, width, height, cache) {
 }
 
 function createPop() {
-	var t = gui(0, 0, 300, 400);
-	t.buttons.push(Buttons(t, 0, 0, 50, 50, 'Satellite'));
+	var t = gui(-Canvas.width / 4, 0, 300, 400);
+	t.buttons.push(Buttons(t, 0, 0, 50, 50, 'Satellite', sprSatellite, function() {
+		speak('choose a target');
+		t.hide();
+		//gameState = STATE_CREATE;
+		//Create = Satellite.create;
+	}));
 	t.show = function(planet) {
-		if (!Mouse.drag && !pop.display && planet.type == 'planet') {
-			t.display = true;
-			t.target = planet;
-		}
+		Mouse.target = t;
+		t.display = true;
+		t.target = planet;
+	}
+	t.hide = function() {
+		t.target = null;
+		t.display = false;
+		Mouse.target = null;
 	}
 	t.onClick = function() {
-		if (clicked(t.x, t.y, t.w, t.h)) {
+		if (Mouse.target == t && clicked(t.x, t.y, t.w, t.h)) {
 			t.buttons.forEach(function(e) { if (clicked(e.x, e.y, e.w, e.h)) e.click(); });
-		} else {
-			t.target = null;
-			t.display = false;
-		}
+		} else t.hide();
 	}
 	t.render = function() {
 		ctx.fillStyle = '#141e28';
-		ctx.fillRect(-t.w / 2, -t.h / 2, t.w, t.h);
+		ctx.fillRect(t.x - t.w / 2, t.y - t.h / 2, t.w, t.h);
 		ctx.fillStyle = "#ffffff";
 		ctx.textAlign = 'center';
 		ctx.font = "24px monospace";
-		ctx.fillText((base.planet === t.target ? 'Base' : '') + ' ' + t.target.name, 0, -t.h / 2 + 20);
+		ctx.fillText((base.planet === t.target ? 'Base' : '') + ' ' + t.target.name, t.x, t.y - t.h / 2 + 20);
 		var image = t.target.cache;
 		ctx.drawImage(image, t.x - image.width / 2, t.y - image.height / 2 - t.h / 4);
 		t.buttons.forEach(function(e) { e.render(); });

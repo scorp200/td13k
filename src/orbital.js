@@ -2,7 +2,6 @@ var orbitals = [];
 var coms = [];
 var def = [];
 //var buffer = 20;
-
 function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	if (angle === UNDEF) angle = 0;
 	var t = {};
@@ -56,6 +55,10 @@ function planet(color, size, orbit, distance, speed, angle) {
 	return t;
 }
 
+function createStation(what) {
+	window[what]()
+}
+
 function miningStation(orbit) {
 	var angle = splitToMax(miningStation.max, orbit, coms);
 	if (angle === UNDEF)
@@ -82,6 +85,9 @@ function satellite(orbit) {
 }
 
 satellite.max = 3;
+satellite.create = function() {
+
+}
 
 function defenseStation(orbit) {
 	var angle = splitToMax(defenseStation.max, orbit, def);

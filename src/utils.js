@@ -21,7 +21,7 @@ function getAngle(p1, p2) {
 }
 
 function mod(a, n) {
-    return a - Math.floor(a/n) * n;
+	return a - Math.floor(a / n) * n;
 }
 
 function splitToMax(max, orbit, array) {
@@ -59,7 +59,7 @@ function clicked(x, y, w, h) {
 }
 
 function nearestOrbital(x, y) {
-	var pos = {x: x, y: y};
+	var pos = { x: x, y: y };
 	var minDistance = 999999;
 	var closest = orbitals[0];
 	var i = orbitals.length;
@@ -71,4 +71,16 @@ function nearestOrbital(x, y) {
 		}
 	}
 	return orbitals[closest];
+}
+
+function clickNearest(conditions) {
+	var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
+	if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
+		hoverName = nearest.name;
+		if (!Mouse.target && Mouse.release && !Mouse.drag && nearest.type == 'planet') {
+			speak("selected " + nearest.name);
+			pop.show(nearest);
+			sndClick.play();
+		}
+	}
 }

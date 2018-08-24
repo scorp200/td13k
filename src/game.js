@@ -3,8 +3,9 @@ var pop = createPop();
 var base = null;
 var STATE_LOADING = 0;
 var STATE_RUNNING = 1;
+var STATE_CREATE = 2;
 var gameState = STATE_LOADING;
-
+var maxDistance = 64;
 // Disables right click context menu.
 window.addEventListener("contextmenu", function(e) {
 	e.preventDefault();
@@ -72,7 +73,7 @@ function update(repeat) {
 
 	if (gameState === STATE_LOADING) {
 		LoadingScreen.update();
-	} else {
+	} else if (gameState === STATE_RUNNING) {
 		hoverName = "";
 		View.update();
 		guis.forEach(function(e) { if (e.display) e.update(); });
@@ -81,20 +82,21 @@ function update(repeat) {
 
 		// Spawn enemies.
 		var angle = Math.random() * cr;
-		new EnemyShip(Math.cos(angle)*3000, Math.sin(angle)*3000);
+		new EnemyShip(Math.cos(angle) * 3000, Math.sin(angle) * 3000);
 
 		// FInd closest planet.
 		// Hover + Select.
-		var maxDistance = 64;
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
-		if (getDistance(nearest, {x: Mouse.vx, y: Mouse.vy}) < maxDistance) {
+		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
 			hoverName = nearest.name;
-			if (Mouse.release) {
+			if (!Mouse.target && Mouse.release && !Mouse.drag && nearest.type == 'planet') {
 				speak("selected " + nearest.name);
 				pop.show(nearest);
 				sndClick.play();
 			}
 		}
+	} else if (gameState === STATE_CREATE) {
+		Create();
 	}
 
 	Mouse.update();
@@ -123,7 +125,7 @@ function render() {
 
 		// Draw line to closer planet.
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
-		if (getDistance(nearest, {x: Mouse.vx, y: Mouse.vy}) < 64) {
+		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
 			ctx.beginPath();
 			ctx.moveTo(nearest.x, nearest.y);
 			ctx.lineTo(Mouse.vx, Mouse.vy);
