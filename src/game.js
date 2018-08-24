@@ -133,7 +133,7 @@ function render() {
 		ctx.globalAlpha = 1;
 		renderAllOrbits();
 		renderAllBodies();
-		EnemyShip.allInstances.forEach(function(e) { e.render(); });
+		EnemyShip.renderAll();
 		renderComLines();
 
 		// Draw line to closer planet.

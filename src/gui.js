@@ -7,6 +7,8 @@ var Gui = {
 
 	render: function() {
 		gui.renderAll();
+
+		// Wave counter.
 		ctx.fillStyle = "#FFF";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -14,6 +16,12 @@ var Gui = {
 		ctx.fillText("next wave in", Canvas.width/2, 32);
 		ctx.font = "700 64px monospace";
 		ctx.fillText(~~(WaveManager.timer/60), Canvas.width/2, 96);
+
+		// Minerals.
+		ctx.font = "small-caps 700 32px monospace";
+		ctx.fillText("minerals", Canvas.width/2+300, 64-16);
+		ctx.fillText(~~base.minerals, Canvas.width/2+300, 64+16);
+
 	}
 
 }

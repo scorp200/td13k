@@ -46,3 +46,10 @@ EnemyShip.updateAll = function() {
         EnemyShip.allInstances[n].update();
     }
 }
+
+EnemyShip.renderAll = function() {
+    var n = EnemyShip.allInstances.length;
+    while (n--) {
+        EnemyShip.allInstances[n].render();
+    }
+}
