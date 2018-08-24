@@ -1,3 +1,24 @@
+//
+var Gui = {
+
+	update: function() {
+		gui.updateAll();
+	},
+
+	render: function() {
+		gui.renderAll();
+		ctx.fillStyle = "#FFF";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.font = "small-caps 700 32px monospace";
+		ctx.fillText("next wave in", Canvas.width/2, 32);
+		ctx.font = "700 64px monospace";
+		ctx.fillText(~~(WaveManager.timer/60), Canvas.width/2, 96);
+	}
+
+}
+
+// Change to guiElement? So Gui can cover a broader aspect.
 var guis = [];
 
 function gui(x, y, width, height, cache) {
@@ -68,5 +89,12 @@ gui.updateAll = function() {
 	var n = guis.length;
 	while (n--) {
 		guis[n].update();
+	}
+}
+
+gui.renderAll = function() {
+	var n = guis.length;
+	while (n--) {
+		(guis[n].display) && guis[n].render();
 	}
 }

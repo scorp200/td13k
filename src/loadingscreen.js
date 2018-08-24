@@ -27,10 +27,10 @@ var LoadingScreen = {
         var centerY = Canvas.height / 2;
 
         //ctx.beginPath();
-        ctx.fillStyle = "#FFFFFF";
+        ctx.fillStyle = "#FFF";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.shadowColor = "#FFFFFF";
+        ctx.shadowColor = "#FFF";
         ctx.shadowBlur = 50 + Math.sin(performance.now()/100)*2;
         ctx.font = "small-caps 700 256px monospace";
         ctx.fillText("X", centerX, centerY-64);

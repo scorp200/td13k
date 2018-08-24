@@ -90,7 +90,7 @@ function update(repeat) {
 	} else {
 		hoverName = "";
 		View.update();
-		gui.updateAll();
+		Gui.update();
 		if (gameState === STATE_RUNNING) {
 			orbitals.forEach(function(e) { e.update(); });
 			WaveManager.update();
@@ -149,8 +149,8 @@ function render() {
 		var centerX = Canvas.width / 2;
 		var centerY = Canvas.height / 2;
 		ctx.setTransform(1, 0, 0, 1, centerX, centerY);
-		guis.forEach(function(e) { if (e.display) e.render(); });
 		View.reset();
+		Gui.render();
 		drawDebug();
 	}
 }
