@@ -127,8 +127,8 @@ function render() {
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
 			ctx.beginPath();
-			ctx.moveTo(nearest.x, nearest.y);
-			ctx.lineTo(Mouse.vx, Mouse.vy);
+			ctx.moveTo(nearest.x, nearest.y / View.tilt);
+			ctx.lineTo(Mouse.vx, Mouse.vy / View.tilt);
 			ctx.strokeStyle = "#ffffff";
 			ctx.stroke();
 		}

@@ -25,7 +25,7 @@ window.addEventListener("mousemove", function(e) {
 	Mouse.x = e.clientX - rect.left;
 	Mouse.y = e.clientY - rect.top;
 	Mouse.vx = (Mouse.x + View.x - Canvas.width / 2) / View.zoom;
-	Mouse.vy = (Mouse.y + View.y - Canvas.height / 2) / View.zoom;
+	Mouse.vy = (Mouse.y + View.y - Canvas.height / 2) * View.tilt / View.zoom;
 	if(Mouse.down)
 		Mouse.drag = true;
 }, false);
