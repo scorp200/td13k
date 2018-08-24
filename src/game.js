@@ -18,7 +18,7 @@ base = Base(s1);
 var s1a = planet(getHSL(-1, 60, 70), 5, s1, 100, -0.002, rand() * cr);
 var s2 = planet(getHSL(-1, 60, 70), 20, s, 1123, 0.0015, rand() * cr);
 var s2a = planet(getHSL(-1, 60, 70), 5, s2, s2.size * 8, 0.01, rand() * cr);
-var s2b = planet(getHSL(-1, 60, 70), 10, s2, s2.size * 9, 0.005);
+var s2b = planet(getHSL(-1, 60, 70), 10, s2, s2.size * 9, 0.005, null);
 var s3 = planet(getHSL(-1, 60, 70), 30, s, 2532, -0.001, rand() * cr);
 var ms = miningStation(s1);
 var ms2 = miningStation(s2);
@@ -95,9 +95,9 @@ function update(repeat) {
 				sndClick.play();
 			}
 		}
-	} else if (gameState === STATE_CREATE) {
-		Create();
-	}
+	}// else if (gameState === STATE_CREATE) {
+		//Create();
+	//}
 
 	Mouse.update();
 	--repeat && update(repeat);

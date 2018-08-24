@@ -28,7 +28,7 @@ function gui(x, y, width, height, cache) {
 }
 
 function createPop() {
-	var t = gui(-Canvas.width / 4, 0, 300, 400);
+	var t = gui(-Canvas.width / 4, 0, 300, 400, null);
 	t.buttons.push(Buttons(t, 0, 0, 50, 50, 'Satellite', sprSatellite, function() {
 		speak('choose a target');
 		t.hide();

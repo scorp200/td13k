@@ -39,7 +39,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 };
 
 function sun(color, size, x, y) {
-	var t = Orbital(color, size, x, y, null, null, null);
+	var t = Orbital(color, size, x, y, null, null, null, null);
 	t.name = t.type = 'the sun';
 	t.isSun = true;
 	return t;
@@ -63,7 +63,7 @@ function miningStation(orbit) {
 	var angle = splitToMax(miningStation.max, orbit, coms);
 	if (angle === UNDEF)
 		return;
-	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, orbit.size * 3, -0.005);
+	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, orbit.size * 3, -0.005, null);
 	t.name = t.type = 'mining station';
 	t.update = extend(t.update, function() {
 		base.minerals += base.mineRate;
