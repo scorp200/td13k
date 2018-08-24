@@ -78,11 +78,8 @@ function update(repeat) {
 		View.update();
 		guis.forEach(function(e) { if (e.display) e.update(); });
 		orbitals.forEach(function(e) { e.update(); });
-		EnemyShip.allInstances.forEach(function(e) { e.update(); });
-
-		// Spawn enemies.
-		var angle = Math.random() * cr;
-		new EnemyShip(Math.cos(angle) * 3000, Math.sin(angle) * 3000);
+		WaveManager.update();
+		EnemyShip.updateAll();
 
 		// FInd closest planet.
 		// Hover + Select.

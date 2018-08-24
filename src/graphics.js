@@ -13,20 +13,12 @@ function resize() {
 	ctx.clearRect(0, 0, Canvas.width, Canvas.height);
 };
 
-// Cache drawing
-function cache(width, height) {
-	var canvas = DOCUMENT.createElement(CANVAS);
-	canvas.width = width;
-	canvas.height = height;
-	return canvas;
-}
-
 // Render all orbits.
 function renderAllOrbits() {
 	ctx.globalAlpha = 1;
-	var total = 0;
-	for (var n=0; n<orbitals.length; n++) {
-		total += renderOrbit(orbitals[n]) === true;
+	var n = orbitals.length;
+	while (n--) {
+		renderOrbit(orbitals[n]);
 	}
 }
 
@@ -93,7 +85,7 @@ function renderOrbit(body) {
 		var cache = body.orbitCache[scaleLevel];
 		ctx.save();
 		ctx.translate(body.x, body.y / View.tilt);
-		ctx.scale(1, 1/View.tilt);
+		ctx.scale(1, 1 / View.tilt);
 		ctx.drawImage(cache, 0, 0, cache.width, cache.height);
 		ctx.scale(-1, 1);
 		ctx.drawImage(cache, 0, 0);
@@ -102,10 +94,7 @@ function renderOrbit(body) {
 		ctx.scale(-1, 1);
 		ctx.drawImage(cache, 0, 0);
 		ctx.restore();
-		return true;
 	}
-
-	return false;
 
 }
 
@@ -130,7 +119,8 @@ function renderTrail(body) {
 // Render all bodies.
 function renderAllBodies() {
 	ctx.globalAlpha = 1;
-	for (var n=0; n<orbitals.length; n++) {
+	var n = orbitals.length;
+	while (n--) {
 		renderBody(orbitals[n]);
 	}
 }
@@ -150,23 +140,40 @@ function renderBody(body) {
 	}
 
 	if (!body.cache) {
-		var color = body.isSun ? WHITE : body.color;
-		var glow = body.isSun ? 50 : 10;
+		var isSun = body.type === ORBITAL_TYPE.STAR;
+		var color = isSun ? WHITE : body.color;
+		var glow = isSun ? 50 : 10;
 		var size = body.size + glow;
-		body.cache = cache(size*2, size*2);
+		var offset = 0;
+		var cache = body.cache = document.createElement("CANVAS");
+		cache.width = size*2;
+		cache.height = size*2;
 		var context = body.cache.getContext("2d");
-		if (body.isSun) context.filter = "blur(4px)";
+
+		// Offset trick for IE/Edge, no filter support.
+		if (isSun) {
+			offset = 1000;
+			context.shadowOffsetY = offset;
+		}
 
 		// Draw planet body.
 		context.beginPath();
 		context.fillStyle = color;
 		context.shadowColor = body.color;
 		context.shadowBlur = glow;
-		context.arc(size, size, body.size, 0, cr, false);
+		context.arc(size, size-offset, body.size, 0, cr, false);
 		context.fill();
 
+		if (isSun) {
+			context.beginPath();
+			context.shadowColor = "#FFF";
+			context.shadowBlur = 5;
+			context.arc(size, size-offset, body.size-5, 0, cr, false);
+			context.fill();
+		}
+
 		// Draw shadow.
-		if (!body.isSun) {
+		if (!isSun) {
             var repeat = body.size;
             var o = body.size;
             context.beginPath();
@@ -175,8 +182,8 @@ function renderBody(body) {
             while (repeat--) {
 				context.beginPath();
 				context.globalAlpha = 0.05;
-				context.fillStyle = "#000000";
-				context.shadowColor = "#000000";
+				context.fillStyle = "#000";
+				context.shadowColor = "#000";
 				context.shadowBlur = 10;
 				context.save();
 				context.transform(1, 0, 0, 1, size-o/2+(body.size-o)/2, size);
@@ -199,20 +206,6 @@ function renderBody(body) {
 	ctx.restore();
 }
 
-/*function renderComLine(from, to) {
-    ctx.setLineDash([1, 1]);
-	ctx.beginPath();
-	ctx.globalAlpha = 0.2 / View.zoom;
-	ctx.moveTo(from.x, from.y);
-    var up = 75 * (View.tilt - 1);
-    ctx.bezierCurveTo(from.x, from.y-up, to.x, to.y-up, to.x, to.y);
-	ctx.lineWidth = 1 / View.zoom * 2;
-	ctx.strokeStyle = "#00FF00";
-	ctx.stroke();
-	ctx.globalAlpha = 1;
-    ctx.setLineDash([]);
-}*/
-
 //
 function renderComLines() {
 	ctx.beginPath();
@@ -231,7 +224,7 @@ function renderComLines() {
     }
 	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.8);
     ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 4);
-    ctx.strokeStyle = "#00FF00";
+    ctx.strokeStyle = "#0F0";
 	ctx.stroke();
     ctx.globalAlpha = 1;
 }
@@ -240,7 +233,7 @@ function drawDebug() {
 	ctx.font = "14px monospace";
 	ctx.textBaseline = "top";
 	ctx.textAlign = 'left';
-	ctx.fillStyle = "#ffffff";
+	ctx.fillStyle = "#fff";
 	ctx.fillText("#js13k tower defense prototype", 20, 20);
 	ctx.fillText("https://github.com/scorp200/td13k", 20, 40);
 	ctx.fillText("framerate: " + fps, 20, 60);

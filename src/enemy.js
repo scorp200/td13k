@@ -39,3 +39,10 @@ EnemyShip.prototype = {
 }
 
 EnemyShip.allInstances = [];
+
+EnemyShip.updateAll = function() {
+    var n = EnemyShip.allInstances.length;
+    while (n--) {
+        EnemyShip.allInstances[n].update();
+    }
+}
