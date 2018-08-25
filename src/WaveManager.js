@@ -3,7 +3,7 @@ var WaveManager = {
 
     // Timing.
     currentWave: 0,
-    cooldown: 5,
+    cooldown: 10,
     timer: 0,
 
     // Wave spawning.
@@ -44,3 +44,5 @@ var WaveManager = {
     }
 
 }
+
+WaveManager.init();

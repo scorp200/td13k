@@ -53,9 +53,9 @@ function clamp(value, min, max) {
 }
 
 function clicked(x, y, w, h) {
-	var a = (Mouse.x - Canvas.width / 2);
-	var b = (Mouse.y - Canvas.height / 2);
-	return (a > x - w / 2 && a < x + w / 2 && b > y - h / 2 && b < y + h / 2);
+	var a = (Mouse.x);
+	var b = (Mouse.y);
+	return (a > x && a < x+w && b > y && b < y+h);
 }
 
 function nearestOrbital(x, y) {

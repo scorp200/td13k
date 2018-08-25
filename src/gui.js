@@ -44,27 +44,22 @@ function gui(x, y, width, height, cache) {
 			t.onClick();
 		}
 	}
-	t.onClick = function() {
-		//must override
-	}
-	t.render = function() {
-		//must override
-	}
-	t.show = function(param) {
-		//must override
-	}
+	t.onClick = function() {}
+	t.render = function() {}
+	t.show = function(param) {}
 	return t;
 }
 
 function createPop() {
-	var t = gui(-Canvas.width / 4, 0, 300, 400, null);
-	t.buttons.push(Buttons(t, 0, 0, 50, 50, 'Satellite', sprSatellite, function() {
+	var t = gui(Canvas.width/2-150, Canvas.height/2-200, 300, 400, null);
+	t.buttons.push(Buttons(t, 150-25, 200-25, 50, 50, 'Satellite', sprSatellite, function() {
 		speak('choose a target');
 		t.hide();
 		//gameState = STATE_CREATE;
 		//Create = Satellite.create;
 	}));
 	t.show = function(planet) {
+		console.log("yo");
 		Mouse.target = t;
 		t.display = true;
 		t.target = planet;
@@ -80,15 +75,25 @@ function createPop() {
 		} else t.hide();
 	}
 	t.render = function() {
+
+		// Background.
 		ctx.fillStyle = '#141e28';
-		ctx.fillRect(t.x - t.w / 2, t.y - t.h / 2, t.w, t.h);
-		ctx.fillStyle = "#ffffff";
+		ctx.fillRect(t.x, t.y, t.w, t.h);
+
+		// Name.
+		ctx.fillStyle = "#fff";
 		ctx.textAlign = 'center';
 		ctx.font = "24px monospace";
-		ctx.fillText((base.planet === t.target ? 'Base' : '') + ' ' + t.target.name, t.x, t.y - t.h / 2 + 20);
+		var text = (base.planet === t.target ? 'Base' : '') + ' ' + t.target.name;
+		ctx.fillText(text, t.x+t.w/2, t.y + 20);
+
+		// Image.
 		var image = t.target.cache;
-		ctx.drawImage(image, t.x - image.width / 2, t.y - image.height / 2 - t.h / 4);
+		ctx.drawImage(image, t.x+t.w/2 - image.width / 2, t.y+100-image.height/2);
+
+		// Buttons.
 		t.buttons.forEach(function(e) { e.render(); });
+
 	}
 	return t;
 }
