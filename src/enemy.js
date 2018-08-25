@@ -4,6 +4,7 @@
 function EnemyShip(x, y) {
     this.x = x;
     this.y = y;
+    this.z = Math.floor(Math.random()*20)
     this.speed = 5;
     this.direction = 0;
     this.hp = 10;
@@ -32,7 +33,7 @@ EnemyShip.prototype = {
 
     render: function() {
         ctx.save();
-    	ctx.translate(this.x, this.y/View.tilt-20*View.tilt);
+    	ctx.translate(this.x, (this.y-this.z)/View.tilt);
         ctx.scale(0.2, 0.2/View.tilt);
     	ctx.rotate(this.direction);
     	ctx.drawImage(sprEnemyShip, -sprEnemyShip.width/2, -sprEnemyShip.height/2);

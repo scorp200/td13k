@@ -113,19 +113,25 @@ function defenseStation(orbit) {
 	t.index = def.length;
 	t.target = null;
 	t.range = 1000;
+	t.shootTimer = 0;
 	def.push(t);
 
 	t.update = extend(t.update, function() {
-		t.target = EnemyShip.nearest(t, t.range);
-		if (t.target) {
-			t.target.hp -= 1;
+		if (t.shootTimer-- <= 0) {
+			t.target = EnemyShip.nearest(t, t.range);
+			if (t.target) {
+				t.target.hp -= 5;
+				t.shootTimer = 5;
+			}
+		} else {
+			t.target = null;
 		}
 	})
 
 	t.render = extend(t.render, function() {
 		if (t.target) {
-			ctx.fillStyle = "#F00";
-			ctx.lineWidth = 1;
+			ctx.strokeStyle = "#0F0";
+			ctx.lineWidth = 3;
 			ctx.moveTo(t.x, t.y/View.tilt);
 			ctx.lineTo(t.target.x, t.target.y/View.tilt);
 			ctx.stroke();
