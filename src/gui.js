@@ -54,6 +54,11 @@ var Gui = {
 		ctx.fillText("survived", Canvas.width/2-300, 64-16);
 		ctx.fillText(WaveManager.currentWave + " waves", Canvas.width/2-300, 64+16);
 
+		// Days.
+		ctx.font = "small-caps 700 32px monospace";
+		ctx.fillText("base status", Canvas.width/2-600, 64-16);
+		ctx.fillText(~~base.hp + "%", Canvas.width/2-600, 64+16);
+
 		// Tooltip.
 		ctx.font = "small-caps 700 24px monospace";
 		ctx.fillText(Gui.tooltip, Canvas.width/2, Canvas.height-96);

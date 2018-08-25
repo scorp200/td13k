@@ -1,6 +1,7 @@
 var Base = function(planet){
     return {
         planet: planet,
+        hp: 100,
         mineRate: 0.01,
         energyRate: 0.02,
         attackRange: 300,

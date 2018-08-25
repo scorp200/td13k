@@ -232,17 +232,17 @@ function drawDebug() {
 	ctx.textBaseline = "top";
 	ctx.textAlign = 'left';
 	ctx.fillStyle = "#fff";
-	ctx.fillText("#js13k tower defense prototype", 20, 20);
-	ctx.fillText("https://github.com/scorp200/td13k", 20, 40);
-	ctx.fillText("framerate: " + fps, 20, 60);
-	ctx.fillText("mouse (gui): " + Mouse.x + ", " + Mouse.y, 20, 80);
-	ctx.fillText("mouse (view): " + Mouse.vx + ", " + Mouse.vy, 20, 100);
-	ctx.fillText("planet name: " + hoverName, 20, 120);
+	ctx.fillText("#js13k tower defense prototype", 20, 200+20);
+	ctx.fillText("https://github.com/scorp200/td13k", 20, 200+40);
+	ctx.fillText("framerate: " + fps, 20, 200+60);
+	ctx.fillText("mouse (gui): " + Mouse.x + ", " + Mouse.y, 20, 200+80);
+	ctx.fillText("mouse (view): " + Mouse.vx + ", " + Mouse.vy, 20, 200+100);
+	ctx.fillText("planet name: " + hoverName, 20, 200+120);
 
-    ctx.fillText("view x: " + View.x, 20, 160);
-    ctx.fillText("view y: " + View.y, 20, 180);
-    ctx.fillText("view zoom: " + View.zoom, 20, 200);
-    ctx.fillText("view tilt: " + View.tilt, 20, 220);
+    ctx.fillText("view x: " + View.x, 20, 200+160);
+    ctx.fillText("view y: " + View.y, 20, 200+180);
+    ctx.fillText("view zoom: " + View.zoom, 20, 200+200);
+    ctx.fillText("view tilt: " + View.tilt, 20, 200+220);
 
 	//ctx.fillText("minerals: " + Math.floor(base.minerals * 100) / 100, 20, 260);
 }
