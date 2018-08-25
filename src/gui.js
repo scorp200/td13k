@@ -10,9 +10,9 @@ var Gui = {
 		var center = Canvas.width/2;
 		var bottom = Canvas.height;
 		Gui.elements = [
-			Button(Gui, center-24-50, bottom-64, 48, 48, "Build Satellite", null, buildSatellite),
+			Button(Gui, center-24-60, bottom-64, 48, 48, "Build Satellite", null, buildSatellite),
 			Button(Gui, center-24, bottom-64, 48, 48, "Build Mining Station", null, buildMiningStation),
-			Button(Gui, center+24+2, bottom-64, 48, 48, "Build Defense Platform", null, buildDefensePlatform)
+			Button(Gui, center+24+12, bottom-64, 48, 48, "Build Defense Platform", null, buildDefensePlatform)
 		];
 	},
 
@@ -43,6 +43,11 @@ var Gui = {
 		ctx.font = "small-caps 700 32px monospace";
 		ctx.fillText("minerals", Canvas.width/2+300, 64-16);
 		ctx.fillText(~~base.minerals, Canvas.width/2+300, 64+16);
+
+		// Energy.
+		ctx.font = "small-caps 700 32px monospace";
+		ctx.fillText("energy", Canvas.width/2+600, 64-16);
+		ctx.fillText(~~base.energy, Canvas.width/2+600, 64+16);
 
 		// Days.
 		ctx.font = "small-caps 700 32px monospace";

@@ -94,6 +94,9 @@ function satellite(orbit) {
 	t.name = "Satellite";
 	t.type = ORBITAL_TYPE.SATELLITE;
 	t.index = coms.length;
+	t.update = extend(t.update, function() {
+		base.energy += base.energyRate;
+	})
 	coms.push(t);
 	return t;
 }
@@ -114,14 +117,18 @@ function defenseStation(orbit) {
 	t.target = null;
 	t.range = 1000;
 	t.shootTimer = 0;
+	t.shootCost = 1;
 	def.push(t);
 
 	t.update = extend(t.update, function() {
 		if (t.shootTimer-- <= 0) {
 			t.target = EnemyShip.nearest(t, t.range);
-			if (t.target) {
+			if (t.target && base.energy >= t.shootCost) {
 				t.target.hp -= 5;
 				t.shootTimer = 5;
+				base.energy -= t.shootCost;
+			} else {
+				t.target = null;
 			}
 		} else {
 			t.target = null;

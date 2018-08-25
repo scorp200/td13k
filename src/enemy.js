@@ -33,7 +33,7 @@ EnemyShip.prototype = {
 
     render: function() {
         ctx.save();
-    	ctx.translate(this.x, (this.y-this.z)/View.tilt);
+    	ctx.translate(this.x, this.y/View.tilt-this.z*View.tilt);
         ctx.scale(0.2, 0.2/View.tilt);
     	ctx.rotate(this.direction);
     	ctx.drawImage(sprEnemyShip, -sprEnemyShip.width/2, -sprEnemyShip.height/2);

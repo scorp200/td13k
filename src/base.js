@@ -1,11 +1,13 @@
 var Base = function(planet){
-    var t = {};
-    t.planet = planet;
-    t.mineRate = 0.01;
-    t.attackRange = 300;
-    t.shieldHP = 0;
-    t.shieldRegen = 0;
-    t.comRange = 500;
-    t.minerals = 0;
-    return t;
+    return {
+        planet: planet,
+        mineRate: 0.01,
+        energyRate: 0.02,
+        attackRange: 300,
+        shieldHP: 0,
+        shieldRegen: 0,
+        comRange: 500,
+        minerals: 0,
+        energy: 0
+    }
 }
