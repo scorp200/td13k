@@ -111,7 +111,27 @@ function defenseStation(orbit) {
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.index = def.length;
+	t.target = null;
+	t.range = 1000;
 	def.push(t);
+
+	t.update = extend(t.update, function() {
+		t.target = EnemyShip.nearest(t, t.range);
+		if (t.target) {
+			t.target.hp -= 1;
+		}
+	})
+
+	t.render = extend(t.render, function() {
+		if (t.target) {
+			ctx.fillStyle = "#F00";
+			ctx.lineWidth = 1;
+			ctx.moveTo(t.x, t.y/View.tilt);
+			ctx.lineTo(t.target.x, t.target.y/View.tilt);
+			ctx.stroke();
+		}
+	})
+
 	return t;
 }
 

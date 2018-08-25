@@ -6,7 +6,8 @@ function EnemyShip(x, y) {
     this.y = y;
     this.speed = 5;
     this.direction = 0;
-    this.target = orbitals[0];
+    this.hp = 10;
+    this.target = base.planet;
     EnemyShip.allInstances.push(this);
 }
 
@@ -21,6 +22,12 @@ EnemyShip.prototype = {
         if (getDistance(this, this.target) < 100) {
             this.destroy();
         }
+
+        // Health depleated.
+        if (this.hp <= 0) {
+            this.destroy();
+        }
+
     },
 
     render: function() {
@@ -39,6 +46,21 @@ EnemyShip.prototype = {
 }
 
 EnemyShip.allInstances = [];
+
+EnemyShip.nearest = function(p, minRange) {
+    var nearest = null;
+    var distance = minRange;
+    var n = EnemyShip.allInstances.length;
+    while (n--) {
+        var inst = EnemyShip.allInstances[n];
+        var newDistance = getDistance(p, inst);
+        if (newDistance < distance) {
+            nearest = inst;
+            distance = newDistance;
+        }
+    }
+    return nearest;
+}
 
 EnemyShip.updateAll = function() {
     var n = EnemyShip.allInstances.length;
