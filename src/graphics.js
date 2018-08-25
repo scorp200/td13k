@@ -1,8 +1,5 @@
 // Setup Canvas (move to graphics.js)
 var hoverName = "";
-var AddEventListener = DOCUMENT.addEventListener.bind(DOCUMENT);
-var Canvas = DOCUMENT.getElementById("c");
-var ctx = Canvas.getContext("2d", { alpha: false });
 
 // Keep canvas same size as window.
 resize();
@@ -11,6 +8,7 @@ function resize() {
 	Canvas.width = window.innerWidth;
 	Canvas.height = window.innerHeight;
 	ctx.clearRect(0, 0, Canvas.width, Canvas.height);
+	Gui.setup();
 };
 
 // Render all orbits.

@@ -1,12 +1,34 @@
 //
 var Gui = {
 
+	x: 0,
+	y: 0,
+	elements: [],
+	tooltip: "",
+
+	setup: function() {
+		var center = Canvas.width/2;
+		var bottom = Canvas.height;
+		Gui.elements = [
+			Button(Gui, center-24-50, bottom-64, 48, 48, "Build Satellite", null, buildSatellite),
+			Button(Gui, center-24, bottom-64, 48, 48, "Build Mining Station", null, buildMiningStation),
+			Button(Gui, center+24+2, bottom-64, 48, 48, "Build Defense Platform", null, buildDefensePlatform)
+		];
+	},
+
 	update: function() {
+		Gui.tooltip = "";
 		gui.updateAll();
+		Gui.elements.forEach(function(e) {
+			e.update();
+		});
 	},
 
 	render: function() {
 		gui.renderAll();
+		Gui.elements.forEach(function(e) {
+			e.render();
+		});
 
 		// Wave counter.
 		ctx.fillStyle = "#FFF";
@@ -22,9 +44,32 @@ var Gui = {
 		ctx.fillText("minerals", Canvas.width/2+300, 64-16);
 		ctx.fillText(~~base.minerals, Canvas.width/2+300, 64+16);
 
+		// Days.
+		ctx.font = "small-caps 700 32px monospace";
+		ctx.fillText("survived", Canvas.width/2-300, 64-16);
+		ctx.fillText(WaveManager.currentWave + " waves", Canvas.width/2-300, 64+16);
+
+		// Tooltip.
+		ctx.font = "small-caps 700 24px monospace";
+		ctx.fillText(Gui.tooltip, Canvas.width/2, Canvas.height-96);
+
 	}
 
 }
+
+function buildSatellite() {
+	speak("Select an area to build the satellite");
+}
+
+function buildMiningStation() {
+	speak("Select an area to build the mining station");
+}
+
+function buildDefensePlatform() {
+	speak("Select an area to build the defense platform");
+}
+
+Gui.setup();
 
 // Change to guiElement? So Gui can cover a broader aspect.
 var guis = [];
@@ -52,14 +97,13 @@ function gui(x, y, width, height, cache) {
 
 function createPop() {
 	var t = gui(Canvas.width/2-150, Canvas.height/2-200, 300, 400, null);
-	t.buttons.push(Buttons(t, 150-25, 200-25, 50, 50, 'Satellite', sprSatellite, function() {
+	t.buttons.push(Button(t, 150-25, 200-25, 50, 50, 'Satellite', sprSatellite, function() {
 		speak('choose a target');
 		t.hide();
 		//gameState = STATE_CREATE;
 		//Create = Satellite.create;
 	}));
 	t.show = function(planet) {
-		console.log("yo");
 		Mouse.target = t;
 		t.display = true;
 		t.target = planet;
@@ -71,8 +115,10 @@ function createPop() {
 	}
 	t.onClick = function() {
 		if (Mouse.target == t && clicked(t.x, t.y, t.w, t.h)) {
-			t.buttons.forEach(function(e) { if (clicked(e.x, e.y, e.w, e.h)) e.click(); });
-		} else t.hide();
+			t.buttons.forEach(function(e) { e.update(); });
+		} else {
+			t.hide();
+		}
 	}
 	t.render = function() {
 

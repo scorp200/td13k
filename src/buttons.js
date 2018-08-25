@@ -1,17 +1,30 @@
-var Buttons = function(parent, x, y, w, h, text, cache, onClick) {
-	var t = {
-		x: parent.x + x,
-		y: parent.y + y,
-		w: w,
-		h: h,
-		text: text,
-		click: onClick,
+var Button = function(parent, x, y, w, h, text, img, onClick) {
+
+	var x = parent.x + x;
+	var y = parent.y + y;
+	var w = w;
+	var h = h;
+	var text = text;
+
+	return {
+
+		update: function() {
+			if (Mouse.overRegion(x, y, w, h)) {
+				Gui.tooltip = text;
+				if (Mouse.click) {
+					onClick();
+				}
+			}
+		},
+
 		render: function() {
-			ctx.fillRect(t.x, t.y, w, h);
-			if (cache) {
-				ctx.drawImage(cache, t.x, t.y, t.w, t.h);
+			ctx.fillStyle = "#FFF";
+			ctx.fillRect(x, y, w, h);
+			if (img) {
+				ctx.drawImage(img, x, y, w, h);
 			}
 		}
+
 	}
-	return t;
+
 }

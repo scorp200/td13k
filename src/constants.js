@@ -1,4 +1,5 @@
-var DOCUMENT = document;
+var Canvas = document.getElementById("c");
+var ctx = Canvas.getContext("2d", { alpha: false });
 var UNDEF = undefined;
 var STROKE = "stroke";
 var FILL = "fill";

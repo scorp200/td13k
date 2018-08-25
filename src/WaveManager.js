@@ -27,7 +27,9 @@ var WaveManager = {
         if (!WaveManager.timer--) {
     		WaveManager.spawn();
             WaveManager.init();
-            speak(WaveManager.speechFlavor[Math.floor(Math.random()*WaveManager.speechFlavor.length)]);
+            WaveManager.currentWave++;
+            var i = ~~(Math.random()*WaveManager.speechFlavor.length);
+            speak(WaveManager.speechFlavor[i]);
         }
     },
 

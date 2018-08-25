@@ -1,5 +1,6 @@
 // Create Mouse object.
 var Mouse = {
+
 	x: 0,
 	y: 0,
 	vx: 0,
@@ -10,12 +11,24 @@ var Mouse = {
 	scrollOut: false,
 	scrollIn: false,
 	target: null,
+
 	update: function() {
 		Mouse.click = false;
 		Mouse.release = false;
 		Mouse.scrollIn = false;
 		Mouse.scrollOut = false;
+	},
+
+	overRegion: function(x, y, w, h) {
+		var a = Mouse.x;
+		var b = Mouse.y;
+		return (a > x && a < x+w && b > y && b < y+h);
+	},
+
+	clickRegion: function(x, y, w, h) {
+		return Mouse.click && Mouse.overRegion(x, y, w, h);
 	}
+
 };
 
 // Update mouse position.
