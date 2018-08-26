@@ -5,24 +5,34 @@ function EnemyShip(x, y) {
     this.x = x;
     this.y = y;
     this.z = Math.floor(Math.random()*20)
-    this.speed = 5;
     this.direction = 0;
     this.hp = 10;
     this.target = base.planet;
+    this.shootTimer = Math.random() * 10;
     EnemyShip.allInstances.push(this);
 }
+
+EnemyShip.speed = 5;
+EnemyShip.range = 500;
 
 EnemyShip.prototype = {
 
     update: function() {
         var a = getAngle(this, this.target) - this.direction;
         this.direction += (mod((a + cr/2), cr) - cr/2) * 0.01;
-        this.x -= this.speed * Math.cos(this.direction);
-        this.y -= this.speed * Math.sin(this.direction);
+        this.x -= EnemyShip.speed * Math.cos(this.direction);
+        this.y -= EnemyShip.speed * Math.sin(this.direction);
 
-        //if (getDistance(this, this.target) < 100) {
-            //this.destroy();
-        //}
+        if (this.shootTimer-- <= 0) {
+            this.shootTimer = 10;
+            var distance = getDistance(this, this.target);
+            if (distance < EnemyShip.range) {
+                var miss = Math.random() > 0.5;
+                var direction = getAngle(this, this.target);
+                var range = miss ? 2000 : distance;
+                Laser.create(this.x, this.y, direction, range, "#F00");
+            }
+        }
 
         // Health depleated.
         if (this.hp <= 0) {

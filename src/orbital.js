@@ -130,7 +130,7 @@ function defenseStation(orbit) {
 				t.shootTimer = 2;
 				base.energy -= t.shootCost;
 				var lifetime = t.miss ? 2000 : getDistance(t, t.target);
-				Laser.create(t.x, t.y, getAngle(t, t.target), lifetime);
+				Laser.create(t.x, t.y, getAngle(t, t.target), lifetime, "#FF0");
 			} else {
 				//t.target = null;
 			}
