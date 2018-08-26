@@ -6,7 +6,7 @@ var voiceIndex = 3;
 
 // Load.
 if (speechSynth) {
-	speechEnabled = true;
+	speechEnabled = ENABLE_VOICE;
 	voices = speechSynth.getVoices();
 	if (voices.length <= 0) {
 		speechSynth.onvoiceschanged = function() {

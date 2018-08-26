@@ -243,6 +243,4 @@ function drawDebug() {
     ctx.fillText("view y: " + View.y, 20, 200+180);
     ctx.fillText("view zoom: " + View.zoom, 20, 200+200);
     ctx.fillText("view tilt: " + View.tilt, 20, 200+220);
-
-	//ctx.fillText("minerals: " + Math.floor(base.minerals * 100) / 100, 20, 260);
 }

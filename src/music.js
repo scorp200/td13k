@@ -73,6 +73,7 @@ function generateSound() {
 }
 
 function musicLoop(sound) {
+    if (!ENABLE_MUSIC) { return; }
     if (!sound.hasListener) {
         sound.hasListener = true;
         sound.addEventListener("ended", function() {
