@@ -25,7 +25,7 @@ function speak(text) {
 		speech.rate = 1;
 		speech.pitch = 0.1;
 		speech.lang = 'en-US';
-		speech.voice = voices[voiceIndex];
+		speech.voice = voices[voiceIndex % voices.length];
 		speechSynth.speak(speech);
 	}
 }
