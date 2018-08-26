@@ -20,9 +20,9 @@ EnemyShip.prototype = {
         this.x -= this.speed * Math.cos(this.direction);
         this.y -= this.speed * Math.sin(this.direction);
 
-        if (getDistance(this, this.target) < 100) {
-            this.destroy();
-        }
+        //if (getDistance(this, this.target) < 100) {
+            //this.destroy();
+        //}
 
         // Health depleated.
         if (this.hp <= 0) {
@@ -48,6 +48,26 @@ EnemyShip.prototype = {
 
 EnemyShip.allInstances = [];
 
+EnemyShip.flockCollision = function() {
+    var n = EnemyShip.allInstances.length;
+    while (n--) {
+        var inst1 = EnemyShip.allInstances[n];
+        var i = n;
+        while (i-- > 0) {
+            var inst2 = EnemyShip.allInstances[i];
+            var distance = getDistanceRaw(inst1, inst2);
+            if (distance < 200) {
+                var xm = (inst1.x - inst2.x) * 0.25;
+                var ym = (inst1.y - inst2.y) * 0.25;
+                inst1.x += xm;
+                inst1.y += ym;
+                inst2.x -= xm;
+                inst2.y -= ym;
+            }
+        }
+    }
+}
+
 EnemyShip.nearest = function(p, minRange) {
     var nearest = null;
     var distance = minRange;
@@ -64,6 +84,7 @@ EnemyShip.nearest = function(p, minRange) {
 }
 
 EnemyShip.updateAll = function() {
+    EnemyShip.flockCollision();
     var n = EnemyShip.allInstances.length;
     while (n--) {
         EnemyShip.allInstances[n].update();

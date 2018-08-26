@@ -10,6 +10,12 @@ function extend(f1, f2) {
 	}
 }
 
+function getDistanceRaw(o1, o2) {
+	var x = o1.x - o2.x;
+	var y = o1.y - o2.y;
+	return x * x + y * y;
+}
+
 function getDistance(o1, o2) {
 	var x = o1.x - o2.x;
 	var y = o1.y - o2.y;
