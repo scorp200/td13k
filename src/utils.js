@@ -37,7 +37,7 @@ function splitToMax(max, orbit, array) {
 			angle += cr / max;
 	});
 	if (angle >= cr)
-		return UNDEF;
+		return undefined;
 	return angle;
 }
 

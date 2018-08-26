@@ -139,7 +139,7 @@ function renderBody(body) {
 
 	if (!body.cache) {
 		var isSun = body.type === ORBITAL_TYPE.STAR;
-		var color = isSun ? WHITE : body.color;
+		var color = isSun ? "#FFF" : body.color;
 		var glow = isSun ? 50 : 10;
 		var size = body.size + glow;
 		var offset = 0;

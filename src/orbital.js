@@ -12,7 +12,7 @@ var ORBITAL_TYPE = {
 }
 
 function Orbital(color, size, x, y, orbit, distance, speed, angle) {
-	if (angle === UNDEF) angle = 0;
+	if (angle === undefined) angle = 0;
 	var t = {};
 	t.name = "Some Shithole Planet";
 	t.type = ORBITAL_TYPE.STAR;
@@ -58,7 +58,7 @@ function sun(color, size, x, y) {
 }
 
 function planet(color, size, orbit, distance, speed, angle) {
-	if (angle === UNDEF) angle = 0;
+	if (angle === undefined) angle = 0;
 	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, angle);
 	t.name = "Planet";
 	t.type = ORBITAL_TYPE.PLANET;
@@ -74,7 +74,7 @@ function createStation(what) {
 
 function miningStation(orbit) {
 	var angle = splitToMax(miningStation.max, orbit, coms);
-	if (angle === UNDEF)
+	if (angle === undefined)
 		return;
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, orbit.size * 3, -0.005, null);
 	t.name = "Mining Station";
@@ -89,7 +89,7 @@ miningStation.max = 4;
 
 function satellite(orbit) {
 	var angle = splitToMax(satellite.max, orbit, coms);
-	if (angle === UNDEF)
+	if (angle === undefined)
 		return;
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, orbit.size * 5, 0.01, angle);
 	t.name = "Satellite";
@@ -109,7 +109,7 @@ satellite.create = function() {
 
 function defenseStation(orbit) {
 	var angle = splitToMax(defenseStation.max, orbit, def);
-	if (angle === UNDEF)
+	if (angle === undefined)
 		return;
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, angle);
 	t.name = "Defense Platform";
