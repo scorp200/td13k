@@ -115,28 +115,24 @@ function defenseStation(orbit) {
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.index = def.length;
-	t.target = null;
 	t.range = 1000;
 	t.shootTimer = 0;
 	t.shootCost = 0.2;
-	t.miss = false;
 	def.push(t);
 
 	t.update = extend(t.update, function() {
 		if (t.shootTimer-- <= 0) {
-			t.target = EnemyShip.nearest(t, t.range);
-			t.miss = (Math.random() > 0.5) ? true : false;
-			if (t.target && base.energy >= t.shootCost) {
-				t.target.hp -= 2;
+			var target = EnemyShip.nearest(t, t.range);
+			if (target && base.energy >= t.shootCost) {
 				t.shootTimer = 2;
 				base.energy -= t.shootCost;
-				var lifetime = t.miss ? 2000 : getDistance(t, t.target);
-				Laser.create(t.x, t.y, getAngle(t, t.target), lifetime, "#FF0");
-			} else {
-				//t.target = null;
+				var miss = (Math.random() > 0.5) ? true : false;
+				var lifetime = miss ? 2000 : getDistance(t, target);
+				Laser.create(t.x, t.y, getAngle(t, target), lifetime, "#FF0");
+				if (!miss) {
+					target.hp -= 2;
+				}
 			}
-		} else {
-			t.target = null;
 		}
 	})
 
