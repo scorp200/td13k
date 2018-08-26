@@ -1,6 +1,7 @@
 //
 var Music = {
     loading: true,
+    current: 0,
     tracks: []
 }
 
@@ -14,11 +15,13 @@ var Sound = {
 sndClick = addSfx(sndClick);
 
 // Generate music
-addTrack(song);
+var musSpace = addTrack(song);
+var musStarry = addTrack(song2);
 
 function addSfx(sound) {
     var player = new CPlayer();
     player._snd = new Audio();
+    player._loading = true;
     player.init(sound);
     Sound.board.push(player);
     return player._snd;
@@ -26,9 +29,11 @@ function addSfx(sound) {
 
 function addTrack(track) {
     var player = new CPlayer();
+    player._snd = new Audio();
     player._loading = true;
     player.init(track);
     Music.tracks.push(player);
+    return player._snd;
 }
 
 // Generate music
@@ -41,13 +46,7 @@ function generateMusic() {
             loadingProgressMusic += 1;
     		var wave = track.createWave();
     		var url = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
-    		var audio = new Audio(url);
-    		audio.addEventListener("ended", function() {
-    		    this.currentTime = 0;
-    		    this.play();
-    		}, false);
-    		audio.play();
-            audio.volume = 0.5;
+            track._snd.src = url;
         }
     }
     if (loadingProgressMusic >= Music.tracks.length) {
@@ -60,7 +59,8 @@ var loadingProgressSound = 0;
 function generateSound() {
     for(var n=0; n<Sound.board.length; n++) {
         var track = Sound.board[n];
-        if (track.generate() >= 1) {
+        if (track._loading) {
+            track._loading = track.generate() >= 1;
             loadingProgressSound += 1;
     		var wave = track.createWave();
     		var url = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
@@ -70,4 +70,21 @@ function generateSound() {
     if (loadingProgressSound >= Sound.board.length) {
         Sound.loading = false;
     }
+}
+
+function musicLoop(sound) {
+    if (!sound.hasListener) {
+        sound.hasListener = true;
+        sound.addEventListener("ended", function() {
+            this.currentTime = 0;
+            Music.current += 1;
+            Music.current %= Music.tracks.length;
+            console.log(Music.current);
+            musicLoop(Music.tracks[Music.current]._snd);
+        }, false);
+        sound.play();
+    } else {
+        sound.play();
+    }
+    sound.volume = 0.5;
 }

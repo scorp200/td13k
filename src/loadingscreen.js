@@ -13,10 +13,14 @@ var LoadingScreen = {
         } else {
             if (!LoadingScreen.ready) {
                 LoadingScreen.ready = true;
+                musicLoop(musStarry);
                 speak("Welcum to Exo");
             }
             if (Mouse.click) {
                 gameState = STATE_RUNNING;
+                if (musSpace.pause) {
+                    musicLoop(musStarry);
+                }
             }
         }
 

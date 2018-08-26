@@ -22,6 +22,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	t.size = size;
 	t.isSun = false;
 	t.id = orbitals.length.toString();
+	t.hp = 100;
 	if (orbit) {
 		t.orbit = {
 			planet: orbit,
@@ -138,17 +139,6 @@ function defenseStation(orbit) {
 			t.target = null;
 		}
 	})
-
-	//t.render = extend(t.render, function() {
-		/*if (t.target) {
-			ctx.strokeStyle = "#0F0";
-			ctx.lineWidth = 3;
-			ctx.moveTo(t.x, t.y/View.tilt);
-			var scale = t.miss ? 3 : 1;
-			ctx.lineTo(t.target.x*scale, t.target.y*scale/View.tilt);
-			ctx.stroke();
-		}*/
-	//})
 
 	return t;
 }

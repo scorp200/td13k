@@ -79,6 +79,23 @@ function nearestOrbital(x, y) {
 	return orbitals[closest];
 }
 
+function nearestTargetableOrbital(x, y) {
+	var pos = { x: x, y: y };
+	var minDistance = 999999;
+	var closest = orbitals[0];
+	var i = orbitals.length;
+	while (i--) {
+		if (orbitals[i].type > 1) {
+			var distance = getDistance(orbitals[i], pos);
+			if (distance < minDistance) {
+				minDistance = distance;
+				closest = i;
+			}
+		}
+	}
+	return orbitals[closest];
+}
+
 function clickNearest(conditions) {
 	var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
 	if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {

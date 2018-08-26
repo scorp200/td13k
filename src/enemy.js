@@ -18,6 +18,9 @@ EnemyShip.range = 500;
 EnemyShip.prototype = {
 
     update: function() {
+
+        this.target = nearestTargetableOrbital(this.x, this.y);
+
         var a = getAngle(this, this.target) - this.direction;
         this.direction += (mod((a + cr/2), cr) - cr/2) * 0.01;
         this.x -= EnemyShip.speed * Math.cos(this.direction);
@@ -39,15 +42,6 @@ EnemyShip.prototype = {
             this.destroy();
         }
 
-    },
-
-    render: function() {
-        ctx.save();
-    	ctx.translate(this.x, this.y/View.tilt-this.z*View.tilt);
-        ctx.scale(0.2, 0.2/View.tilt);
-    	ctx.rotate(this.direction);
-    	ctx.drawImage(sprEnemyShip, -sprEnemyShip.width/2, -sprEnemyShip.height/2);
-    	ctx.restore();
     },
 
     destroy : function() {
@@ -102,8 +96,16 @@ EnemyShip.updateAll = function() {
 }
 
 EnemyShip.renderAll = function() {
+    var ox = -sprEnemyShip.width/2;
+    var oy = -sprEnemyShip.height/2;
     var n = EnemyShip.allInstances.length;
     while (n--) {
-        EnemyShip.allInstances[n].render();
+        var inst = EnemyShip.allInstances[n];
+        ctx.save();
+    	ctx.translate(inst.x, inst.y/View.tilt-inst.z*View.tilt);
+        ctx.scale(0.3, 0.3/View.tilt);
+    	ctx.rotate(inst.direction);
+    	ctx.drawImage(sprEnemyShip, ox, oy);
+    	ctx.restore();
     }
 }
