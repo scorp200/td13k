@@ -95,6 +95,7 @@ function update(repeat) {
 			orbitals.forEach(function(e) { e.update(); });
 			WaveManager.update();
 			EnemyShip.updateAll();
+			Laser.update();
 		}
 
 		// FInd closest planet.
@@ -135,6 +136,7 @@ function render() {
 		renderAllBodies();
 		EnemyShip.renderAll();
 		renderComLines();
+		Laser.render();
 
 		// Draw line to closer planet.
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);

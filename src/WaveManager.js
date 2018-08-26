@@ -47,4 +47,4 @@ var WaveManager = {
 
 }
 
-WaveManager.init();
+//WaveManager.init();
