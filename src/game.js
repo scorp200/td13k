@@ -27,7 +27,7 @@ document.addEventListener("keypress", function(e)  {
 
 // Setup planets (procgen this?)
 var s = sun(getHSL(60, 100, 50), 50, 0, 0);
-var s1 = planet(getHSL(180, 39, 62), 10, s, 500, 0.003, rand() * cr);
+var s1 = planet(getHSL(180, 39, 62), 10, s, 650, 0.003, rand() * cr);
 base = Base(s1);
 var s1a = planet(getHSL(-1, 60, 70), 5, s1, 100, -0.002, rand() * cr);
 var s2 = planet(getHSL(-1, 60, 70), 20, s, 1123, 0.0015, rand() * cr);
@@ -153,6 +153,6 @@ function render() {
 		ctx.setTransform(1, 0, 0, 1, centerX, centerY);
 		View.reset();
 		Gui.render();
-		drawDebug();
+		//drawDebug();
 	}
 }

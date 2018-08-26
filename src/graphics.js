@@ -204,15 +204,48 @@ function renderBody(body) {
 	ctx.restore();
 }
 
+// MOVE THIS
+function getComlines(node, list) {
+	list = list || [];
+	list.push(node);
+	var n = orbitals.length;
+	while (n--) {
+		var inst = orbitals[n];
+		var inList = list.indexOf(inst) >= 0;
+		if (node !== inst && !inList && canOfferConnection(node)) {
+			if (getDistance(node, inst) <= base.comRange) {
+				getComlines(inst, list);
+			}
+		}
+	}
+	return list;
+}
+
+function canOfferConnection(t) {
+	return t === base.planet
+		|| t.type === ORBITAL_TYPE.SATELLITE;
+}
+
+function canReceiveConnection(t) {
+	return t.type === ORBITAL_TYPE.SATELLITE
+		|| t.type === ORBITAL_TYPE.MINING
+		|| t.type === ORBITAL_TYPE.DEFENSE;
+}
+
 //
 function renderComLines() {
+
+	var lines = getComlines(base.planet);
+	//console.log(lines);
+
 	ctx.beginPath();
     var up = 75 * (View.tilt - 1);
-    for (var n=0; n<coms.length; n++) {
-        var t = coms[n];
-        for (var i=n; i<coms.length; i++) {
-            var e = coms[i];
-            if (e != t && getDistance(e, t) <= base.comRange) {
+    for (var n=0; n<lines.length; n++) {
+        var t = lines[n];
+        for (var i=n; i<lines.length; i++) {
+            var e = lines[i];
+            if (e != t && getDistance(e, t) <= base.comRange
+			&& canOfferConnection(t) && canReceiveConnection(e)) {
 				var y1 = t.y / View.tilt;
 				var y2 = e.y / View.tilt;
                 ctx.moveTo(t.x, y1);

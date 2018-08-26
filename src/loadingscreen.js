@@ -1,7 +1,7 @@
 var LoadingScreen = {
 
     ready: false,
-    cooldown: 60,
+    cooldown: 1,
 
     update: function() {
 
