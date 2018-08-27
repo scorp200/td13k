@@ -116,7 +116,7 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.index = def.length;
 	def.push(t);
-	t.module = defenseStation.modules.beam(t);
+	t.module = defenseStation.modules.laser(t);
 	t.update = extend(t.update, t.module.update);
 	t.render = extend(t.render, t.module.render);
 	return t;
@@ -168,25 +168,27 @@ defenseStation.modules = {
 	},
 	laser: function(station) {
 		var t = {}
-		t.range = 1000;
-		t.shootTimer = 0;
-		t.shootCost = 0.1;
-		t.station = station;
+		var range = 1000;
+		var shootTimer = 0;
+		var shootCost = 0.1;
+		var station = station;
 		t.update = function() {
-			if (t.shootTimer-- <= 0) {
-				var target = EnemyShip.nearest(t, t.range);
-				if (target && base.energy >= t.shootCost) {
-					t.shootTimer = 2;
-					base.energy -= t.shootCost;
+			if (shootTimer-- <= 0) {
+				var target = EnemyShip.nearest(station, range);
+				if (target && base.energy >= shootCost) {
+					shootTimer = 2;
+					base.energy -= shootCost;
 					var miss = (Math.random() > 0.5) ? true : false;
-					var lifetime = miss ? 2000 : getDistance(t.station, target);
-					Laser.create(t.station.x, t.station.y, getAngle(t.station.x, target), lifetime, "#FF0");
+					var lifetime = miss ? 2000 : getDistance(station, target);
+					console.log("shoot");
+					Laser.create(station.x, station.y, getAngle(station, target), lifetime, "#FF0");
 					if (!miss) {
 						target.hp -= 2;
 					}
 				}
 			}
 		}
+		t.render = function() {}
 		return t;
 	}
 }
