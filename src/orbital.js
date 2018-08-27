@@ -187,5 +187,6 @@ defenseStation.modules = {
 				}
 			}
 		}
+		return t;
 	}
 }
