@@ -1,5 +1,5 @@
 // Cache stuff.
-var pop = createPop();
+//var pop = createPop();
 var base = null;
 var STATE_LOADING = 0;
 var STATE_RUNNING = 1;
@@ -96,18 +96,7 @@ function update(repeat) {
 			WaveManager.update();
 			EnemyShip.updateAll();
 			Laser.update();
-		}
-
-		// FInd closest planet.
-		// Hover + Select.
-		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
-		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
-			hoverName = nearest.name;
-			if (!Mouse.target && Mouse.release && !Mouse.drag/* && nearest.type == ORBITAL_TYPE.PLANET*/) {
-				speak("selected " + nearest.name);
-				pop.show(nearest);
-				sndClick.play();
-			}
+			clickNearest();
 		}
 
 	}// else if (gameState === STATE_CREATE) {
@@ -155,5 +144,6 @@ function render() {
 		View.reset();
 		Gui.render();
 		//drawDebug();
+
 	}
 }

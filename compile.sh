@@ -1,8 +1,8 @@
-java -jar closure-compiler/closure-compiler-v20180805.jar \
+java -jar closure-compiler.jar \
 --compilation_level ADVANCED_OPTIMIZATIONS \
 --language_in=ES5_STRICT \
 --output_wrapper_file src/build_index.html \
---js_output_file build/compiled.html \
+--js_output_file build/index.html \
 --assume_function_wrapper \
 src/constants.js \
 src/utils.js \

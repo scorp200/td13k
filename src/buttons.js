@@ -1,15 +1,14 @@
 var Button = function(parent, x, y, w, h, text, img, onClick) {
 
-	var x = parent.x + x;
-	var y = parent.y + y;
-	var w = w;
-	var h = h;
-	var text = text;
+	var fillStyle = "rgba(0, 0, 0, 0.5)";
+	var strokeStyle = "rgba(255, 255, 255, 0.5)";
 
 	return {
 
+		// Update the button.
+		// Handles tooltip and clicking.
 		update: function() {
-			if (Mouse.overRegion(x, y, w, h)) {
+			if (Mouse.overRegion(parent.x+x, parent.y+y, w, h)) {
 				Gui.tooltip = text;
 				if (Mouse.click) {
 					onClick();
@@ -17,11 +16,14 @@ var Button = function(parent, x, y, w, h, text, img, onClick) {
 			}
 		},
 
+		// Render the button.
 		render: function() {
-			ctx.fillStyle = "#FFF";
-			ctx.fillRect(x, y, w, h);
+			ctx.fillStyle = fillStyle;
+			ctx.strokeStyle = strokeStyle;
+			ctx.fillRect(parent.x+x, parent.y+y, w, h);
+			ctx.strokeRect(parent.x+x, parent.y+y, w, h);
 			if (img) {
-				ctx.drawImage(img, x, y, w, h);
+				ctx.drawImage(img, parent.x+x, parent.y+y, w, h);
 			}
 		}
 

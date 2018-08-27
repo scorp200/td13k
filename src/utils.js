@@ -101,14 +101,18 @@ function nearestTargetableOrbital(x, y) {
 	return orbitals[closest];
 }
 
-function clickNearest(conditions) {
-	var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
-	if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
-		hoverName = nearest.name;
-		if (!Mouse.target && Mouse.release && !Mouse.drag && nearest.type == 'planet') {
-			speak("selected " + nearest.name);
-			pop.show(nearest);
-			sndClick.play();
+function clickNearest() {
+	if (Mouse.release) {
+		Gui.selection.target = null;
+		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
+		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
+			hoverName = nearest.name;
+			if (!Mouse.target && !Mouse.drag) {
+				speak("selected " + nearest.name);
+				Gui.selection.target = nearest;
+				Gui.selection.openAt(Mouse.x, Mouse.y);
+				sndClick.play();
+			}
 		}
 	}
 }

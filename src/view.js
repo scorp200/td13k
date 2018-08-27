@@ -17,7 +17,7 @@ var View = {
             View.zoomTarget = clamp(View.zoomTarget+shift, 0.1, 2);
         }
         View.tilt = Math.min(1 + (View.zoom - 0.1), 2);
-        if (Mouse.click && !pop.display) {
+        if (Mouse.click/* && !pop.display*/) {
             View.drag = true;
             View.anchorX = View.x;
             View.anchorY = View.y;

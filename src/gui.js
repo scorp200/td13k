@@ -5,11 +5,14 @@ var Gui = {
 	y: 0,
 	elements: [],
 	tooltip: "",
+	selection: null,
 
 	setup: function() {
 		var center = Canvas.width/2;
 		var bottom = Canvas.height;
+		Gui.selection = createSelectionDisplay();
 		Gui.elements = [
+			Gui.selection,
 			Button(Gui, center-24-60, bottom-64, 48, 48, "Build Satellite", null, buildSatellite),
 			Button(Gui, center-24, bottom-64, 48, 48, "Build Mining Station", null, buildMiningStation),
 			Button(Gui, center+24+12, bottom-64, 48, 48, "Build Defense Platform", null, buildDefensePlatform)
@@ -18,14 +21,12 @@ var Gui = {
 
 	update: function() {
 		Gui.tooltip = "";
-		gui.updateAll();
 		Gui.elements.forEach(function(e) {
 			e.update();
 		});
 	},
 
 	render: function() {
-		gui.renderAll();
 		Gui.elements.forEach(function(e) {
 			e.render();
 		});
@@ -81,89 +82,70 @@ function buildDefensePlatform() {
 
 Gui.setup();
 
-// Change to guiElement? So Gui can cover a broader aspect.
-var guis = [];
+function createSelectionDisplay() {
 
-function gui(x, y, width, height, cache) {
-	var t = {};
-	guis.push(t);
-	t.x = x;
-	t.y = y;
-	t.w = width;
-	t.h = height;
-	t.cache = cache;
-	t.display = false;
-	t.buttons = [];
-	t.update = function() {
-		if (t.display && Mouse.click) {
-			t.onClick();
+	var w = 360;
+	var h = 120;
+	var x = Canvas.width/2 - w/2;
+	var y = Canvas.height-128 - h;
+	var elements = [];
+
+	var object = {
+
+		x: x,
+		y: y,
+		target: null,
+
+		update: function() {
+			elements.forEach(function(e) {
+				e.update();
+			});
+		},
+
+		render: function() {
+			if (object.target !== null) {
+
+				// Background.
+				ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+				ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+				ctx.fillRect(x, y, w, h);
+				ctx.strokeRect(x, y, w, h);
+
+				// Name.
+				ctx.fillStyle = "#fff";
+				ctx.textAlign = "left";
+				ctx.textBaseline = "top";
+				ctx.font = "16px monospace";
+				var text = (base.planet === object.target ? 'Base' : '') + '' + object.target.name;
+				ctx.fillText(text, x+h, y+16);
+
+				// Image.
+				var image = object.target.cache;
+				ctx.drawImage(image, x+8, y+8, h-16, h-16);
+
+				// Buttons.
+				elements.forEach(function(e) {
+					e.render();
+				});
+
+			}
+		},
+
+		// Open the panel at a particular location.
+		// Currently assigns to 2 different coords, FIX.
+		openAt: function(nx, ny) {
+			object.x = x = nx;
+			object.y = y = ny;
 		}
-	}
-	t.onClick = function() {}
-	t.render = function() {}
-	t.show = function(param) {}
-	return t;
-}
-
-function createPop() {
-	var t = gui(Canvas.width/2-150, Canvas.height/2-200, 300, 400, null);
-	t.buttons.push(Button(t, 150-25, 200-25, 50, 50, 'Satellite', sprSatellite, function() {
-		speak('choose a target');
-		t.hide();
-		//gameState = STATE_CREATE;
-		//Create = Satellite.create;
-	}));
-	t.show = function(planet) {
-		Mouse.target = t;
-		t.display = true;
-		t.target = planet;
-	}
-	t.hide = function() {
-		t.target = null;
-		t.display = false;
-		Mouse.target = null;
-	}
-	t.onClick = function() {
-		if (Mouse.target == t && clicked(t.x, t.y, t.w, t.h)) {
-			t.buttons.forEach(function(e) { e.update(); });
-		} else {
-			t.hide();
-		}
-	}
-	t.render = function() {
-
-		// Background.
-		ctx.fillStyle = '#141e28';
-		ctx.fillRect(t.x, t.y, t.w, t.h);
-
-		// Name.
-		ctx.fillStyle = "#fff";
-		ctx.textAlign = 'center';
-		ctx.font = "24px monospace";
-		var text = (base.planet === t.target ? 'Base' : '') + ' ' + t.target.name;
-		ctx.fillText(text, t.x+t.w/2, t.y + 20);
-
-		// Image.
-		var image = t.target.cache;
-		ctx.drawImage(image, t.x+t.w/2 - image.width / 2, t.y+100-image.height/2);
-
-		// Buttons.
-		t.buttons.forEach(function(e) { e.render(); });
 
 	}
-	return t;
-}
 
-gui.updateAll = function() {
-	var n = guis.length;
-	while (n--) {
-		guis[n].update();
-	}
-}
+	elements.push(
+		Button(object, h+8, h-60, 48, 48, "Build Satellite", null, buildSatellite),
+		Button(object, h+8+60, h-60, 48, 48, "Build Mining Station", null, buildMiningStation),
+		Button(object, h+8+120, h-60, 48, 48, "Build Defense Platform", null, buildDefensePlatform)
+	);
 
-gui.renderAll = function() {
-	var n = guis.length;
-	while (n--) {
-		(guis[n].display) && guis[n].render();
-	}
+	return object;
+
 }
