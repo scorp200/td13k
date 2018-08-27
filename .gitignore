@@ -1,3 +1,2 @@
-closure-compiler/
-compile.sh
+closure-compiler.jar
 *.zip
