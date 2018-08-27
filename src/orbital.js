@@ -116,7 +116,7 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.index = def.length;
 	def.push(t);
-	t.module = defenseStation.modules.laser(t);
+	t.module = defenseStation.modules.beam(t);
 	t.update = extend(t.update, t.module.update);
 	t.render = extend(t.render, t.module.render);
 	return t;
@@ -125,70 +125,72 @@ function defenseStation(orbit) {
 defenseStation.max = 2;
 
 defenseStation.modules = {
+
+	// Beam weapon module.
 	beam: function(station) {
-		var t = {};
-		t.cost = 100;
-		t.damage = 0.5;
-		t.length = 1000;
-		t.station = station;
-		t.target = null;
-		t.angle = null;
-		t.angleTarget = null;
-		t.buffer = 0.01;
-		t.update = function() {
-			t.target = EnemyShip.furthest(t.station, t.length);
-			if (!t.target)
-				return;
-			t.angleTarget = Math.atan2(t.target.y - t.station.y, t.target.x - t.station.x);
-			if (t.angle == null)
-				t.angle = t.angleTarget;
-			t.angle += lerp(t.angle, t.angleTarget, 100, 0.001);
-			var n = EnemyShip.allInstances.length;
-			while (n--) {
-				var inst = EnemyShip.allInstances[n];
-				var angle = Math.atan2(inst.y - t.station.y, inst.x - t.station.x);
-				var distance = getDistance(inst, t.station);
-				if (distance < t.length && Math.abs(angle - t.angle) < t.buffer)
-					inst.hp -= t.damage;
+		var cost = 100;
+		var damage = 10.5;
+		var length = 1000;
+		var target = null;
+		var angle = null;
+		var angleTarget = null;
+		var buffer = 0.1;
+		return {
+			update: function() {
+				target = EnemyShip.furthest(station, length);
+				if (!target) return;
+				angleTarget = getAngle(station, target);
+				if (angle == null) angle = angleTarget;
+				angle += Math.sign(getAngleDifference(angleTarget, angle)) * 0.01;
+				var n = EnemyShip.allInstances.length;
+				while (n--) {
+					var inst = EnemyShip.allInstances[n];
+					var instAngle = getAngle(station, inst);
+					var distance = getDistance(inst, station);
+					var difference = getAngleDifference(angle, instAngle)
+					if (distance < length && Math.abs(difference) < buffer) {
+						inst.hp -= damage;
+					}
+				}
+			},
+			render: function() {
+				if (!target) return;
+				ctx.beginPath();
+				ctx.strokeStyle = "#FF0";
+				ctx.lineWidth = 5;
+				ctx.moveTo(station.x, station.y / View.tilt);
+				var x = station.x - length * Math.cos(angle);
+				var y = station.y - length * Math.sin(angle);
+				ctx.lineTo(x, y / View.tilt);
+				ctx.stroke();
 			}
 		}
-		t.render = function() {
-			if (!t.target)
-				return;
-			ctx.beginPath();
-			ctx.strokeStyle = "#FF0";
-			ctx.lineWidth = 5;
-			ctx.moveTo(t.station.x, t.station.y / View.tilt);
-			var x = t.length * Math.cos(t.angle) + t.station.x;
-			var y = t.length * Math.sin(t.angle) + t.station.y;
-			ctx.lineTo(x, y / View.tilt);
-			ctx.stroke();
-		}
-		return t;
 	},
+
+	// Laser weapon module.
 	laser: function(station) {
-		var t = {}
 		var range = 1000;
 		var shootTimer = 0;
 		var shootCost = 0.1;
-		var station = station;
-		t.update = function() {
-			if (shootTimer-- <= 0) {
-				var target = EnemyShip.nearest(station, range);
-				if (target && base.energy >= shootCost) {
+		return {
+			update: function() {
+				if (shootTimer-- <= 0) {
 					shootTimer = 2;
-					base.energy -= shootCost;
-					var miss = (Math.random() > 0.5) ? true : false;
-					var lifetime = miss ? 2000 : getDistance(station, target);
-					console.log("shoot");
-					Laser.create(station.x, station.y, getAngle(station, target), lifetime, "#FF0");
-					if (!miss) {
-						target.hp -= 2;
+					var target = EnemyShip.nearest(station, range);
+					if (target && base.energy >= shootCost) {
+						base.energy -= shootCost;
+						var miss = Math.random() > 0.5;
+						var life = miss ? 2000 : getDistance(station, target);
+						var dir = getAngle(station, target);
+						Laser.create(station.x, station.y, dir, life, "#FF0");
+						if (!miss) {
+							target.hp -= 2;
+						}
 					}
 				}
-			}
+			},
+			render: function() {}
 		}
-		t.render = function() {}
-		return t;
 	}
+
 }

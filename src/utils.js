@@ -26,6 +26,10 @@ function getAngle(p1, p2) {
 	return Math.atan2(p1.y - p2.y, p1.x - p2.x);
 }
 
+function getAngleDifference(a1, a2) {
+	return mod((a1 - a2) + PI, TAU) - PI;
+}
+
 function mod(a, n) {
 	return a - Math.floor(a / n) * n;
 }
@@ -34,9 +38,9 @@ function splitToMax(max, orbit, array) {
 	var angle = 0;
 	array.forEach(function(e) {
 		if (e.orbit.planet == orbit)
-			angle += cr / max;
+			angle += TAU / max;
 	});
-	if (angle >= cr)
+	if (angle >= TAU)
 		return undefined;
 	return angle;
 }

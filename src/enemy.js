@@ -21,8 +21,8 @@ EnemyShip.prototype = {
 
         // Accuire and move to target.
         this.target = nearestTargetableOrbital(this.x, this.y);
-        var a = getAngle(this, this.target) - this.direction;
-        this.direction += (mod((a + cr/2), cr) - cr/2) * 0.01;
+        var a = getAngle(this, this.target);
+        this.direction += getAngleDifference(a, this.direction) * 0.01;
         this.x -= EnemyShip.speed * Math.cos(this.direction);
         this.y -= EnemyShip.speed * Math.sin(this.direction);
 
