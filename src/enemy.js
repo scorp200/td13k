@@ -88,6 +88,21 @@ EnemyShip.nearest = function(p, minRange) {
     return nearest;
 }
 
+EnemyShip.furthest = function(p, maxRange) {
+    var furthest = null;
+    var distance = 0;
+    var n = EnemyShip.allInstances.length;
+    while (n--) {
+        var inst = EnemyShip.allInstances[n];
+        var newDistance = getDistance(p, inst);
+        if (newDistance > distance && newDistance < maxRange) {
+            furthest = inst;
+            distance = newDistance;
+        }
+    }
+    return furthest;
+}
+
 EnemyShip.updateAll = function() {
     EnemyShip.flockCollision();
     var n = EnemyShip.allInstances.length;
