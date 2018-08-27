@@ -95,6 +95,7 @@ function satellite(orbit) {
 	t.name = "Satellite";
 	t.type = ORBITAL_TYPE.SATELLITE;
 	t.index = coms.length;
+	t.cache = sprSatellite;
 	t.update = extend(t.update, function() {
 		base.energy += base.energyRate;
 	})
@@ -156,8 +157,14 @@ defenseStation.modules = {
 			render: function() {
 				if (!target) return;
 				ctx.beginPath();
-				ctx.strokeStyle = "#FF0";
-				ctx.lineWidth = 5;
+				//ctx.strokeStyle = "#FF0";
+				ctx.lineWidth = 6 + Math.sin(performance.now()/5) * 3;
+
+				var grd=ctx.createRadialGradient(station.x, station.y / View.tilt,100,station.x, station.y / View.tilt,1000);
+				grd.addColorStop(0,"#FF0");
+				grd.addColorStop(1,"rgba(0, 0, 0, 0)");
+				ctx.strokeStyle = grd;
+
 				ctx.moveTo(station.x, station.y / View.tilt);
 				var x = station.x - length * Math.cos(angle);
 				var y = station.y - length * Math.sin(angle);

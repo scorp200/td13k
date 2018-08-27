@@ -62,9 +62,10 @@ function clamp(value, min, max) {
 	return value > max ? max : value < min ? min : value;
 }
 
+// IS THIS STILL USED?!
 function clicked(x, y, w, h) {
-	var a = (Mouse.x);
-	var b = (Mouse.y);
+	var a = Mouse.x;
+	var b = Mouse.y;
 	return (a > x && a < x+w && b > y && b < y+h);
 }
 

@@ -103,12 +103,13 @@ function update(repeat) {
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
 			hoverName = nearest.name;
-			if (!Mouse.target && Mouse.release && !Mouse.drag && nearest.type == ORBITAL_TYPE.PLANET) {
+			if (!Mouse.target && Mouse.release && !Mouse.drag/* && nearest.type == ORBITAL_TYPE.PLANET*/) {
 				speak("selected " + nearest.name);
 				pop.show(nearest);
 				sndClick.play();
 			}
 		}
+
 	}// else if (gameState === STATE_CREATE) {
 		//Create();
 	//}
