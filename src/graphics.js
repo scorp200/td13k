@@ -205,6 +205,10 @@ function renderBody(body) {
 }
 
 // MOVE THIS
+/**
+ * @param {Object} node
+ * @param {Array=} list
+ */
 function getComlines(node, list) {
 	list = list || [];
 	list.push(node);

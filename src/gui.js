@@ -97,38 +97,38 @@ function createSelectionDisplay() {
 		target: null,
 
 		update: function() {
+			if (object.target === null) return;
 			elements.forEach(function(e) {
 				e.update();
 			});
 		},
 
 		render: function() {
-			if (object.target !== null) {
+			if (object.target === null) return;
 
-				// Background.
-				ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-				ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-				ctx.fillRect(x, y, w, h);
-				ctx.strokeRect(x, y, w, h);
+			// Background.
+			ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+			ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+			ctx.fillRect(x, y, w, h);
+			ctx.strokeRect(x, y, w, h);
 
-				// Name.
-				ctx.fillStyle = "#fff";
-				ctx.textAlign = "left";
-				ctx.textBaseline = "top";
-				ctx.font = "16px monospace";
-				var text = (base.planet === object.target ? 'Base' : '') + '' + object.target.name;
-				ctx.fillText(text, x+h, y+16);
+			// Name.
+			ctx.fillStyle = "#fff";
+			ctx.textAlign = "left";
+			ctx.textBaseline = "top";
+			ctx.font = "16px monospace";
+			var text = (base.planet === object.target ? 'Base' : '') + '' + object.target.name;
+			ctx.fillText(text, x+h, y+16);
 
-				// Image.
-				var image = object.target.cache;
-				ctx.drawImage(image, x+8, y+8, h-16, h-16);
+			// Image.
+			var image = object.target.cache;
+			ctx.drawImage(image, x+8, y+8, h-16, h-16);
 
-				// Buttons.
-				elements.forEach(function(e) {
-					e.render();
-				});
+			// Buttons.
+			elements.forEach(function(e) {
+				e.render();
+			});
 
-			}
 		},
 
 		// Open the panel at a particular location.
@@ -136,15 +136,29 @@ function createSelectionDisplay() {
 		openAt: function(nx, ny) {
 			object.x = x = nx;
 			object.y = y = ny;
+		},
+
+		// Adds buttons from upgrade objects.
+		addButtons: function(arr) {
+			var xOffset = h + 8;
+			arr.forEach(function(upgrade) {
+				var text = upgrade.text;
+				var img = upgrade.img;
+				var func = upgrade.func;
+				elements.push(Button(object, xOffset, h-60, 48, 48, text, img, func));
+				xOffset += 60;
+			});
 		}
 
 	}
 
-	elements.push(
-		Button(object, h+8, h-60, 48, 48, "Build Satellite", null, buildSatellite),
-		Button(object, h+8+60, h-60, 48, 48, "Build Mining Station", null, buildMiningStation),
-		Button(object, h+8+120, h-60, 48, 48, "Build Defense Platform", null, buildDefensePlatform)
-	);
+	// TEST.
+	// Example: Gui.selection.addButtons(arrayOfUpgrades);
+	object.addButtons([
+		{ text: "Upgrade 1", img: null, func: buildSatellite },
+		{ text: "Upgrade 2", img: null, func: buildSatellite },
+		{ text: "Upgrade 3", img: null, func: buildSatellite }
+	]);
 
 	return object;
 

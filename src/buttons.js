@@ -1,3 +1,12 @@
+/**
+ * @param {Object} parent
+ * @param {number} x
+ * @param {number} y
+ * @param {number} w
+ * @param {number} h
+ * @param {HTMLCanvasElement} img
+ * @param {Function} onClick
+ */
 var Button = function(parent, x, y, w, h, text, img, onClick) {
 
 	var fillStyle = "rgba(0, 0, 0, 0.5)";
