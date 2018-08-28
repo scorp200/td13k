@@ -23,6 +23,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	t.isSun = false;
 	t.id = orbitals.length.toString();
 	t.hp = 100;
+	t.upgrades = [];
 	if (orbit) {
 		t.orbit = {
 			planet: orbit,
@@ -117,10 +118,59 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.index = def.length;
 	def.push(t);
-	t.module = defenseStation.modules.laser(t);
+	t.module = defenseStation.modules.laser(t, 1);
 	t.update = extend(t.update, t.module.update);
 	t.render = extend(t.render, t.module.render);
 	return t;
+}
+
+var upgrades = {
+	laser: {
+		name: "Lasers",
+		img: null,
+		func: null
+	},
+	beam: {
+		name: "Beam",
+		img: null,
+		func: null
+	},
+	rocket: {
+		name: "Rockets",
+		img: null,
+		func: null
+	}
+}
+
+function getUpgrade(m, type) {
+	var u = upgrades[type];
+	var o = {};
+	if (m.type === type) {
+		o.text = u.name + " (Level " + (m.level + 1) + ")";
+		o.img = u.img;
+		o.func = u.func;
+	} else {
+		o.text = u.name + " (Level 1)";
+		o.img = u.img;
+		o.func = u.func;
+	}
+	return o;
+}
+
+/**
+ * @param {Object} t Orbital.
+ * @return {Array}
+ */
+function getUpgrades(t) {
+
+	if (!t.module) return [];
+
+	return [
+		getUpgrade(t.module, "laser"),
+		getUpgrade(t.module, "beam"),
+		getUpgrade(t.module, "rocket")
+	];
+
 }
 
 defenseStation.max = 2;
@@ -150,7 +200,7 @@ defenseStation.modules = {
 	},
 
 	// Beam weapon module.
-	beam: function(station) {
+	beam: function(station, level) {
 		var cost = 100;
 		var damage = 10.5;
 		var length = 1000;
@@ -159,6 +209,8 @@ defenseStation.modules = {
 		var angleTarget = null;
 		var buffer = 0.1;
 		return {
+			type: "beam",
+			level: level,
 			update: function() {
 				target = EnemyShip.furthest(station, length);
 				if (!target) return;
@@ -197,11 +249,13 @@ defenseStation.modules = {
 	},
 
 	// Laser weapon module.
-	laser: function(station) {
+	laser: function(station, level) {
 		var range = 1000;
 		var shootTimer = 0;
 		var shootCost = 0.1;
 		return {
+			type: "laser",
+			level: level,
 			update: function() {
 				if (shootTimer-- <= 0) {
 					shootTimer = 2;

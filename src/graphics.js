@@ -240,7 +240,10 @@ function canReceiveConnection(t) {
 function renderComLines() {
 
 	var lines = getComlines(base.planet);
-	//console.log(lines);
+
+	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.8);
+    ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 4);
+    ctx.strokeStyle = "#0F0";
 
 	ctx.beginPath();
     var up = 75 * (View.tilt - 1);
@@ -257,11 +260,8 @@ function renderComLines() {
             }
         }
     }
-	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.8);
-    ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 4);
-    ctx.strokeStyle = "#0F0";
 	ctx.stroke();
-    ctx.globalAlpha = 1;
+
 }
 
 function drawDebug() {
@@ -271,7 +271,7 @@ function drawDebug() {
 	ctx.fillStyle = "#fff";
 	ctx.fillText("#js13k tower defense prototype", 20, 200+20);
 	ctx.fillText("https://github.com/scorp200/td13k", 20, 200+40);
-	ctx.fillText("framerate: " + fps, 20, 200+60);
+	ctx.fillText("framerate: " + Fps.fps, 20, 200+60);
 	ctx.fillText("mouse (gui): " + Mouse.x + ", " + Mouse.y, 20, 200+80);
 	ctx.fillText("mouse (view): " + Mouse.vx + ", " + Mouse.vy, 20, 200+100);
 	ctx.fillText("planet name: " + hoverName, 20, 200+120);

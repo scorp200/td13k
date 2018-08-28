@@ -15,7 +15,6 @@ window.addEventListener("contextmenu", function(e) {
 
 // Pause the game.
 document.addEventListener("keypress", function(e)  {
-	console.log(e.key);
   	if (e.key === " ") {
 		if (gameState === STATE_PAUSED) {
 			gameState = STATE_RUNNING;
@@ -52,27 +51,12 @@ var ds3 = defenseStation(s2);
 var lastTick = performance.now();
 var tickLength = 1000 / 60; // Logic steps per second
 var last = 0;
-var fps = 0;
-var allFps = [];
 (function frame(timestamp) {
 
 	requestAnimationFrame(frame);
-	//setTimeout(function(){frame(performance.now())}, 1);
 	var nextTick = lastTick + tickLength;
-	allFps.push(1 / ((timestamp - last) / 1000));
+	Fps.update(1 / ((timestamp - last) / 1000));
 	last = timestamp;
-	if (allFps.length > 60) {
-		var sum = 0;
-		var min = 1000;
-		var max = 0;
-		allFps.shift();
-		allFps.forEach(function(value) {
-			sum += value;
-			min = Math.min(min, value);
-			max = Math.max(max, value);
-		});
-		fps = Math.floor(sum / 60) + ", " + ~~min + " - " + ~~max;
-	}
 
 	if (timestamp > nextTick) {
 		var timeSinceTick = timestamp - lastTick;
@@ -143,7 +127,7 @@ function render() {
 		ctx.setTransform(1, 0, 0, 1, centerX, centerY);
 		View.reset();
 		Gui.render();
-		//drawDebug();
+		drawDebug();
 
 	}
 }

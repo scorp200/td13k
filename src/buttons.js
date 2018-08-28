@@ -6,6 +6,7 @@
  * @param {number} h
  * @param {HTMLCanvasElement} img
  * @param {Function} onClick
+ * @return {Object}
  */
 var Button = function(parent, x, y, w, h, text, img, onClick) {
 
@@ -20,7 +21,7 @@ var Button = function(parent, x, y, w, h, text, img, onClick) {
 			if (Mouse.overRegion(parent.x+x, parent.y+y, w, h)) {
 				Gui.tooltip = text;
 				if (Mouse.click) {
-					onClick();
+					onClick && onClick();
 				}
 			}
 		},

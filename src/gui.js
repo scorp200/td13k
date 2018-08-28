@@ -140,6 +140,7 @@ function createSelectionDisplay() {
 
 		// Adds buttons from upgrade objects.
 		addButtons: function(arr) {
+			elements.length = 0;
 			var xOffset = h + 8;
 			arr.forEach(function(upgrade) {
 				var text = upgrade.text;
@@ -154,11 +155,11 @@ function createSelectionDisplay() {
 
 	// TEST.
 	// Example: Gui.selection.addButtons(arrayOfUpgrades);
-	object.addButtons([
+	/*object.addButtons([
 		{ text: "Upgrade 1", img: null, func: buildSatellite },
 		{ text: "Upgrade 2", img: null, func: buildSatellite },
 		{ text: "Upgrade 3", img: null, func: buildSatellite }
-	]);
+	]);*/
 
 	return object;
 
