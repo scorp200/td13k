@@ -1,45 +1,54 @@
-var Laser = {
+var Laser = (function() {
 
-    map: {},
-    instances: [],
-    speed: 50,
+    var map = {};
+    var instances = [];
+    var speed = 50;
 
-    create: function(x, y, angle, lifetime, color) {
-        if (!Laser.map[color]) {
-            Laser.map[color] = [];
+    /**
+     * @param {number} x
+     * @param {number} y
+     * @param {number} angle
+     * @param {number} lifetime
+     * @param {string} color
+     * @return {void}
+     */
+    function create(x, y, angle, lifetime, color) {
+        if (!map[color]) {
+            map[color] = [];
         }
-        Laser.map[color].push({
+        map[color].push({
             x: x,
             y: y,
             angle: angle,
-            lifetime: lifetime - Laser.speed
+            lifetime: lifetime - speed
         });
-    },
+    }
 
-    update: function() {
-        for (var color in Laser.map) {
-            var n = Laser.map[color].length;
+    function update() {
+        for (var color in map) {
+            var n = map[color].length;
             while (n--) {
-                var inst = Laser.map[color][n];
-                inst.lifetime -= Laser.speed;
+                var inst = map[color][n];
+                inst.lifetime -= speed;
                 if (inst.lifetime <= 0) {
-                    Laser.destroy(color, n);
+                    destroy(color, n);
                 } else {
-                    inst.x -= Math.cos(inst.angle) * Laser.speed;
-                    inst.y -= Math.sin(inst.angle) * Laser.speed;
+                    inst.x -= Math.cos(inst.angle) * speed;
+                    inst.y -= Math.sin(inst.angle) * speed;
                 }
             }
         }
-    },
+    }
 
-    render: function() {
+    function render() {
+        ctx.globalAlpha = 1;
         ctx.lineWidth = 1;
-        for (var color in Laser.map) {
+        for (var color in map) {
             ctx.strokeStyle = color;
             ctx.beginPath();
-            var n = Laser.map[color].length;
+            var n = map[color].length;
             while (n--) {
-                var inst = Laser.map[color][n];
+                var inst = map[color][n];
                 var toX = inst.x+Math.cos(inst.angle)*10;
                 var toY = inst.y / View.tilt+Math.sin(inst.angle)*10;
                 ctx.moveTo(inst.x, inst.y / View.tilt);
@@ -47,10 +56,16 @@ var Laser = {
             }
             ctx.stroke();
         }
-    },
-
-    destroy: function(c, n) {
-        Laser.map[c].splice(n, 1);
     }
 
-}
+    function destroy(c, n) {
+        map[c].splice(n, 1);
+    }
+
+    return {
+        create: create,
+        update: update,
+        render: render
+    }
+
+})();

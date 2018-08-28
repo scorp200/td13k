@@ -6,6 +6,7 @@
  * @param {number} h
  * @param {HTMLCanvasElement} img
  * @param {Function} onClick
+ * @return {Object}
  */
 var Button = function(parent, x, y, w, h, text, img, onClick) {
 
