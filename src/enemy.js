@@ -58,7 +58,7 @@ EnemyShip.flockCollision = function() {
     while (n--) {
         var inst1 = EnemyShip.allInstances[n];
         var i = n;
-        while (i-- > 0) {
+        while (i--) {
             var inst2 = EnemyShip.allInstances[i];
             var distance = getDistanceRaw(inst1, inst2);
             if (distance < 200) {
@@ -68,6 +68,7 @@ EnemyShip.flockCollision = function() {
                 inst1.y += ym;
                 inst2.x -= xm;
                 inst2.y -= ym;
+                break;  // Hackky quick exit, works just as well!
             }
         }
     }

@@ -25,6 +25,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	t.isSun = false;
 	t.id = orbitals.length.toString();
 	t.hp = 100;
+	t.module = null;
 	t.upgrades = [];
 	if (orbit) {
 		t.orbit = {
@@ -44,9 +45,13 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 			t.y = e.distance * Math.sin(e.angle) + e.planet.y;
 		}
 
+		//
+		t.module && t.module.update();
+
 	}
 	t.render = function() {
 		renderTrail(t);
+		t.module && t.module.render();
 	}
 	orbitals.push(t);
 	return t;
@@ -97,7 +102,7 @@ function satellite(orbit) {
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, orbit.size * 5, 0.01, angle);
 	t.name = "Satellite";
 	t.type = ORBITAL_TYPE.SATELLITE;
-	t.index = coms.length;
+	//t.index = coms.length;
 	t.cache = sprSatellite;
 	t.update = extend(t.update, function() {
 		base.energy += base.energyRate;
@@ -118,13 +123,17 @@ function defenseStation(orbit) {
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, angle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
-	t.index = def.length;
+	//t.index = def.length;
 	def.push(t);
-	t.module = defenseStation.modules.rocket(t, 4);
-	t.update = extend(t.update, t.module.update);
-	t.render = extend(t.render, t.module.render);
+	t.module = defenseStation.modules.beam(t, 4);
+	//t.update = extend(t.update, t.module.update);
+	//t.render = extend(t.render, t.module.render);
 	return t;
 }
+
+//function setModuleUpgrade(station, ) {
+
+//}
 
 defenseStation.max = 2;
 
@@ -151,7 +160,7 @@ defenseStation.modules = {
 					}
 				}
 			},
-			render: function() {}
+			render: NOOP
 		};
 	},
 
@@ -228,7 +237,7 @@ defenseStation.modules = {
 					}
 				}
 			},
-			render: function() {}
+			render: NOOP
 		}
 	}
 
