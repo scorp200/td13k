@@ -124,53 +124,52 @@ function defenseStation(orbit) {
 	return t;
 }
 
+var upgrades = {
+	laser: {
+		name: "Lasers",
+		img: null,
+		func: null
+	},
+	beam: {
+		name: "Beam",
+		img: null,
+		func: null
+	},
+	rocket: {
+		name: "Rockets",
+		img: null,
+		func: null
+	}
+}
+
+function getUpgrade(m, type) {
+	var u = upgrades[type];
+	var o = {};
+	if (m.type === type) {
+		o.text = u.name + " (Level " + (m.level + 1) + ")";
+		o.img = u.img;
+		o.func = u.func;
+	} else {
+		o.text = u.name + " (Level 1)";
+		o.img = u.img;
+		o.func = u.func;
+	}
+	return o;
+}
+
 /**
  * @param {Object} t Orbital.
  * @return {Array}
  */
-function getDefenseStationUpgrades(t) {
+function getUpgrades(t) {
 
 	if (!t.module) return [];
 
-	var arr = [];
-
-	if (t.module.type === "laser") {
-		arr.push({
-			text: "Laser (Level " + (t.module.level + 1) + ")",
-			img: null, func: null
-		});
-	} else {
-		arr.push({
-			text: "Laser (Level 1)",
-			img: null, func: null
-		});
-	}
-
-	if (t.module.type === "Beam") {
-		arr.push({
-			text: "Beam (Level " + (t.module.level + 1) + ")",
-			img: null, func: null
-		});
-	} else {
-		arr.push({
-			text: "Beam (Level 1)",
-			img: null, func: null
-		});
-	}
-
-	if (t.module.type === "Rockets") {
-		arr.push({
-			text: "Rockets (Level " + (t.module.level + 1) + ")",
-			img: null, func: null
-		});
-	} else {
-		arr.push({
-			text: "Rockets (Level 1)",
-			img: null, func: null
-		});
-	}
-
-	return arr;
+	return [
+		getUpgrade(t.module, "laser"),
+		getUpgrade(t.module, "beam"),
+		getUpgrade(t.module, "rocket")
+	];
 
 }
 
