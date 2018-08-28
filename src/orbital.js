@@ -192,6 +192,28 @@ function getUpgrades(t) {
 defenseStation.max = 2;
 
 defenseStation.modules = {
+	rocket: function(station) {
+		var cost = 200;
+		var energyCost = 0.5;
+		var damage = 2;
+		var attackRate = 20;
+		var range = 1500;
+		var timer = attackRate;
+		return {
+			update: function() {
+				if (timer-- <= 0) {
+					timer = attackRate;
+					var target = EnemyShip.nearest(station, range);
+					if (target && base.energy >= energyCost) {
+						base.energy -= energyCost;
+						var life = getDistance(station, target);
+						var dir = getAngle(station, target);
+						//Laser.create(station.x, station.y, dir, life, "#FF0", createExplosion.bind(target.x, target.y, 1000));
+					}
+				}
+			}
+		};
+	},
 
 	// Beam weapon module.
 	beam: function(station, level) {
@@ -226,11 +248,11 @@ defenseStation.modules = {
 				if (!target) return;
 				ctx.beginPath();
 				//ctx.strokeStyle = "#FF0";
-				ctx.lineWidth = 6 + Math.sin(performance.now()/5) * 3;
+				ctx.lineWidth = 6 + Math.sin(performance.now() / 5) * 3;
 
-				var grd=ctx.createRadialGradient(station.x, station.y / View.tilt,100,station.x, station.y / View.tilt,1000);
-				grd.addColorStop(0,"#FF0");
-				grd.addColorStop(1,"rgba(0, 0, 0, 0)");
+				var grd = ctx.createRadialGradient(station.x, station.y / View.tilt, 100, station.x, station.y / View.tilt, 1000);
+				grd.addColorStop(0, "#FF0");
+				grd.addColorStop(1, "rgba(0, 0, 0, 0)");
 				ctx.strokeStyle = grd;
 
 				ctx.moveTo(station.x, station.y / View.tilt);
