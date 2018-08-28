@@ -80,6 +80,7 @@ function update(repeat) {
 			WaveManager.update();
 			EnemyShip.updateAll();
 			Laser.update();
+			Rocket.update();
 			clickNearest();
 		}
 
@@ -111,6 +112,7 @@ function render() {
 		EnemyShip.renderAll();
 		renderComLines();
 		Laser.render();
+		Rocket.render();
 
 		// Draw line to closer planet.
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);

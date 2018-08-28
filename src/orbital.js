@@ -118,7 +118,7 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.index = def.length;
 	def.push(t);
-	t.module = defenseStation.modules.laser(t, 4);
+	t.module = defenseStation.modules.rocket(t, 4);
 	t.update = extend(t.update, t.module.update);
 	t.render = extend(t.render, t.module.render);
 	return t;
@@ -192,7 +192,7 @@ function getUpgrades(t) {
 defenseStation.max = 2;
 
 defenseStation.modules = {
-	rocket: function(station) {
+	rocket: function(station, level) {
 		var cost = 200;
 		var energyCost = 0.5;
 		var damage = 2;
@@ -200,6 +200,8 @@ defenseStation.modules = {
 		var range = 1500;
 		var timer = attackRate;
 		return {
+			type: "rocket",
+			level: level,
 			update: function() {
 				if (timer-- <= 0) {
 					timer = attackRate;
@@ -208,10 +210,11 @@ defenseStation.modules = {
 						base.energy -= energyCost;
 						var life = getDistance(station, target);
 						var dir = getAngle(station, target);
-						//Laser.create(station.x, station.y, dir, life, "#FF0", createExplosion.bind(target.x, target.y, 1000));
+						Rocket.create(station.x, station.y, dir, life, "#00B" /*createExplosion.bind(target.x, target.y, 1000)*/);
 					}
 				}
-			}
+			},
+			render: function() {}
 		};
 	},
 
