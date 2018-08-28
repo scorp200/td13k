@@ -125,10 +125,7 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	//t.index = def.length;
 	def.push(t);
-	setModuleUpgrade(t, "laser", 4);
-	//t.module = defenseStation.modules.beam(t, 4);
-	//t.update = extend(t.update, t.module.update);
-	//t.render = extend(t.render, t.module.render);
+	setModuleUpgrade(t, "laser", 1);
 	return t;
 }
 

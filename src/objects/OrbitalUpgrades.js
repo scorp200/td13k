@@ -45,13 +45,14 @@ var OrbitalUpgrades = (function() {
      * @param {string} type Type of module.
      * @return {Object}
      */
-    function getUpgrade(m, type) {
+    function getUpgrade(t, type) {
+        var m = t.module;
         var u = upgrades[type];
         var level = (m.type === type) ? m.level+1 : 1;
         return {
             img: u.img,
             text: u.name + " (Level " + level + ")",
-            func: u.func
+            func: setModuleUpgrade.bind(null, t, type, level)
         }
     }
 
@@ -68,7 +69,7 @@ var OrbitalUpgrades = (function() {
         var arr = [];
         var list = getUpgradesByLocation(t.type);
         list.forEach(function(type) {
-            arr.push(getUpgrade(t.module, type));
+            arr.push(getUpgrade(t, type));
         });
 
         //
@@ -76,8 +77,16 @@ var OrbitalUpgrades = (function() {
 
     }
 
+    /**
+     * @param {string} type Upgrade name. Should change to a constant.
+     */
+    function getImplementation(type) {
+        return upgrades[type].impl;
+    }
+
     //
 	function rocketCode(station, level) {
+        console.log("rocket", station, level);
 		var cost = 200;
 		var energyCost = 0.5;
 		var damage = 2;
@@ -105,6 +114,7 @@ var OrbitalUpgrades = (function() {
 
 	// Beam weapon module.
 	function beamCode(station, level) {
+        console.log("beam", station, level);
 		var cost = 100;
 		var damage = 10.5;
 		var length = 1000;
@@ -154,6 +164,7 @@ var OrbitalUpgrades = (function() {
 
 	// Laser weapon module.
 	function laserCode(station, level) {
+        console.log("laser", station, level);
 		var range = 1000;
 		var shootTimer = 0;
 		var shootCost = 0.1;
@@ -162,7 +173,7 @@ var OrbitalUpgrades = (function() {
 			level: level,
 			update: function() {
 				if (shootTimer-- <= 0) {
-					shootTimer = 2;
+					shootTimer = 2 - Math.min(level / 10, 2);
 					var target = EnemyShip.nearest(station, range);
 					if (target && base.energy >= shootCost) {
 						base.energy -= shootCost;
@@ -178,11 +189,6 @@ var OrbitalUpgrades = (function() {
 			},
 			render: NOOP
 		}
-    }
-
-    //
-    function getImplementation(type) {
-        return upgrades[type].impl;
     }
 
     // Export.
