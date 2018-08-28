@@ -4,7 +4,7 @@ var Laser = {
     instances: [],
     speed: 50,
 
-    create: function(x, y, angle, lifetime, color) {
+    create: function(x, y, angle, lifetime, color, onDestroy) {
         if (!Laser.map[color]) {
             Laser.map[color] = [];
         }
@@ -12,7 +12,8 @@ var Laser = {
             x: x,
             y: y,
             angle: angle,
-            lifetime: lifetime - Laser.speed
+            lifetime: lifetime - Laser.speed,
+            onDestroy: onDestroy
         });
     },
 
@@ -23,6 +24,8 @@ var Laser = {
                 var inst = Laser.map[color][n];
                 inst.lifetime -= Laser.speed;
                 if (inst.lifetime <= 0) {
+                    if(inst.onDestroy !== UNDEF)
+                        inst.onDestroy();
                     Laser.destroy(color, n);
                 } else {
                     inst.x -= Math.cos(inst.angle) * Laser.speed;
