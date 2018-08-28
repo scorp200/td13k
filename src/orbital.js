@@ -118,7 +118,7 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.index = def.length;
 	def.push(t);
-	t.module = defenseStation.modules.laser(t, 1);
+	t.module = defenseStation.modules.laser(t, 4);
 	t.update = extend(t.update, t.module.update);
 	t.render = extend(t.render, t.module.render);
 	return t;
@@ -126,35 +126,46 @@ function defenseStation(orbit) {
 
 var upgrades = {
 	laser: {
+		loc: ORBITAL_TYPE.DEFENSE,
 		name: "Lasers",
 		img: null,
 		func: null
 	},
 	beam: {
+		loc: ORBITAL_TYPE.DEFENSE,
 		name: "Beam",
 		img: null,
 		func: null
 	},
 	rocket: {
+		loc: ORBITAL_TYPE.DEFENSE,
 		name: "Rockets",
 		img: null,
 		func: null
 	}
 }
 
+function getUpgradesByLocation(loc) {
+	var arr = [];
+	for (var name in upgrades) {
+		(upgrades[name].loc === loc) && arr.push(name);
+	}
+	return arr;
+}
+
+/**
+ * @param {Object} m Weapon module.
+ * @param {string} type Type of module.
+ * @return {Object}
+ */
 function getUpgrade(m, type) {
 	var u = upgrades[type];
-	var o = {};
-	if (m.type === type) {
-		o.text = u.name + " (Level " + (m.level + 1) + ")";
-		o.img = u.img;
-		o.func = u.func;
-	} else {
-		o.text = u.name + " (Level 1)";
-		o.img = u.img;
-		o.func = u.func;
+	var level = (m.type === type) ? m.level+1 : 1;
+	return {
+		img: u.img,
+		text: u.name + " (Level " + level + ")",
+		func: u.func
 	}
-	return o;
 }
 
 /**
@@ -163,13 +174,18 @@ function getUpgrade(m, type) {
  */
 function getUpgrades(t) {
 
+	// Orbital doesn't have a module.
 	if (!t.module) return [];
 
-	return [
-		getUpgrade(t.module, "laser"),
-		getUpgrade(t.module, "beam"),
-		getUpgrade(t.module, "rocket")
-	];
+	//
+	var arr = [];
+	var list = getUpgradesByLocation(t.type);
+	list.forEach(function(type) {
+		arr.push(getUpgrade(t.module, type));
+	});
+
+	//
+	return arr;
 
 }
 
