@@ -111,6 +111,10 @@ function clickNearest() {
 				speak("selected " + nearest.name);
 				Gui.selection.target = nearest;
 				Gui.selection.openAt(Mouse.x, Mouse.y);
+
+				var upgrades = getDefenseStationUpgrades(nearest);
+				Gui.selection.addButtons(upgrades);
+
 				sndClick.play();
 			}
 		}

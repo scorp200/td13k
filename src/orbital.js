@@ -23,6 +23,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	t.isSun = false;
 	t.id = orbitals.length.toString();
 	t.hp = 100;
+	t.upgrades = [];
 	if (orbit) {
 		t.orbit = {
 			planet: orbit,
@@ -117,10 +118,60 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.index = def.length;
 	def.push(t);
-	t.module = defenseStation.modules.laser(t);
+	t.module = defenseStation.modules.laser(t, 1);
 	t.update = extend(t.update, t.module.update);
 	t.render = extend(t.render, t.module.render);
 	return t;
+}
+
+/**
+ * @param {Object} t Orbital.
+ * @return {Array}
+ */
+function getDefenseStationUpgrades(t) {
+
+	if (!t.module) return [];
+
+	var arr = [];
+
+	if (t.module.type === "laser") {
+		arr.push({
+			text: "Laser (Level " + (t.module.level + 1) + ")",
+			img: null, func: null
+		});
+	} else {
+		arr.push({
+			text: "Laser (Level 1)",
+			img: null, func: null
+		});
+	}
+
+	if (t.module.type === "Beam") {
+		arr.push({
+			text: "Beam (Level " + (t.module.level + 1) + ")",
+			img: null, func: null
+		});
+	} else {
+		arr.push({
+			text: "Beam (Level 1)",
+			img: null, func: null
+		});
+	}
+
+	if (t.module.type === "Rockets") {
+		arr.push({
+			text: "Rockets (Level " + (t.module.level + 1) + ")",
+			img: null, func: null
+		});
+	} else {
+		arr.push({
+			text: "Rockets (Level 1)",
+			img: null, func: null
+		});
+	}
+
+	return arr;
+
 }
 
 defenseStation.max = 2;
@@ -128,7 +179,7 @@ defenseStation.max = 2;
 defenseStation.modules = {
 
 	// Beam weapon module.
-	beam: function(station) {
+	beam: function(station, level) {
 		var cost = 100;
 		var damage = 10.5;
 		var length = 1000;
@@ -137,6 +188,8 @@ defenseStation.modules = {
 		var angleTarget = null;
 		var buffer = 0.1;
 		return {
+			type: "beam",
+			level: level,
 			update: function() {
 				target = EnemyShip.furthest(station, length);
 				if (!target) return;
@@ -175,11 +228,13 @@ defenseStation.modules = {
 	},
 
 	// Laser weapon module.
-	laser: function(station) {
+	laser: function(station, level) {
 		var range = 1000;
 		var shootTimer = 0;
 		var shootCost = 0.1;
 		return {
+			type: "laser",
+			level: level,
 			update: function() {
 				if (shootTimer-- <= 0) {
 					shootTimer = 2;

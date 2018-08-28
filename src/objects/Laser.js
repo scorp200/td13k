@@ -1,7 +1,6 @@
 var Laser = (function() {
 
     var map = {};
-    var instances = [];
     var speed = 50;
 
     /**
@@ -13,25 +12,33 @@ var Laser = (function() {
      * @return {void}
      */
     function create(x, y, angle, lifetime, color) {
-        if (!map[color]) {
-            map[color] = [];
-        }
+
+        // Create map for this color if it doesn't exist yet.
+        (!map[color]) && (map[color] = []);
+
+        // Push new instance to array in map.
         map[color].push({
             x: x,
             y: y,
             angle: angle,
             lifetime: lifetime - speed
         });
+
     }
 
+    /**
+     * Update all Laser instances.
+     * @return {void}
+     */
     function update() {
         for (var color in map) {
-            var n = map[color].length;
+            var m = map[color];
+            var n = m.length;
             while (n--) {
-                var inst = map[color][n];
+                var inst = m[n];
                 inst.lifetime -= speed;
                 if (inst.lifetime <= 0) {
-                    destroy(color, n);
+                    destroy(m, n);
                 } else {
                     inst.x -= Math.cos(inst.angle) * speed;
                     inst.y -= Math.sin(inst.angle) * speed;
@@ -40,6 +47,10 @@ var Laser = (function() {
         }
     }
 
+    /**
+     * Render all Laser instances.
+     * @return {void}
+     */
     function render() {
         ctx.globalAlpha = 1;
         ctx.lineWidth = 1;
@@ -58,8 +69,9 @@ var Laser = (function() {
         }
     }
 
-    function destroy(c, n) {
-        map[c].splice(n, 1);
+    function destroy(arr, n) {
+        arr[n] = arr[arr.length-1];
+        arr.length -= 1;
     }
 
     return {
