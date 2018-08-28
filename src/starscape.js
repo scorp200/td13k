@@ -31,7 +31,7 @@ function drawStarscape() {
     ctx.beginPath();
     ctx.rect(0, 0, Canvas.width, Canvas.height);
     ctx.fillStyle = starPattern;
-    ctx.translate(Canvas.width*0.5, Canvas.height*0.5);
+    ctx.translate(Canvas.width*0.5, Canvas.height*0.5+View.tilt*500);
     ctx.scale(0.5, 0.5);
     ctx.translate(-View.x/25, -View.y/25);
     ctx.rotate(offset/200);
