@@ -9,7 +9,7 @@ var Fps = (function() {
 
         /**
          * @param {number} tFrame
-         * @return {string} The framerate in string format: fps, min - max.
+         * @return {void} Directly sets private "fps" variable.
          */
         update: function(tFrame) {
             allFps.push(tFrame);
