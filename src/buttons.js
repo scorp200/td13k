@@ -6,9 +6,10 @@
  * @param {number} h
  * @param {HTMLCanvasElement} img
  * @param {Function} onClick
+ * @param {string=} speech
  * @return {Object}
  */
-var Button = function(parent, x, y, w, h, text, img, onClick) {
+var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 
 	var fillStyle = "rgba(0, 0, 0, 0.5)";
 	var strokeStyle = "rgba(255, 255, 255, 0.5)";
@@ -21,7 +22,12 @@ var Button = function(parent, x, y, w, h, text, img, onClick) {
 			if (Mouse.overRegion(parent.x+x, parent.y+y, w, h)) {
 				Gui.tooltip = text;
 				if (Mouse.click) {
-					onClick && onClick();
+					if (onClick) {
+						onClick();
+						if (speech) {
+							speak(speech);
+						}
+					}
 				}
 			}
 		},

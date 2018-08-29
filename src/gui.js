@@ -146,20 +146,13 @@ function createSelectionDisplay() {
 				var text = upgrade.text;
 				var img = upgrade.img;
 				var func = upgrade.func;
-				elements.push(Button(object, xOffset, h-60, 48, 48, text, img, func));
+				var speech = upgrade.speech;
+				elements.push(Button(object, xOffset, h-60, 48, 48, text, img, func, speech));
 				xOffset += 60;
 			});
 		}
 
 	}
-
-	// TEST.
-	// Example: Gui.selection.addButtons(arrayOfUpgrades);
-	/*object.addButtons([
-		{ text: "Upgrade 1", img: null, func: buildSatellite },
-		{ text: "Upgrade 2", img: null, func: buildSatellite },
-		{ text: "Upgrade 3", img: null, func: buildSatellite }
-	]);*/
 
 	return object;
 

@@ -1,4 +1,4 @@
-var Storage = (function() {
+var GameStorage = (function() {
 
     /**
      * @param {string} key
@@ -6,7 +6,7 @@ var Storage = (function() {
      * @return {void}
      */
     function set(key, value) {
-        localStorage.setItem(key, value);
+        window.localStorage.setItem(key, value);
     }
 
     /**
@@ -15,7 +15,7 @@ var Storage = (function() {
      * @return {string}
      */
     function get(key, defaultValue) {
-        return localStorage.getItem(key) || defaultValue;
+        return window.localStorage.getItem(key) || defaultValue;
     }
 
     // Export.

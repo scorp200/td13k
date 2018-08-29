@@ -18,14 +18,14 @@ var Settings = (function() {
         label.textContent = text;
         input.type = "checkbox";
         input.onclick = function() {
-            Storage.set(text, input.checked);
+            GameStorage.set(text, input.checked);
             callback.call(input);
         }
         li.appendChild(input);
         li.appendChild(label);
         ul.appendChild(li);
 
-        if (Storage.get(text, "true") === "true") {
+        if (GameStorage.get(text, "true") === "true") {
             input.checked = true;
             callback.call(input, true);
         }
