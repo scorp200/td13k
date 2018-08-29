@@ -82,7 +82,6 @@ var OrbitalUpgrades = (function() {
      * @return {Function}
      */
     function getImplementation(type) {
-        console.log(type);
         return upgrades[type].impl;
     }
 

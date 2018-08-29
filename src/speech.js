@@ -6,7 +6,7 @@ var voiceIndex = 3;
 
 // Load.
 if (speechSynth) {
-	speechEnabled = ENABLE_VOICE;
+	speechEnabled = true;
 	voices = speechSynth.getVoices();
 	if (voices.length <= 0) {
 		speechSynth.onvoiceschanged = function() {
@@ -19,7 +19,7 @@ if (speechSynth) {
 
 // Wrapper for speaking a new sentence.
 function speak(text) {
-	if (speechEnabled) {
+	if (speechEnabled && ENABLE_VOICE) {
 		speechSynth.cancel();
 		var speech = new SpeechSynthesisUtterance(text);
 		speech.rate = 1;

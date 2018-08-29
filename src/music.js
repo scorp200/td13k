@@ -73,19 +73,21 @@ function generateSound() {
 }
 
 function musicLoop(sound) {
-    if (!ENABLE_MUSIC) { return; }
-    if (!sound.hasListener) {
-        sound.hasListener = true;
-        sound.addEventListener("ended", function() {
-            this.currentTime = 0;
-            Music.current += 1;
-            Music.current %= Music.tracks.length;
-            console.log(Music.current);
-            musicLoop(Music.tracks[Music.current]._snd);
-        }, false);
-        sound.play();
+    if (ENABLE_MUSIC) {
+        if (!sound.hasListener) {
+            sound.hasListener = true;
+            sound.addEventListener("ended", function() {
+                this.currentTime = 0;
+                Music.current += 1;
+                Music.current %= Music.tracks.length;
+                musicLoop(Music.tracks[Music.current]._snd);
+            }, false);
+            sound.play();
+        } else {
+            sound.play();
+        }
+        sound.volume = 0.5;
     } else {
-        sound.play();
+        sound.pause();
     }
-    sound.volume = 0.5;
 }
