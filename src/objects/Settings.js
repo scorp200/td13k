@@ -11,23 +11,35 @@ var Settings = (function() {
     document.body.appendChild(ul);
 
     function addSetting(text, callback) {
+
         var li = document.createElement("LI");
         var label = document.createElement("LABEL");
         var input = document.createElement("INPUT");
         label.textContent = text;
         input.type = "checkbox";
-        input.onclick = callback;
+        input.onclick = function() {
+            Storage.set(text, input.checked);
+            callback.call(input);
+        }
         li.appendChild(input);
         li.appendChild(label);
         ul.appendChild(li);
+
+        if (Storage.get(text, "true") === "true") {
+            input.checked = true;
+            callback.call(input, true);
+        }
+
     }
 
-    addSetting("Music", function() {
+    addSetting("music", function(init) {
         ENABLE_MUSIC = this.checked;
-        musicLoop(Music.tracks[Music.current]._snd);
+        if (!init) {
+            musicLoop(currentMusic);
+        }
     });
 
-    addSetting("Voice", function() {
+    addSetting("voice", function() {
         ENABLE_VOICE = this.checked;
     });
 

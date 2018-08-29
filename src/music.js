@@ -72,22 +72,25 @@ function generateSound() {
     }
 }
 
+var currentMusic = musSpace;
 function musicLoop(sound) {
+    if (sound === null) return;
     if (ENABLE_MUSIC) {
+        currentMusic = sound;
         if (!sound.hasListener) {
             sound.hasListener = true;
             sound.addEventListener("ended", function() {
                 this.currentTime = 0;
-                Music.current += 1;
-                Music.current %= Music.tracks.length;
-                musicLoop(Music.tracks[Music.current]._snd);
+                var newTrack = Music.tracks[Music.current]._snd;
+                Music.current = Music.tracks.indexOf(newTrack);
+                musicLoop(newTrack);
             }, false);
-            sound.play();
+            currentMusic.play();
         } else {
-            sound.play();
+            currentMusic.play();
         }
         sound.volume = 0.5;
-    } else {
-        sound.pause();
+    } else if (currentMusic) {
+        currentMusic.pause();
     }
 }
