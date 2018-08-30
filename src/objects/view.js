@@ -11,6 +11,15 @@ var View = {
 	zoomTarget: 1,
     tilt: 2,
     smooth: 5,
+	init: function() {
+		View.x = 0;
+		View.y = 0;
+		View.xTarget = 0;
+	    View.yTarget = 0;
+		View.zoom = 1;
+		View.zoomTarget = 1;
+	    View.tilt = 2;
+	},
     update: function() {
         if (Mouse.scrollIn || Mouse.scrollOut) {
             var shift = Mouse.scrollIn ? 0.1 : -0.1;

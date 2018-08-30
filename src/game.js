@@ -31,7 +31,10 @@ var Game = {
 
 		// Clear any previous game.
 		orbitals = [];
+		View.init();
 		EnemyShip.destroyAll();
+		Laser.clear();
+		WaveManager.init();
 
 		// Setup planets (procgen this?)
 		var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);

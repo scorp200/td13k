@@ -74,10 +74,19 @@ var Laser = (function() {
         arr.length -= 1;
     }
 
+	/**
+	 *
+	 */
+	function clear() {
+		map = {};
+	}
+
+	// Export.
     return {
         create: create,
         update: update,
-        render: render
+        render: render,
+		clear: clear
     }
 
 })();
