@@ -125,7 +125,7 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	//t.index = def.length;
 	def.push(t);
-	setModuleUpgrade(t, "laser", 1);
+	setModuleUpgrade(t, "slow", 1);
 	return t;
 }
 

@@ -25,6 +25,13 @@ var OrbitalUpgrades = (function() {
         		img: null,
         		func: null,
                 impl: rocketCode
+        	},
+        	"slow": {
+        		loc: ORBITAL_TYPE.DEFENSE,
+        		name: "Slow",
+        		img: null,
+        		func: null,
+                impl: slowCode
         	}
         });
     }
