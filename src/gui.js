@@ -43,12 +43,12 @@ var Gui = {
 		// Minerals.
 		ctx.font = "small-caps 700 32px monospace";
 		ctx.fillText("minerals", Canvas.width/2+300, 64-16);
-		ctx.fillText(~~base.minerals, Canvas.width/2+300, 64+16);
+		ctx.fillText(~~Base.minerals, Canvas.width/2+300, 64+16);
 
 		// Energy.
 		ctx.font = "small-caps 700 32px monospace";
 		ctx.fillText("energy", Canvas.width/2+600, 64-16);
-		ctx.fillText(~~base.energy, Canvas.width/2+600, 64+16);
+		ctx.fillText(~~Base.energy, Canvas.width/2+600, 64+16);
 
 		// Days.
 		ctx.font = "small-caps 700 32px monospace";
@@ -58,7 +58,7 @@ var Gui = {
 		// Days.
 		ctx.font = "small-caps 700 32px monospace";
 		ctx.fillText("base status", Canvas.width/2-600, 64-16);
-		ctx.fillText(~~base.hp + "%", Canvas.width/2-600, 64+16);
+		ctx.fillText(~~Base.hp + "%", Canvas.width/2-600, 64+16);
 
 		// Tooltip.
 		ctx.font = "small-caps 700 24px monospace";
@@ -123,7 +123,7 @@ function createSelectionDisplay() {
 			ctx.textAlign = "left";
 			ctx.textBaseline = "top";
 			ctx.font = "16px monospace";
-			var text = (base.planet === object.target ? 'Base' : '') + '' + object.target.name;
+			var text = (Base.planet === object.target ? 'Base' : '') + '' + object.target.name;
 			ctx.fillText(text, x+h, y+16);
 
 			// Image.

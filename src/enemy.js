@@ -9,7 +9,7 @@ function EnemyShip(x, y) {
 	this.hp = 10;
 	this.speed = 5;
 	this.range = 500;
-	this.target = base.planet;
+	this.target = Base.planet;
 	this.shootTimer = Math.random() * 10;
 	this.buffs = [];
 	EnemyShip.allInstances.push(this);
@@ -32,20 +32,25 @@ EnemyShip.prototype = {
 
 		// Accuire and move to target.
 		this.target = nearestTargetableOrbital(this.x, this.y);
-		var a = getAngle(this, this.target);
-		this.moveDirection += getAngleDifference(a, this.moveDirection) * 0.01;
-		this.x -= opts.speed * Math.cos(this.moveDirection);
-		this.y -= opts.speed * Math.sin(this.moveDirection);
+		if (this.target) {
+			var a = getAngle(this, this.target);
+			this.moveDirection += getAngleDifference(a, this.moveDirection) * 0.01;
+			this.x -= opts.speed * Math.cos(this.moveDirection);
+			this.y -= opts.speed * Math.sin(this.moveDirection);
 
-		// Shootzing!
-		if (this.shootTimer-- <= 0) {
-			this.shootTimer = 10;
-			var distance = getDistance(this, this.target);
-			if (distance < opts.range) {
-				var miss = Math.random() > 0.5;
-				var dir = getAngle(this, this.target);
-				var range = miss ? 2000 : distance;
-				Laser.create(this.x, this.y, dir, range, "#F00");
+			// Shootzing!
+			if (this.shootTimer-- <= 0) {
+				this.shootTimer = 10;
+				var distance = getDistance(this, this.target);
+				if (distance < opts.range) {
+					var miss = Math.random() > 0.5;
+					var dir = getAngle(this, this.target);
+					var range = miss ? 2000 : distance;
+					Laser.create(this.x, this.y, dir, range, "#F00");
+					if (!miss) {
+						this.target.hp -= 1;
+					}
+				}
 			}
 		}
 

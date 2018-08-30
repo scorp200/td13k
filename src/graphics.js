@@ -230,7 +230,7 @@ function getComlines(node, list) {
 		var inst = orbitals[n];
 		var inList = list.indexOf(inst) >= 0;
 		if (node !== inst && !inList && canOfferConnection(node)) {
-			if (getDistance(node, inst) <= base.comRange) {
+			if (getDistance(node, inst) <= Base.comRange) {
 				getComlines(inst, list);
 			}
 		}
@@ -239,7 +239,7 @@ function getComlines(node, list) {
 }
 
 function canOfferConnection(t) {
-	return t === base.planet
+	return t === Base.planet
 		|| t.type === ORBITAL_TYPE.SATELLITE;
 }
 
@@ -253,7 +253,7 @@ function canReceiveConnection(t) {
 function renderComLines() {
 
 	resetComlines();
-	var lines = getComlines(base.planet);
+	var lines = getComlines(Base.planet);
 
 	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.8);
     ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 4);
@@ -265,7 +265,7 @@ function renderComLines() {
         var t = lines[n];
         for (var i=n; i<lines.length; i++) {
             var e = lines[i];
-            if (e != t && getDistance(e, t) <= base.comRange
+            if (e != t && getDistance(e, t) <= Base.comRange
 			&& canOfferConnection(t) && canReceiveConnection(e)) {
 				var y1 = t.y / View.tilt;
 				var y2 = e.y / View.tilt;

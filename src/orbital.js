@@ -41,6 +41,12 @@ function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
 	}
 	t.update = function() {
 
+		// Destroy.
+		if (t.hp <= 0) {
+			var index = orbitals.indexOf(t);
+			orbitals.splice(index, 1);
+		}
+
 		// Update orbit.
 		if (t.orbit) {
 			var e = t.orbit;
@@ -49,7 +55,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
 			t.y = e.distance * Math.sin(e.radAngle) + e.planet.y;
 		}
 
-		//
+		// Update module is present.
 		t.module && t.module.update();
 
 	}
@@ -91,7 +97,7 @@ Orbital.miningStation = function(orbit) {
 	t.name = "Mining Station";
 	t.type = ORBITAL_TYPE.MINING;
 	t.update = extend(t.update, function() {
-		base.minerals += base.mineRate;
+		Base.minerals += Base.mineRate;
 	})
 	return t;
 }
@@ -106,7 +112,7 @@ Orbital.satellite = function(orbit) {
 	//t.index = coms.length;
 	t.cache = sprSatellite;
 	t.update = extend(t.update, function() {
-		base.energy += base.energyRate;
+		Base.energy += Base.energyRate;
 	})
 	coms.push(t);
 	return t;

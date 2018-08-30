@@ -1,6 +1,4 @@
 // Cache stuff.
-//var pop = createPop();
-var base = null;
 var STATE_LOADING = 0;
 var STATE_RUNNING = 1;
 var STATE_CREATE = 2;
@@ -30,7 +28,7 @@ document.addEventListener("keypress", function(e) {
 // Setup planets (procgen this?)
 var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);
 var s1 = Orbital.planet(getHSL(180, 39, 62), 10, s, 650, 0.003, Math.random() * TAU);
-base = Base(s1);
+Base.planet = s1;
 var s1a = Orbital.planet(getHSL(-1, 60, 70), 5, s1, 100, -0.002, Math.random() * TAU);
 var s2 = Orbital.planet(getHSL(-1, 60, 70), 20, s, 1123, 0.0015, Math.random() * TAU);
 var s2a = Orbital.planet(getHSL(-1, 60, 70), 5, s2, s2.size * 8, 0.01, Math.random() * TAU);

@@ -1,4 +1,4 @@
-var Base = function(planet){
+var Base = (function(planet){
     return {
         planet: planet,
         hp: 100,
@@ -11,4 +11,4 @@ var Base = function(planet){
         minerals: 0,
         energy: 0
     }
-}
+})();

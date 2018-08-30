@@ -87,7 +87,8 @@ function nearestTargetableOrbital(x, y) {
 	var closest = orbitals[0];
 	var i = orbitals.length;
 	while (i--) {
-		if (orbitals[i].type > 1) {
+		var orb = orbitals[i];
+		if (orb.type > 1 || Base.planet === orb) {
 			var distance = getDistance(orbitals[i], pos);
 			if (distance < minDistance) {
 				minDistance = distance;
