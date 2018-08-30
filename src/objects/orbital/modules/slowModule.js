@@ -28,7 +28,7 @@ function slowCode(station, level) {
 			if (timer <= 0) {
 				ctx.beginPath();
 				ctx.fillStyle = '#c6e2ff';
-				ctx.arc(station.x, station.y, range, 0, TAU);
+				ctx.arc(station.x, station.y / View.tilt, range, 0, TAU);
 				ctx.fill();
 			}
 		}
