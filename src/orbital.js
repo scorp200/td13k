@@ -76,57 +76,55 @@ Orbital.sun = function(color, size, x, y) {
 }
 
 Orbital.planet = function(color, size, orbit, distance, speed, radAngle) {
-	//if (radAngle === undefined) radAngle = 0;
 	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, radAngle);
 	t.name = "Planet";
-	if (orbit.type === ORBITAL_TYPE.PLANET)
+	if (orbit.type === ORBITAL_TYPE.PLANET) {
 		t.type = ORBITAL_TYPE.MOON;
-	else
+	} else {
 		t.type = ORBITAL_TYPE.PLANET;
-	t.update = extend(t.update, function() {
-
-	})
+	}
+	//t.update = extend(t.update, function() {})
 	return t;
 }
 
 Orbital.miningStation = function(orbit) {
-	var radAngle = splitToMax(4, orbit, orbitals);
+	var radAngle = splitToMax(4, orbit);
 	if (radAngle === undefined)
 		return;
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, orbit.size * 3, -0.005, null);
 	t.name = "Mining Station";
 	t.type = ORBITAL_TYPE.MINING;
 	t.update = extend(t.update, function() {
-		Base.minerals += Base.mineRate;
-	})
+		if (t.online) {
+			Base.minerals += Base.mineRate;
+		}
+	});
 	return t;
 }
 
 Orbital.satellite = function(orbit) {
-	var radAngle = splitToMax(3, orbit, orbitals);
+	var radAngle = splitToMax(3, orbit);
 	if (radAngle === undefined)
 		return;
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, orbit.size * 5, 0.01, radAngle);
 	t.name = "Satellite";
 	t.type = ORBITAL_TYPE.SATELLITE;
-	//t.index = coms.length;
 	t.cache = sprSatellite;
 	t.update = extend(t.update, function() {
-		Base.energy += Base.energyRate;
-	})
-	//coms.push(t);
+		if (t.online) {
+			Base.energy += Base.energyRate;
+		}
+	});
 	return t;
 }
 
 Orbital.defenseStation = function(orbit) {
-	var radAngle = splitToMax(2, orbit, orbitals);
+	var radAngle = splitToMax(2, orbit);
 	if (radAngle === undefined)
 		return;
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
-	//t.index = def.length;
-	//def.push(t);
 	setModuleUpgrade(t, "slow", 1);
 	return t;
 }
@@ -138,15 +136,15 @@ function setModuleUpgrade(station, type, level) {
 
 // I can barely understand this function. >.<
 // Made it work-ish without needing multiple arrays.
-function splitToMax(max, orbit, array) {
+function splitToMax(max, orbit) {
 	var radAngle = 0;
-	if (array.length && array[0].orbit)
-		radAngle = array[0].orbit.radAngle;
-	array.forEach(function(e) {
-		if (e.orbit && e.orbit.planet == orbit)
+	if (orbitals.length && orbitals[0].orbit) {
+		radAngle = orbitals[0].orbit.radAngle;
+	}
+	orbitals.forEach(function(e) {
+		if (e.orbit && e.orbit.planet == orbit) {
 			radAngle += TAU / max;
+		}
 	});
-	//if (radAngle >= TAU)
-		//return undefined;
 	return radAngle;
 }
