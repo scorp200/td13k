@@ -37,7 +37,7 @@ var WaveManager = {
     spawn: function() {
         var n = WaveManager.spawnCount;
         while (n--) {
-            var a = Math.random() * cr;
+            var a = Math.random() * TAU;
             var x = Math.cos(a) * 3000;
             var y = Math.sin(a) * 3000;
             var ship = new EnemyShip(x, y);

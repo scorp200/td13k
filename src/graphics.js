@@ -58,7 +58,7 @@ function getOrbitCache(body) {
 		ctxOrbit.lineWidth = 2 / drawScale;
 		ctxOrbit.strokeStyle = body.color;
 		ctxOrbit.globalAlpha = 0.6;
-		ctxOrbit.arc(0, 0, orbit.distance, 0, cr/4, false);
+		ctxOrbit.arc(0, 0, orbit.distance, 0, TAU/4, false);
 		ctxOrbit.stroke();
 		ctxOrbit.setLineDash(dashStyleReset);
 		cache.hasBody[body.id] = true;
@@ -159,14 +159,14 @@ function renderBody(body) {
 		context.fillStyle = color;
 		context.shadowColor = body.color;
 		context.shadowBlur = glow;
-		context.arc(size, size-offset, body.size, 0, cr, false);
+		context.arc(size, size-offset, body.size, 0, TAU, false);
 		context.fill();
 
 		if (isSun) {
 			context.beginPath();
 			context.shadowColor = "#FFF";
 			context.shadowBlur = 5;
-			context.arc(size, size-offset, body.size-5, 0, cr, false);
+			context.arc(size, size-offset, body.size-5, 0, TAU, false);
 			context.fill();
 		}
 
@@ -185,7 +185,7 @@ function renderBody(body) {
 				context.shadowBlur = 10;
 				context.save();
 				context.transform(1, 0, 0, 1, size-o/2+(body.size-o)/2, size);
-				context.arc(0, 0, o--*2, -cr / 4, cr / 4);
+				context.arc(0, 0, o--*2, -TAU / 4, TAU / 4);
 				context.fill();
 				context.restore();
             }
@@ -197,7 +197,7 @@ function renderBody(body) {
 	ctx.translate(body.x, body.y / View.tilt);
 	ctx.rotate(a);
 	if (body.isSun) {
-		var scale = 1+Math.sin(performance.now()/30)*0.01;//1 + rand() * 0.03;
+		var scale = 1+Math.sin(performance.now()/30)*0.01;//1 + Math.random() * 0.03;
 		ctx.scale(scale, scale);
 	}
 	ctx.drawImage(body.cache, -body.cache.width/2, -body.cache.height/2);

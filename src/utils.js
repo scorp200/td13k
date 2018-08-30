@@ -1,7 +1,3 @@
-var log = console.log.bind(console);
-var rand = Math.random;
-var rond = Math.round;
-var cr = 2 * Math.PI;
 
 function extend(f1, f2) {
 	return function() {
@@ -48,9 +44,9 @@ function splitToMax(max, orbit, array) {
 
 function getHSL(h, s, l) {
 	return 'hsl(' +
-		(h < 0 ? rand() * 360 : h) + ',' +
-		(s < 0 ? rand() * 100 : s) + '%,' +
-		(l < 0 ? rand() * 100 : l) + '%)';
+		(h < 0 ? Math.random() * 360 : h) + ',' +
+		(s < 0 ? Math.random() * 100 : s) + '%,' +
+		(l < 0 ? Math.random() * 100 : l) + '%)';
 }
 
 function lerp(value, target, ease, precision) {
