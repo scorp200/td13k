@@ -133,10 +133,7 @@ EnemyShip.addBuff = function(inst, opts) {
 }
 
 EnemyShip.destroyAll = function() {
-	var n = EnemyShip.allInstances.length;
-	while (n--) {
-		EnemyShip.allInstances[n].destroy();
-	}
+	EnemyShip.allInstances.length = 0;
 }
 
 EnemyShip.renderAll = function() {
