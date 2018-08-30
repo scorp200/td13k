@@ -70,14 +70,20 @@ var Gui = {
 
 function buildSatellite() {
 	speak("Select an area to build the satellite");
+	gameState = STATE_CREATE;
+	build = 'satellite';
 }
 
 function buildMiningStation() {
 	speak("Select an area to build the mining station");
+	gameState = STATE_CREATE;
+	build = 'miningStation';
 }
 
 function buildDefensePlatform() {
 	speak("Select an area to build the defense platform");
+	gameState = STATE_CREATE;
+	build = 'defenseStation';
 }
 
 Gui.setup();

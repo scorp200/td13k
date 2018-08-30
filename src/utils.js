@@ -35,6 +35,8 @@ function mod(a, n) {
 
 function splitToMax(max, orbit, array) {
 	var angle = 0;
+	if (array.length)
+		angle = array[0].orbit.angle;
 	array.forEach(function(e) {
 		if (e.orbit.planet == orbit)
 			angle += TAU / max;
@@ -65,7 +67,7 @@ function clamp(value, min, max) {
 function clicked(x, y, w, h) {
 	var a = Mouse.x;
 	var b = Mouse.y;
-	return (a > x && a < x+w && b > y && b < y+h);
+	return (a > x && a < x + w && b > y && b < y + h);
 }
 
 function nearestOrbital(x, y) {
@@ -108,11 +110,24 @@ function clickNearest() {
 			hoverName = nearest.name;
 			if (!Mouse.target && !Mouse.drag) {
 				speak("selected " + nearest.name);
-				Gui.selection.target = nearest;
-				Gui.selection.openAt(Mouse.x, Mouse.y);
-				Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
+				if (gameState === STATE_RUNNING) {
+					Gui.selection.target = nearest;
+					Gui.selection.openAt(Mouse.x, Mouse.y);
+					Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
+				} else if (gameState === STATE_CREATE && nearest.type == ORBITAL_TYPE.PLANET) {
+					buildOn = nearest;
+				}
 				sndClick.play();
 			}
 		}
 	}
+}
+
+function selectOrbitSize() {
+	//if (getDistance(buildOn, { x: Mouse.vs, y: Mouse.vy }) <= buildOn * buildOrbitSize) {
+	Orbital[build](buildOn);
+	build = null;
+	buildOn = null;
+	gameState = STATE_RUNNING;
+	//}
 }

@@ -1,7 +1,7 @@
 // Beam weapon module.
 function beamCode(station, level) {
 	var cost = 100;
-	var damage = 0.5;
+	var damage = 10.5;
 	var length = 1000;
 	var target = null;
 	var angle = null;

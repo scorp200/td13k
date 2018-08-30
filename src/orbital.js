@@ -1,14 +1,17 @@
 var orbitals = [];
 var coms = [];
 var def = [];
-
+var build = null;
+var buildOn = null;
+var buildOrbitSize = 10;
 /** @enum {number} */
 var ORBITAL_TYPE = {
 	STAR: 0,
 	PLANET: 1,
 	SATELLITE: 2,
 	MINING: 3,
-	DEFENSE: 4
+	DEFENSE: 4,
+	MOON: 5
 }
 
 OrbitalUpgrades.init();
@@ -57,7 +60,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 	return t;
 };
 
-function sun(color, size, x, y) {
+Orbital.sun = function(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null, null);
 	t.name = "The Sun";
 	t.type = ORBITAL_TYPE.STAR;
@@ -65,23 +68,22 @@ function sun(color, size, x, y) {
 	return t;
 }
 
-function planet(color, size, orbit, distance, speed, angle) {
+Orbital.planet = function(color, size, orbit, distance, speed, angle) {
 	if (angle === undefined) angle = 0;
 	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, angle);
 	t.name = "Planet";
-	t.type = ORBITAL_TYPE.PLANET;
+	if (orbit.type === ORBITAL_TYPE.PLANET)
+		t.type = ORBITAL_TYPE.MOON;
+	else
+		t.type = ORBITAL_TYPE.PLANET;
 	t.update = extend(t.update, function() {
 
 	})
 	return t;
 }
 
-function createStation(what) {
-	window[what]()
-}
-
-function miningStation(orbit) {
-	var angle = splitToMax(miningStation.max, orbit, coms);
+Orbital.miningStation = function(orbit) {
+	var angle = splitToMax(4, orbit, coms);
 	if (angle === undefined)
 		return;
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, orbit.size * 3, -0.005, null);
@@ -93,10 +95,8 @@ function miningStation(orbit) {
 	return t;
 }
 
-miningStation.max = 4;
-
-function satellite(orbit) {
-	var angle = splitToMax(satellite.max, orbit, coms);
+Orbital.satellite = function(orbit) {
+	var angle = splitToMax(3, orbit, coms);
 	if (angle === undefined)
 		return;
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, orbit.size * 5, 0.01, angle);
@@ -111,13 +111,8 @@ function satellite(orbit) {
 	return t;
 }
 
-satellite.max = 3;
-satellite.create = function() {
-
-}
-
-function defenseStation(orbit) {
-	var angle = splitToMax(defenseStation.max, orbit, def);
+Orbital.defenseStation = function(orbit) {
+	var angle = splitToMax(2, orbit, def);
 	if (angle === undefined)
 		return;
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, angle);
@@ -125,7 +120,7 @@ function defenseStation(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	//t.index = def.length;
 	def.push(t);
-	setModuleUpgrade(t, "slow", 1);
+	setModuleUpgrade(t, "beam", 1);
 	return t;
 }
 
@@ -133,5 +128,3 @@ function setModuleUpgrade(station, type, level) {
 	var impl = OrbitalUpgrades.implementation(type);
 	station.module = impl(station, level);
 }
-
-defenseStation.max = 2;
