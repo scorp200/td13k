@@ -11,10 +11,8 @@ if (speechSynth) {
 	if (voices.length <= 0) {
 		speechSynth.onvoiceschanged = function() {
 			voices = speechSynth.getVoices();
-			//console.log(voices);
 		};
 	}
-	//console.log(voices);
 }
 
 // Wrapper for speaking a new sentence.

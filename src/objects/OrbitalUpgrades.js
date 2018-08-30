@@ -9,35 +9,30 @@ var OrbitalUpgrades = (function() {
         		loc: ORBITAL_TYPE.DEFENSE,
         		name: "Lasers",
         		img: null,
-        		func: null,
                 impl: laserCode
         	},
         	"beam": {
         		loc: ORBITAL_TYPE.DEFENSE,
         		name: "Beam",
         		img: null,
-        		func: null,
                 impl: beamCode
         	},
         	"rocket": {
         		loc: ORBITAL_TYPE.DEFENSE,
         		name: "Rockets",
         		img: null,
-        		func: null,
                 impl: rocketCode
         	},
         	"slow": {
         		loc: ORBITAL_TYPE.DEFENSE,
         		name: "Slow",
         		img: null,
-        		func: null,
                 impl: slowCode
         	},
         	"zap": {
         		loc: ORBITAL_TYPE.DEFENSE,
         		name: "Lightning",
         		img: null,
-        		func: null,
                 impl: zapCode
         	}
         });
