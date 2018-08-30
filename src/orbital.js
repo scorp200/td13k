@@ -120,7 +120,7 @@ Orbital.defenseStation = function(orbit) {
 	t.type = ORBITAL_TYPE.DEFENSE;
 	//t.index = def.length;
 	def.push(t);
-	setModuleUpgrade(t, "beam", 1);
+	setModuleUpgrade(t, "zap", 1);
 	return t;
 }
 

@@ -32,6 +32,13 @@ var OrbitalUpgrades = (function() {
         		img: null,
         		func: null,
                 impl: slowCode
+        	},
+        	"zap": {
+        		loc: ORBITAL_TYPE.DEFENSE,
+        		name: "Lightning",
+        		img: null,
+        		func: null,
+                impl: zapCode
         	}
         });
     }
