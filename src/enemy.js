@@ -5,7 +5,7 @@ function EnemyShip(x, y) {
 	this.x = x;
 	this.y = y;
 	this.z = Math.floor(Math.random() * 20)
-	this.direction = 0;
+	this.moveDirection = 0;
 	this.hp = 10;
 	this.speed = 5;
 	this.range = 500;
@@ -33,9 +33,9 @@ EnemyShip.prototype = {
 		// Accuire and move to target.
 		this.target = nearestTargetableOrbital(this.x, this.y);
 		var a = getAngle(this, this.target);
-		this.direction += getAngleDifference(a, this.direction) * 0.01;
-		this.x -= opts.speed * Math.cos(this.direction);
-		this.y -= opts.speed * Math.sin(this.direction);
+		this.moveDirection += getAngleDifference(a, this.moveDirection) * 0.01;
+		this.x -= opts.speed * Math.cos(this.moveDirection);
+		this.y -= opts.speed * Math.sin(this.moveDirection);
 
 		// Shootzing!
 		if (this.shootTimer-- <= 0) {
@@ -43,9 +43,9 @@ EnemyShip.prototype = {
 			var distance = getDistance(this, this.target);
 			if (distance < opts.range) {
 				var miss = Math.random() > 0.5;
-				var direction = getAngle(this, this.target);
+				var dir = getAngle(this, this.target);
 				var range = miss ? 2000 : distance;
-				Laser.create(this.x, this.y, direction, range, "#F00");
+				Laser.create(this.x, this.y, dir, range, "#F00");
 			}
 		}
 
@@ -136,7 +136,7 @@ EnemyShip.renderAll = function() {
 		ctx.save();
 		ctx.translate(inst.x, inst.y / View.tilt - inst.z * View.tilt);
 		ctx.scale(0.3, 0.3 / View.tilt);
-		ctx.rotate(inst.direction);
+		ctx.rotate(inst.moveDirection);
 		ctx.drawImage(sprEnemyShip, ox, oy);
 		ctx.restore();
 	}

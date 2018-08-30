@@ -4,14 +4,14 @@ var Rocket = {
     instances: [],
     speed: 50,
 
-    create: function(x, y, angle, lifetime, color, onDestroy) {
+    create: function(x, y, dir, lifetime, color, onDestroy) {
         if (!Rocket.map[color]) {
             Rocket.map[color] = [];
         }
         Rocket.map[color].push({
             x: x,
             y: y,
-            angle: angle,
+            moveDirection: dir,
             lifetime: lifetime - Rocket.speed,
             onDestroy: onDestroy
         });
@@ -27,8 +27,8 @@ var Rocket = {
                     (inst.onDestroy) && inst.onDestroy();
                     Rocket.destroy(color, n);
                 } else {
-                    inst.x -= Math.cos(inst.angle) * Rocket.speed;
-                    inst.y -= Math.sin(inst.angle) * Rocket.speed;
+                    inst.x -= Math.cos(inst.moveDirection) * Rocket.speed;
+                    inst.y -= Math.sin(inst.moveDirection) * Rocket.speed;
                 }
             }
         }
@@ -42,8 +42,8 @@ var Rocket = {
             var n = Rocket.map[color].length;
             while (n--) {
                 var inst = Rocket.map[color][n];
-                var toX = inst.x+Math.cos(inst.angle)*10;
-                var toY = inst.y / View.tilt+Math.sin(inst.angle)*10;
+                var toX = inst.x+Math.cos(inst.moveDirection)*10;
+                var toY = inst.y / View.tilt+Math.sin(inst.moveDirection)*10;
                 ctx.moveTo(inst.x, inst.y / View.tilt);
                 ctx.lineTo(toX, toY);
             }

@@ -27,7 +27,7 @@ var View = {
         if (Mouse.drag && View.drag) {
             View.xTarget = View.anchorX + (View.anchorMouseX - Mouse.x);
             View.yTarget = View.anchorY + (View.anchorMouseY - Mouse.y);
-        } else if(Mouse.release) {
+        } else if(Mouse.released) {
             View.drag = false;
         }
 

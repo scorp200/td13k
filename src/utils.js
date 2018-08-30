@@ -34,16 +34,16 @@ function mod(a, n) {
 }
 
 function splitToMax(max, orbit, array) {
-	var angle = 0;
+	var radAngle = 0;
 	if (array.length)
-		angle = array[0].orbit.angle;
+		radAngle = array[0].orbit.radAngle;
 	array.forEach(function(e) {
 		if (e.orbit.planet == orbit)
-			angle += TAU / max;
+			radAngle += TAU / max;
 	});
-	if (angle >= TAU)
+	if (radAngle >= TAU)
 		return undefined;
-	return angle;
+	return radAngle;
 }
 
 function getHSL(h, s, l) {
@@ -103,7 +103,7 @@ function nearestTargetableOrbital(x, y) {
 }
 
 function clickNearest() {
-	if (Mouse.release) {
+	if (Mouse.released) {
 		Gui.selection.target = null;
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {

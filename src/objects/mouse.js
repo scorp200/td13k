@@ -7,14 +7,14 @@ var Mouse = (function() {
 	var vy = 0;
 	var click = false;
 	var drag = false;
-	var release = false;
+	var released = false;
 	var down = false;
 	var scrollOut = false;
 	var scrollIn = false;
 
 	function update() {
 		click = false;
-		release = false;
+		released = false;
 		scrollIn = false;
 		scrollOut = false;
 	}
@@ -66,7 +66,7 @@ var Mouse = (function() {
 	window.addEventListener("mouseup", function(e) {
 		down = false;
 		if (!drag) {
-			release = true;
+			released = true;
 		}
 		drag = false;
 	}, false);
@@ -88,7 +88,7 @@ var Mouse = (function() {
 		get vy() { return vy; },
 		get click() { return click; },
 		get drag() { return drag; },
-		get release() { return release; },
+		get released() { return released; },
 		get down() { return down; },
 		get scrollOut() { return scrollOut; },
 		get scrollIn() { return scrollIn; }

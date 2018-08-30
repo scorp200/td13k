@@ -4,7 +4,7 @@ function beamCode(station, level) {
 	var damage = 10.5;
 	var length = 1000;
 	var target = null;
-	var angle = null;
+	var shootDir = null;
 	var angleTarget = null;
 	var buffer = 0.1;
 	return {
@@ -14,14 +14,14 @@ function beamCode(station, level) {
 			target = EnemyShip.furthest(station, length);
 			if (!target) return;
 			angleTarget = getAngle(station, target);
-			if (angle == null) angle = angleTarget;
-			angle += Math.sign(getAngleDifference(angleTarget, angle)) * 0.01;
+			if (shootDir == null) shootDir = angleTarget;
+			shootDir += Math.sign(getAngleDifference(angleTarget, shootDir)) * 0.01;
 			var n = EnemyShip.allInstances.length;
 			while (n--) {
 				var inst = EnemyShip.allInstances[n];
 				var instAngle = getAngle(station, inst);
 				var distance = getDistance(inst, station);
-				var difference = getAngleDifference(angle, instAngle)
+				var difference = getAngleDifference(shootDir, instAngle)
 				if (distance < length && Math.abs(difference) < buffer) {
 					inst.hp -= damage;
 				}
@@ -39,8 +39,8 @@ function beamCode(station, level) {
 			ctx.strokeStyle = grd;
 
 			ctx.moveTo(station.x, station.y / View.tilt);
-			var x = station.x - length * Math.cos(angle);
-			var y = station.y - length * Math.sin(angle);
+			var x = station.x - length * Math.cos(shootDir);
+			var y = station.y - length * Math.sin(shootDir);
 			ctx.lineTo(x, y / View.tilt);
 			ctx.stroke();
 		}

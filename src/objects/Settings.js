@@ -32,19 +32,23 @@ var Settings = (function() {
 
     }
 
-    addSetting("music", function(init) {
-        ENABLE_MUSIC = this.checked;
-        if (!init) {
-            musicLoop(currentMusic);
-        }
-    });
+    function init() {
 
-    addSetting("voice", function() {
-        ENABLE_VOICE = this.checked;
-    });
+        addSetting("music", function(init) {
+            ENABLE_MUSIC = this.checked;
+            if (!init) {
+                musicLoop(currentMusic);
+            }
+        });
+
+        addSetting("voice", function() {
+            ENABLE_VOICE = this.checked;
+        });
+
+    }
 
     return {
-        ul: ul
+        init: init
     }
 
 })();

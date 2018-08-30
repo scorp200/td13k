@@ -37,11 +37,11 @@ var WaveManager = {
     spawn: function() {
         var n = WaveManager.spawnCount;
         while (n--) {
-            var angle = Math.random() * cr;
-            var x = Math.cos(angle) * 3000;
-            var y = Math.sin(angle) * 3000;
+            var a = Math.random() * cr;
+            var x = Math.cos(a) * 3000;
+            var y = Math.sin(a) * 3000;
             var ship = new EnemyShip(x, y);
-            ship.direction = angle;
+            ship.moveDirection = a;
         }
     }
 

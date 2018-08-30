@@ -16,8 +16,8 @@ var ORBITAL_TYPE = {
 
 OrbitalUpgrades.init();
 
-function Orbital(color, size, x, y, orbit, distance, speed, angle) {
-	if (angle === undefined) angle = 0;
+function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
+	if (radAngle === undefined) radAngle = 0;
 	var t = {};
 	t.name = "Some Shithole Planet";
 	t.type = ORBITAL_TYPE.STAR;
@@ -35,7 +35,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 			planet: orbit,
 			distance: distance,
 			speed: speed,
-			angle: angle
+			radAngle: radAngle
 		};
 	}
 	t.update = function() {
@@ -43,9 +43,9 @@ function Orbital(color, size, x, y, orbit, distance, speed, angle) {
 		// Update orbit.
 		if (t.orbit) {
 			var e = t.orbit;
-			e.angle += e.speed;
-			t.x = e.distance * Math.cos(e.angle) + e.planet.x;
-			t.y = e.distance * Math.sin(e.angle) + e.planet.y;
+			e.radAngle += e.speed;
+			t.x = e.distance * Math.cos(e.radAngle) + e.planet.x;
+			t.y = e.distance * Math.sin(e.radAngle) + e.planet.y;
 		}
 
 		//
@@ -68,9 +68,9 @@ Orbital.sun = function(color, size, x, y) {
 	return t;
 }
 
-Orbital.planet = function(color, size, orbit, distance, speed, angle) {
-	if (angle === undefined) angle = 0;
-	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, angle);
+Orbital.planet = function(color, size, orbit, distance, speed, radAngle) {
+	//if (radAngle === undefined) radAngle = 0;
+	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, radAngle);
 	t.name = "Planet";
 	if (orbit.type === ORBITAL_TYPE.PLANET)
 		t.type = ORBITAL_TYPE.MOON;
@@ -83,8 +83,8 @@ Orbital.planet = function(color, size, orbit, distance, speed, angle) {
 }
 
 Orbital.miningStation = function(orbit) {
-	var angle = splitToMax(4, orbit, coms);
-	if (angle === undefined)
+	var radAngle = splitToMax(4, orbit, coms);
+	if (radAngle === undefined)
 		return;
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, orbit.size * 3, -0.005, null);
 	t.name = "Mining Station";
@@ -96,10 +96,10 @@ Orbital.miningStation = function(orbit) {
 }
 
 Orbital.satellite = function(orbit) {
-	var angle = splitToMax(3, orbit, coms);
-	if (angle === undefined)
+	var radAngle = splitToMax(3, orbit, coms);
+	if (radAngle === undefined)
 		return;
-	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, orbit.size * 5, 0.01, angle);
+	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, orbit.size * 5, 0.01, radAngle);
 	t.name = "Satellite";
 	t.type = ORBITAL_TYPE.SATELLITE;
 	//t.index = coms.length;
@@ -112,10 +112,10 @@ Orbital.satellite = function(orbit) {
 }
 
 Orbital.defenseStation = function(orbit) {
-	var angle = splitToMax(2, orbit, def);
-	if (angle === undefined)
+	var radAngle = splitToMax(2, orbit, def);
+	if (radAngle === undefined)
 		return;
-	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, angle);
+	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
 	//t.index = def.length;

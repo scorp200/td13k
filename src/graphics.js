@@ -107,8 +107,8 @@ function renderTrail(body) {
 		ctx.save();
 		var tilt = 1 / View.tilt;
 		ctx.transform(1, 0, 0, tilt, orbit.planet.x, orbit.planet.y * tilt)
-		var trail = orbit.angle - orbit.speed * orbit.distance / 2;
-		ctx.arc(0, 0, orbit.distance, trail, orbit.angle, orbit.speed < 0);
+		var trail = orbit.radAngle - orbit.speed * orbit.distance / 2;
+		ctx.arc(0, 0, orbit.distance, trail, orbit.radAngle, orbit.speed < 0);
 		ctx.restore();
 		ctx.stroke();
 	}
@@ -127,10 +127,10 @@ function renderAllBodies() {
 function renderBody(body) {
 
 	if (body.type === ORBITAL_TYPE.SATELLITE) {
-		var angle = getAngle(body, orbitals[0]);
+		var a = getAngle(body, orbitals[0]);
 		ctx.save();
 		ctx.translate(body.x, body.y / View.tilt);
-		ctx.rotate(angle);
+		ctx.rotate(a);
 		ctx.scale(0.2, 0.2);
 		ctx.drawImage(sprSatellite, -sprSatellite.width/2, -sprSatellite.height/2);
 		ctx.restore();
@@ -192,10 +192,10 @@ function renderBody(body) {
 		}
 	}
 
-	var angle = getAngle(body, orbitals[0]);
+	var a = getAngle(body, orbitals[0]);
 	ctx.save();
 	ctx.translate(body.x, body.y / View.tilt);
-	ctx.rotate(angle);
+	ctx.rotate(a);
 	if (body.isSun) {
 		var scale = 1+Math.sin(performance.now()/30)*0.01;//1 + rand() * 0.03;
 		ctx.scale(scale, scale);

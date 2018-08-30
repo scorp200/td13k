@@ -13,6 +13,9 @@ window.addEventListener("contextmenu", function(e) {
 	e.preventDefault();
 }, false);
 
+//
+Settings.init();
+
 // Pause the game.
 document.addEventListener("keypress", function(e) {
 	if (e.key === " ") {
@@ -85,7 +88,7 @@ function update(repeat) {
 		} else if (gameState === STATE_CREATE) {
 			if (!buildOn)
 				clickNearest();
-			else if (Mouse.release) {
+			else if (Mouse.released) {
 				selectOrbitSize();
 			}
 		}
