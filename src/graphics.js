@@ -94,6 +94,11 @@ function renderOrbit(body) {
 		ctx.restore();
 	}
 
+	ctx.fillStyle = body.online ? "#0F0" : "#F00";
+	ctx.beginPath();
+	ctx.arc(body.x, body.y / View.tilt - 20, 5, 0, TAU);
+	ctx.fill();
+
 }
 
 // Render trail
@@ -205,11 +210,19 @@ function renderBody(body) {
 }
 
 // MOVE THIS
+function resetComlines() {
+	var n = orbitals.length;
+	while (n--) {
+		orbitals[n].online = false;
+	}
+}
+
 /**
  * @param {Object} node
  * @param {Array=} list
  */
 function getComlines(node, list) {
+	node.online = true;
 	list = list || [];
 	list.push(node);
 	var n = orbitals.length;
@@ -239,6 +252,7 @@ function canReceiveConnection(t) {
 //
 function renderComLines() {
 
+	resetComlines();
 	var lines = getComlines(base.planet);
 
 	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.8);

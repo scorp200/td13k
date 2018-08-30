@@ -30,6 +30,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
 	t.hp = 100;
 	t.module = null;
 	t.upgrades = [];
+	t.online = false;
 	if (orbit) {
 		t.orbit = {
 			planet: orbit,
@@ -125,6 +126,6 @@ Orbital.defenseStation = function(orbit) {
 }
 
 function setModuleUpgrade(station, type, level) {
-	var impl = OrbitalUpgrades.implementation(type);
+	var impl = OrbitalUpgrades.impl(type);
 	station.module = impl(station, level);
 }

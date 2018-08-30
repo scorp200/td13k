@@ -101,7 +101,7 @@ var OrbitalUpgrades = (function() {
         init: init,
         byLocation: getUpgradesByLocation,
         get: getUpgrades,
-        implementation: getImplementation
+        impl: getImplementation
     }
 
 })();
