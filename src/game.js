@@ -1,9 +1,5 @@
 // Cache stuff.
-var STATE_LOADING = 0;
-var STATE_RUNNING = 1;
-var STATE_CREATE = 2;
-var STATE_PAUSED = 3;
-var gameState = STATE_LOADING;
+var gameState = GAME_STATE.LOADING;
 var maxDistance = 64;
 
 // Disables right click context menu.
@@ -17,10 +13,10 @@ Settings.init();
 // Pause the game.
 document.addEventListener("keypress", function(e) {
 	if (e.key === " ") {
-		if (gameState === STATE_PAUSED) {
-			gameState = STATE_RUNNING;
+		if (gameState === GAME_STATE.PAUSED) {
+			gameState = GAME_STATE.RUNNING;
 		} else {
-			gameState = STATE_PAUSED;
+			gameState = GAME_STATE.PAUSED;
 		}
 	}
 });
@@ -86,27 +82,27 @@ var last = 0;
 
 function update(repeat) {
 
-	if (gameState === STATE_LOADING) {
+	if (gameState === GAME_STATE.LOADING) {
 		LoadingScreen.update();
 	} else {
 
 		// Base destroyed.
 		if (orbitals.indexOf(Base.planet) === -1) {
-			gameState = STATE_LOADING;
+			gameState = GAME_STATE.LOADING;
 			Game.init();
 		}
 
 		hoverName = "";
 		View.update();
 		Gui.update();
-		if (gameState === STATE_RUNNING) {
+		if (gameState === GAME_STATE.RUNNING) {
 			orbitals.forEach(function(e) { e.update(); });
 			WaveManager.update();
 			EnemyShip.updateAll();
 			Laser.update();
 			Rocket.update();
 			clickNearest();
-		} else if (gameState === STATE_CREATE) {
+		} else if (gameState === GAME_STATE.CREATE) {
 			if (!buildOn)
 				clickNearest();
 			else if (Mouse.released) {
@@ -128,7 +124,7 @@ function render() {
 	drawBackground();
 	drawStarscape();
 
-	if (gameState === STATE_LOADING) {
+	if (gameState === GAME_STATE.LOADING) {
 		View.reset();
 		LoadingScreen.render();
 	} else {
@@ -145,11 +141,21 @@ function render() {
 		// Draw line to closer planet.
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
+
+			// Draw line.
 			ctx.beginPath();
 			ctx.moveTo(nearest.x, nearest.y / View.tilt);
 			ctx.lineTo(Mouse.vx, Mouse.vy / View.tilt);
 			ctx.strokeStyle = "#ffffff";
 			ctx.stroke();
+
+			// Draw reticle.
+			ctx.beginPath();
+			ctx.scale(1, 1/View.tilt);
+			ctx.arc(nearest.x, nearest.y, 30, 0, TAU);
+			ctx.lineWidth = 3;
+			ctx.stroke();
+
 		}
 
 		var centerX = Canvas.width / 2;

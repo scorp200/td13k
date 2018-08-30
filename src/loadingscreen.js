@@ -17,7 +17,7 @@ var LoadingScreen = {
                 speak("Welcum to Exo");
             }
             if (Mouse.click) {
-                gameState = STATE_RUNNING;
+                gameState = GAME_STATE.RUNNING;
                 if (musSpace.pause) {
                     musicLoop(musStarry);
                 }

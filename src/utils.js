@@ -94,11 +94,11 @@ function clickNearest() {
 			hoverName = nearest.name;
 			if (!Mouse.target && !Mouse.drag) {
 				speak("selected " + nearest.name);
-				if (gameState === STATE_RUNNING) {
+				if (gameState === GAME_STATE.RUNNING) {
 					Gui.selection.target = nearest;
 					Gui.selection.openAt(Mouse.x, Mouse.y);
 					Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
-				} else if (gameState === STATE_CREATE && nearest.type == ORBITAL_TYPE.PLANET) {
+				} else if (gameState === GAME_STATE.CREATE && nearest.type == ORBITAL_TYPE.PLANET) {
 					buildOn = nearest;
 				}
 				sndClick.play();
@@ -112,6 +112,6 @@ function selectOrbitSize() {
 	Orbital[build](buildOn);
 	build = null;
 	buildOn = null;
-	gameState = STATE_RUNNING;
+	gameState = GAME_STATE.RUNNING;
 	//}
 }

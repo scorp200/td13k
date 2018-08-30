@@ -4,15 +4,6 @@ var orbitals = [];
 var build = null;
 var buildOn = null;
 var buildOrbitSize = 10;
-/** @enum {number} */
-var ORBITAL_TYPE = {
-	STAR: 0,
-	PLANET: 1,
-	SATELLITE: 2,
-	MINING: 3,
-	DEFENSE: 4,
-	MOON: 5
-}
 
 OrbitalUpgrades.init();
 
@@ -125,7 +116,7 @@ Orbital.defenseStation = function(orbit) {
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
-	setModuleUpgrade(t, "slow", 1);
+	setModuleUpgrade(t, "laser", 1);
 	return t;
 }
 

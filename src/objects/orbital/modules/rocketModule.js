@@ -13,8 +13,8 @@ function rocketCode(station, level) {
             if (timer-- <= 0) {
                 timer = attackRate;
                 var target = EnemyShip.nearest(station, range);
-                if (target && base.energy >= energyCost) {
-                    base.energy -= energyCost;
+                if (target && Base.energy >= energyCost) {
+                    Base.energy -= energyCost;
                     var life = getDistance(station, target);
                     var dir = getAngle(station, target);
                     Rocket.create(station.x, station.y, dir, life, "#00B" /*createExplosion.bind(target.x, target.y, 1000)*/);
