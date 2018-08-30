@@ -50,8 +50,9 @@ cBackground.width = 512;
 cBackground.height = 512;
 ctxBackground.beginPath();
 var grd = ctxBackground.createRadialGradient(256, 256, 0, 256, 256, 256);
-grd.addColorStop(0, "#141e28");
-grd.addColorStop(1, "#000000");
+grd.addColorStop(0, "#234");
+grd.addColorStop(0.1, "#123");
+grd.addColorStop(1, "#000");
 ctxBackground.fillStyle = grd;
 ctxBackground.fillRect(0, 0, 512, 512);
 function drawBackground() {
