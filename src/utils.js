@@ -29,19 +29,6 @@ function mod(a, n) {
 	return a - Math.floor(a / n) * n;
 }
 
-function splitToMax(max, orbit, array) {
-	var radAngle = 0;
-	if (array.length)
-		radAngle = array[0].orbit.radAngle;
-	array.forEach(function(e) {
-		if (e.orbit.planet == orbit)
-			radAngle += TAU / max;
-	});
-	if (radAngle >= TAU)
-		return undefined;
-	return radAngle;
-}
-
 function getHSL(h, s, l) {
 	return 'hsl(' +
 		(h < 0 ? Math.random() * 360 : h) + ',' +

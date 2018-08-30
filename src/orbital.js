@@ -1,6 +1,6 @@
 var orbitals = [];
-var coms = [];
-var def = [];
+//var coms = [];
+//var def = [];
 var build = null;
 var buildOn = null;
 var buildOrbitSize = 10;
@@ -90,7 +90,7 @@ Orbital.planet = function(color, size, orbit, distance, speed, radAngle) {
 }
 
 Orbital.miningStation = function(orbit) {
-	var radAngle = splitToMax(4, orbit, coms);
+	var radAngle = splitToMax(4, orbit, orbitals);
 	if (radAngle === undefined)
 		return;
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, orbit.size * 3, -0.005, null);
@@ -103,7 +103,7 @@ Orbital.miningStation = function(orbit) {
 }
 
 Orbital.satellite = function(orbit) {
-	var radAngle = splitToMax(3, orbit, coms);
+	var radAngle = splitToMax(3, orbit, orbitals);
 	if (radAngle === undefined)
 		return;
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, orbit.size * 5, 0.01, radAngle);
@@ -114,19 +114,19 @@ Orbital.satellite = function(orbit) {
 	t.update = extend(t.update, function() {
 		Base.energy += Base.energyRate;
 	})
-	coms.push(t);
+	//coms.push(t);
 	return t;
 }
 
 Orbital.defenseStation = function(orbit) {
-	var radAngle = splitToMax(2, orbit, def);
+	var radAngle = splitToMax(2, orbit, orbitals);
 	if (radAngle === undefined)
 		return;
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, orbit.size * 7, 0.005, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
 	//t.index = def.length;
-	def.push(t);
+	//def.push(t);
 	setModuleUpgrade(t, "slow", 1);
 	return t;
 }
@@ -134,4 +134,19 @@ Orbital.defenseStation = function(orbit) {
 function setModuleUpgrade(station, type, level) {
 	var impl = OrbitalUpgrades.impl(type);
 	station.module = impl(station, level);
+}
+
+// I can barely understand this function. >.<
+// Made it work-ish without needing multiple arrays.
+function splitToMax(max, orbit, array) {
+	var radAngle = 0;
+	if (array.length && array[0].orbit)
+		radAngle = array[0].orbit.radAngle;
+	array.forEach(function(e) {
+		if (e.orbit && e.orbit.planet == orbit)
+			radAngle += TAU / max;
+	});
+	//if (radAngle >= TAU)
+		//return undefined;
+	return radAngle;
 }

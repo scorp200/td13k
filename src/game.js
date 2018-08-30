@@ -25,28 +25,41 @@ document.addEventListener("keypress", function(e) {
 	}
 });
 
-// Setup planets (procgen this?)
-var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);
-var s1 = Orbital.planet(getHSL(180, 39, 62), 10, s, 650, 0.003, Math.random() * TAU);
-Base.planet = s1;
-var s1a = Orbital.planet(getHSL(-1, 60, 70), 5, s1, 100, -0.002, Math.random() * TAU);
-var s2 = Orbital.planet(getHSL(-1, 60, 70), 20, s, 1123, 0.0015, Math.random() * TAU);
-var s2a = Orbital.planet(getHSL(-1, 60, 70), 5, s2, s2.size * 8, 0.01, Math.random() * TAU);
-var s2b = Orbital.planet(getHSL(-1, 60, 70), 10, s2, s2.size * 9, 0.005, null);
-var s3 = Orbital.planet(getHSL(-1, 60, 70), 30, s, 2532, -0.001, Math.random() * TAU);
-var ms = Orbital.miningStation(s1);
-var ms2 = Orbital.miningStation(s2);
-var st = Orbital.satellite(s1);
-var st1 = Orbital.satellite(s);
-var st2 = Orbital.satellite(s);
-var st3 = Orbital.satellite(s);
-var st4 = Orbital.satellite(s2);
-var st5 = Orbital.satellite(s2);
-var st6 = Orbital.satellite(s2);
-var ds = Orbital.defenseStation(s1);
-var ds1 = Orbital.defenseStation(s1);
-var ds2 = Orbital.defenseStation(s1);
-var ds3 = Orbital.defenseStation(s2);
+var Game = {
+
+	init: function() {
+
+		// Clear any previous game.
+		orbitals = [];
+		EnemyShip.destroyAll();
+
+		// Setup planets (procgen this?)
+		var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);
+		var s1 = Orbital.planet(getHSL(180, 39, 62), 10, s, 650, 0.003, Math.random() * TAU);
+		Base.planet = s1;
+		var s1a = Orbital.planet(getHSL(-1, 60, 70), 5, s1, 100, -0.002, Math.random() * TAU);
+		var s2 = Orbital.planet(getHSL(-1, 60, 70), 20, s, 1123, 0.0015, Math.random() * TAU);
+		var s2a = Orbital.planet(getHSL(-1, 60, 70), 5, s2, s2.size * 8, 0.01, Math.random() * TAU);
+		var s2b = Orbital.planet(getHSL(-1, 60, 70), 10, s2, s2.size * 9, 0.005, null);
+		var s3 = Orbital.planet(getHSL(-1, 60, 70), 30, s, 2532, -0.001, Math.random() * TAU);
+		var ms = Orbital.miningStation(s1);
+		var ms2 = Orbital.miningStation(s2);
+		var st = Orbital.satellite(s1);
+		var st1 = Orbital.satellite(s);
+		var st2 = Orbital.satellite(s);
+		var st3 = Orbital.satellite(s);
+		var st4 = Orbital.satellite(s2);
+		var st5 = Orbital.satellite(s2);
+		var st6 = Orbital.satellite(s2);
+		var ds = Orbital.defenseStation(s1);
+		var ds1 = Orbital.defenseStation(s1);
+		var ds2 = Orbital.defenseStation(s1);
+		var ds3 = Orbital.defenseStation(s2);
+	}
+
+}
+
+Game.init();
 
 // Update game.
 var lastTick = performance.now();
@@ -73,6 +86,13 @@ function update(repeat) {
 	if (gameState === STATE_LOADING) {
 		LoadingScreen.update();
 	} else {
+
+		// Base destroyed.
+		if (orbitals.indexOf(Base.planet) === -1) {
+			gameState = STATE_LOADING;
+			Game.init();
+		}
+
 		hoverName = "";
 		View.update();
 		Gui.update();
