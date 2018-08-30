@@ -51,7 +51,7 @@ function getOrbitCache(body) {
 
 	// Render particular body's orbit line.
 	if (!cache.hasBody[body.id]) {
-		var drawScale = 0.1 + scaleLevel / 4;
+		var drawScale = 0.2 + scaleLevel / 4;
 		var ctxOrbit = cache.getContext("2d");
 		ctxOrbit.setLineDash([5 / drawScale, 5 / drawScale]);
 		ctxOrbit.beginPath();

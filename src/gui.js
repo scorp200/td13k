@@ -128,7 +128,10 @@ function createSelectionDisplay() {
 
 			// Image.
 			var image = object.target.cache;
-			ctx.drawImage(image, x+8, y+8, h-16, h-16);
+			var scale = Math.max(image.width, image.height) / (h-16);
+			var imgx = x+8+(h-16)/2-image.width/scale/2;
+			var imgy = y+8+(h-16)/2-image.height/scale/2;
+			ctx.drawImage(image, imgx, imgy, image.width/scale, image.height/scale);
 
 			// Buttons.
 			elements.forEach(function(e) {
