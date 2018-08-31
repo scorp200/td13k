@@ -1,47 +1,65 @@
 //
-var WaveManager = {
+var WaveManager = (function() {
 
     // Timing.
-    currentWave: 0,
-    cooldown: 10,
-    timer: 0,
+    var currentWave = 0;
+    var cooldown = 10;
+    var timer = 0;
 
     // Wave spawning.
-    spawnCount: 100,
+    var spawnCount = 100;
 
     // Speech flavor.
-    speechFlavor: [
+    var speechFlavor = [
         "enemies, approaching",
         "we are under attack",
         "enemy, in-bound",
         "hostiles detected"
-    ],
+    ];
 
-    //
-    init: function() {
-        WaveManager.timer = WaveManager.cooldown * 60;
-    },
+    /**
+	 * Inits/resets manager.
+	 * @return {void}
+	 */
+    function init() {
+        timer = cooldown * 60;
+    }
 
-    //
-    update: function() {
-        if (!WaveManager.timer--) {
-    		WaveManager.spawn();
-            WaveManager.init();
-            WaveManager.currentWave++;
-            var i = ~~(Math.random()*WaveManager.speechFlavor.length);
-            speak(WaveManager.speechFlavor[i]);
+	/**
+	 * Counts down the timer and spawns waves.
+	 * @return {void}
+	 */
+    function update() {
+        if (!timer--) {
+    		spawn();
+            init();
+            currentWave++;
+            var i = ~~(Math.random()*speechFlavor.length);
+            speak(speechFlavor[i]);
         }
-    },
+    }
 
-    //
-    spawn: function() {
-        var n = WaveManager.spawnCount;
+	/**
+	 * Spawn ships.
+	 * @return {void}
+	 */
+    function spawn() {
+		var dis = 3000;
+        var n = spawnCount;
         while (n--) {
             var a = Math.random() * TAU;
-            var x = Math.cos(a) * 3000;
-            var y = Math.sin(a) * 3000;
+            var x = Math.cos(a) * dis;
+            var y = Math.sin(a) * dis;
             var ship = EnemyShip.create(x, y, a);
         }
     }
 
-}
+	// Export.
+	return {
+		init: init,
+		update: update,
+		get timer() { return timer; },
+		get currentWave() { return currentWave; }
+	}
+
+})();
