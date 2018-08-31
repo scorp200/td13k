@@ -7,7 +7,7 @@ function EnemyShip(x, y) {
 	this.z = Math.floor(Math.random() * 20)
 	this.moveDirection = 0;
 	this.hp = 10;
-	this.speed = 5;
+	this.moveSpeed = 5;
 	this.range = 500;
 	this.target = Base.planet;
 	this.shootTimer = Math.random() * 10;
@@ -21,7 +21,7 @@ EnemyShip.prototype = {
 
 		// Apply buffs.
 		var opts = [];
-		opts[BUFF_TYPE.SPEED] = this.speed;
+		opts[BUFF_TYPE.SPEED] = this.moveSpeed;
 		opts[BUFF_TYPE.RANGE] = this.range;
 		var n = this.buffs.length;
 		while (n--) {

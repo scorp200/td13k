@@ -7,7 +7,7 @@ var buildOrbitSize = 10;
 
 OrbitalUpgrades.init();
 
-function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
+function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
 	if (radAngle === undefined) radAngle = 0;
 	var t = {};
 	t.name = "";
@@ -25,7 +25,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
 		t.orbit = {
 			planet: orbit,
 			distance: distance,
-			speed: speed,
+			moveSpeed: moveSpeed,
 			radAngle: radAngle
 		};
 	}
@@ -41,7 +41,7 @@ function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
 		// Update orbit.
 		if (t.orbit) {
 			var e = t.orbit;
-			e.radAngle += e.speed;
+			e.radAngle += e.moveSpeed;
 			t.x = e.distance * Math.cos(e.radAngle) + e.planet.x;
 			t.y = e.distance * Math.sin(e.radAngle) + e.planet.y;
 		}
@@ -65,8 +65,8 @@ Orbital.sun = function(color, size, x, y) {
 	return t;
 }
 
-Orbital.planet = function(color, size, orbit, distance, speed, radAngle) {
-	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, speed, radAngle);
+Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
+	var t = Orbital(color, size, 0, 0, orbit, distance + size / 2, moveSpeed, radAngle);
 	t.name = "Planet";
 	if (orbit.type === ORBITAL_TYPE.PLANET) {
 		t.type = ORBITAL_TYPE.MOON;

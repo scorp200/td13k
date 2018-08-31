@@ -1,7 +1,7 @@
 var Laser = (function() {
 
     var map = {};
-    var speed = 50;
+    var moveSpeed = 50;
 
     /**
      * @param {number} x
@@ -21,7 +21,7 @@ var Laser = (function() {
             x: x,
             y: y,
             radAngle: a,
-            lifetime: lifetime - speed
+            lifetime: lifetime - moveSpeed
         });
 
     }
@@ -36,12 +36,12 @@ var Laser = (function() {
             var n = m.length;
             while (n--) {
                 var inst = m[n];
-                inst.lifetime -= speed;
+                inst.lifetime -= moveSpeed;
                 if (inst.lifetime <= 0) {
                     destroy(m, n);
                 } else {
-                    inst.x -= Math.cos(inst.radAngle) * speed;
-                    inst.y -= Math.sin(inst.radAngle) * speed;
+                    inst.x -= Math.cos(inst.radAngle) * moveSpeed;
+                    inst.y -= Math.sin(inst.radAngle) * moveSpeed;
                 }
             }
         }

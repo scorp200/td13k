@@ -2,7 +2,7 @@ var Rocket = {
 
     map: {},
     instances: [],
-    speed: 50,
+    moveSpeed: 50,
 
     create: function(x, y, dir, lifetime, color, onDestroy) {
         if (!Rocket.map[color]) {
@@ -12,7 +12,7 @@ var Rocket = {
             x: x,
             y: y,
             moveDirection: dir,
-            lifetime: lifetime - Rocket.speed,
+            lifetime: lifetime - Rocket.moveSpeed,
             onDestroy: onDestroy
         });
     },
@@ -22,13 +22,13 @@ var Rocket = {
             var n = Rocket.map[color].length;
             while (n--) {
                 var inst = Rocket.map[color][n];
-                inst.lifetime -= Rocket.speed;
+                inst.lifetime -= Rocket.moveSpeed;
                 if (inst.lifetime <= 0) {
                     (inst.onDestroy) && inst.onDestroy();
                     Rocket.destroy(color, n);
                 } else {
-                    inst.x -= Math.cos(inst.moveDirection) * Rocket.speed;
-                    inst.y -= Math.sin(inst.moveDirection) * Rocket.speed;
+                    inst.x -= Math.cos(inst.moveDirection) * Rocket.moveSpeed;
+                    inst.y -= Math.sin(inst.moveDirection) * Rocket.moveSpeed;
                 }
             }
         }
