@@ -117,7 +117,7 @@ Orbital.defenseStation = function(orbit, distance) {
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, distance || orbit.size * 7, 0.005, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
-	setModuleUpgrade(t, "slow", 1);
+	setModuleUpgrade(t, "laser", 1);
 	return t;
 }
 

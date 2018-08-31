@@ -3,11 +3,11 @@ var WaveManager = (function() {
 
     // Timing.
     var currentWave = 0;
-    var cooldown = 10;
+    var cooldown = 1;
     var timer = 0;
 
     // Wave spawning.
-    var spawnCount = 100;
+    var spawnCount = 10;
 
     // Speech flavor.
     var speechFlavor = [

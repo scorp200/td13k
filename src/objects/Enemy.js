@@ -1,9 +1,18 @@
 //
 var EnemyShip = (function() {
 
+	var spaceSize = 6000;
+	var partitionSize = 100;
+	var partitionWidth = spaceSize / partitionSize;
+	var partitions = [];
 	var instances = [];
 	var moveSpd = 5;
 	var range = 500;
+
+	var size = partitionWidth * partitionWidth;
+	while (size--) {
+		partitions.push([]);
+	}
 
 	/**
 	 * @param {number} x
@@ -19,7 +28,8 @@ var EnemyShip = (function() {
 			hp: 10,
 			target: null,
 			shootTime: Math.random() * 10,
-			buffs: []
+			buffs: [],
+			partition: null
 		});
 	}
 
@@ -31,6 +41,17 @@ var EnemyShip = (function() {
 		var n = instances.length;
 		while (n-- > 0) {
 			var inst = instances[n];
+
+			var newPartition = getPartition(inst.x, inst.y);
+			if (inst.partition !== newPartition) {
+				if (inst.partition !== null) {
+					var index = inst.partition.indexOf(inst);
+					inst.partition[index] = inst.partition[inst.partition.length-1];
+					inst.partition.length--;
+				}
+				inst.partition = newPartition;
+				newPartition.push(inst);
+			}
 
 			// Apply buffs.
 			var opts = [];
@@ -64,7 +85,7 @@ var EnemyShip = (function() {
 						var r = miss ? 2000 : distance;
 						Laser.create(inst.x, inst.y, dir, r, "#F00");
 						if (!miss) {
-							inst.target.hp -= 1;
+							//inst.target.hp -= 1;
 						}
 					}
 				}
@@ -76,6 +97,8 @@ var EnemyShip = (function() {
 			}
 
 		}
+
+		flockCollision()
 
 	}
 
@@ -98,10 +121,12 @@ var EnemyShip = (function() {
 	}
 
 	/**
-	 *
+	 * @param {number} n The index of the ship to destroy.
+	 * @return {void}
 	 */
 	function destroy(n) {
-		EnemyShip.allInstances.splice(n, 1);
+		instances[n] = instances[instances.length-1];
+		instances.length--;
 	}
 
 	/**
@@ -111,9 +136,11 @@ var EnemyShip = (function() {
 		var n = instances.length;
 		while (n--) {
 			var inst1 = instances[n];
-			var i = n;
+			var partition = getPartition(inst1.x, inst1.y);
+			var i = partition.length;
 			while (i--) {
-				var inst2 = instances[i];
+				var inst2 = partition[i];
+				if (inst1 === inst2) continue;
 				var distance = getDistanceRaw(inst1, inst2);
 				if (distance < 200) {
 					var xm = (inst1.x - inst2.x) * 0.25;
@@ -129,33 +156,36 @@ var EnemyShip = (function() {
 	}
 
 	/**
-	 *
+	 * @param {Object} pos Any object with x and y properties.
+	 * @param {number} dist
+	 * @return {Object}
 	 */
-	function nearest(p, minRange) {
+	function nearest(pos, dist) {
 		var nearest = null;
-		var distance = minRange;
 		var n = instances.length;
 		while (n--) {
 			var inst = instances[n];
-			var newDistance = getDistance(p, inst);
-			if (newDistance < distance) {
+			var newDist = getDistance(pos, inst);	// Change to Raw?
+			if (newDist < dist) {
 				nearest = inst;
-				distance = newDistance;
+				dist = newDist;
 			}
 		}
 		return nearest;
 	}
 
 	/**
-	 *
+	 * @param {Object} pos Any object with x and y properties.
+	 * @param {number} maxRange
+	 * @return {Object}
 	 */
-	function furthest(p, maxRange) {
+	function furthest(pos, maxRange) {
 		var furthest = null;
 		var distance = 0;
 		var n = instances.length;
 		while (n--) {
 			var inst = instances[n];
-			var newDistance = getDistance(p, inst);
+			var newDistance = getDistance(pos, inst);	// Change to Raw?
 			if (newDistance > distance && newDistance < maxRange) {
 				furthest = inst;
 				distance = newDistance;
@@ -180,6 +210,16 @@ var EnemyShip = (function() {
 	 */
 	function destroyAll() {
 		instances.length = 0;
+	}
+
+	/**
+	 *
+	 */
+	function getPartition(x, y) {
+		x = Math.floor((x + spaceSize / 2) / partitionSize);
+		y = Math.floor((y + spaceSize / 2) / partitionSize);
+		var index = y * partitionWidth + x;
+		return partitions[index];
 	}
 
 	// Export.
