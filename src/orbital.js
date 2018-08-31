@@ -10,13 +10,12 @@ OrbitalUpgrades.init();
 function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
 	if (radAngle === undefined) radAngle = 0;
 	var t = {};
-	t.name = "Some Shithole Planet";
+	t.name = "";
 	t.type = ORBITAL_TYPE.STAR;
 	t.x = x;
 	t.y = y;
 	t.color = color;
 	t.size = size;
-	t.isSun = false;
 	t.id = orbitals.length.toString();
 	t.hp = 100;
 	t.module = null;
@@ -35,7 +34,8 @@ function Orbital(color, size, x, y, orbit, distance, speed, radAngle) {
 		// Destroy.
 		if (t.hp <= 0) {
 			var index = orbitals.indexOf(t);
-			orbitals.splice(index, 1);
+			orbitals[index] = orbitals[orbitals.length-1];
+			orbitals.length -= 1;
 		}
 
 		// Update orbit.
@@ -62,7 +62,6 @@ Orbital.sun = function(color, size, x, y) {
 	var t = Orbital(color, size, x, y, null, null, null, null);
 	t.name = "The Sun";
 	t.type = ORBITAL_TYPE.STAR;
-	t.isSun = true;
 	return t;
 }
 
@@ -120,9 +119,33 @@ Orbital.defenseStation = function(orbit) {
 	return t;
 }
 
+/**
+ * Sets the upgrade module for the given orbital.
+ * @param {Object} station The station to set the module of.
+ * @param {string} type	The type of the new module.
+ * @param {number} level THe level of the new module.
+ * @return {void}
+ */
 function setModuleUpgrade(station, type, level) {
 	var impl = OrbitalUpgrades.impl(type);
 	station.module = impl(station, level);
+}
+
+/**
+ * Gets a list of orbitals of the given type.
+ * @param {number} type The type of orbitals to find.
+ * @return {Array} An array of orbitals. Could be empty.
+ */
+function getOrbitalsByType(type) {
+	var arr = [];
+	var len = orbitals.length;
+	while (len--) {
+		var orb = orbitals[len];
+		if (type === orb.type) {
+			arr.push(orb);
+		}
+	}
+	return arr;
 }
 
 // I can barely understand this function. >.<
