@@ -107,6 +107,9 @@ function update(repeat) {
 				clickNearest();
 			else if (Mouse.released) {
 				selectOrbitSize();
+			} else {
+				buildDistance = getDistance(buildOn, { x: Mouse.vx, y: Mouse.vy });
+				buildDistance = buildDistance > buildMaxDistance ? buildMaxDistance : buildDistance;
 			}
 		}
 
@@ -140,7 +143,7 @@ function render() {
 
 		// Draw line to closer planet.
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
-		ctx.scale(1, 1/View.tilt);
+		ctx.scale(1, 1 / View.tilt);
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
 
 			// Draw line.
@@ -161,8 +164,6 @@ function render() {
 		// Draw building radius.
 		if (gameState === GAME_STATE.CREATE) {
 			if (buildOn) {
-				buildDistance = getDistance(buildOn, {x:Mouse.vx, y:Mouse.vy});
-				buildDistance = buildDistance > buildMaxDistance ? buildMaxDistance : buildDistance;
 				ctx.strokeStyle = "#0F0";
 				ctx.beginPath();
 				ctx.arc(buildOn.x, buildOn.y, buildDistance, 0, TAU);
