@@ -141,22 +141,34 @@ function render() {
 
 		// Draw line to closer planet.
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
+		ctx.scale(1, 1/View.tilt);
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
 
 			// Draw line.
 			ctx.beginPath();
-			ctx.moveTo(nearest.x, nearest.y / View.tilt);
-			ctx.lineTo(Mouse.vx, Mouse.vy / View.tilt);
-			ctx.strokeStyle = "#ffffff";
+			ctx.moveTo(nearest.x, nearest.y);
+			ctx.lineTo(Mouse.vx, Mouse.vy);
+			ctx.strokeStyle = "#FFF";
 			ctx.stroke();
 
 			// Draw reticle.
 			ctx.beginPath();
-			ctx.scale(1, 1/View.tilt);
 			ctx.arc(nearest.x, nearest.y, 30, 0, TAU);
 			ctx.lineWidth = 3;
 			ctx.stroke();
 
+		}
+
+		// Draw building radius.
+		if (gameState === GAME_STATE.CREATE) {
+			if (buildOn) {
+				var dist = getDistance(buildOn, {x:Mouse.vx, y:Mouse.vy});
+				ctx.strokeStyle = "#0F0";
+				ctx.beginPath();
+				ctx.arc(buildOn.x, buildOn.y, dist, 0, TAU);
+				ctx.lineWidth = 3;
+				ctx.stroke();
+			}
 		}
 
 		var centerX = Canvas.width / 2;

@@ -104,7 +104,7 @@ function selectOrbitSize() {
 	//if (getDistance(buildOn, { x: Mouse.vs, y: Mouse.vy }) <= buildOn * buildOrbitSize) {
 	switch (build) {
 		case (ORBITAL_TYPE.SATELLITE): Orbital.satellite(buildOn); break;
-		case (ORBITAL_TYPE.MINING): Orbital.mingingStation(buildOn); break;
+		case (ORBITAL_TYPE.MINING): Orbital.miningStation(buildOn); break;
 		case (ORBITAL_TYPE.DEFENSE): Orbital.defenseStation(buildOn); break;
 	}
 
