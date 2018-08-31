@@ -91,8 +91,9 @@ function clickNearest() {
 					Gui.selection.target = nearest;
 					Gui.selection.openAt(Mouse.x, Mouse.y);
 					Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
-				} else if (gameState === GAME_STATE.CREATE && nearest.type == ORBITAL_TYPE.PLANET) {
+				} else if (gameState === GAME_STATE.CREATE && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
 					buildOn = nearest;
+					buildMaxDistance = buildOn.size * buildOrbitSize;
 				}
 				sndClick.play();
 			}
@@ -101,11 +102,10 @@ function clickNearest() {
 }
 
 function selectOrbitSize() {
-	//if (getDistance(buildOn, { x: Mouse.vs, y: Mouse.vy }) <= buildOn * buildOrbitSize) {
 	switch (build) {
-		case (ORBITAL_TYPE.SATELLITE): Orbital.satellite(buildOn); break;
-		case (ORBITAL_TYPE.MINING): Orbital.miningStation(buildOn); break;
-		case (ORBITAL_TYPE.DEFENSE): Orbital.defenseStation(buildOn); break;
+		case (ORBITAL_TYPE.SATELLITE): Orbital.satellite(buildOn, buildDistance); break;
+		case (ORBITAL_TYPE.MINING): Orbital.miningStation(buildOn, buildDistance); break;
+		case (ORBITAL_TYPE.DEFENSE): Orbital.defenseStation(buildOn, buildDistance); break;
 	}
 
 	build = null;

@@ -161,10 +161,11 @@ function render() {
 		// Draw building radius.
 		if (gameState === GAME_STATE.CREATE) {
 			if (buildOn) {
-				var dist = getDistance(buildOn, {x:Mouse.vx, y:Mouse.vy});
+				buildDistance = getDistance(buildOn, {x:Mouse.vx, y:Mouse.vy});
+				buildDistance = buildDistance > buildMaxDistance ? buildMaxDistance : buildDistance;
 				ctx.strokeStyle = "#0F0";
 				ctx.beginPath();
-				ctx.arc(buildOn.x, buildOn.y, dist, 0, TAU);
+				ctx.arc(buildOn.x, buildOn.y, buildDistance, 0, TAU);
 				ctx.lineWidth = 3;
 				ctx.stroke();
 			}
