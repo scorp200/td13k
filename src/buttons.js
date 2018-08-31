@@ -12,7 +12,8 @@
 var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 
 	var fillStyle = "rgba(0, 0, 0, 0.5)";
-	var strokeStyle = "rgba(255, 255, 255, 0.5)";
+	var strokeStyle = "#FFF";
+	var borderWidth = 2;
 
 	return {
 
@@ -36,6 +37,7 @@ var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 		render: function() {
 			ctx.fillStyle = fillStyle;
 			ctx.strokeStyle = strokeStyle;
+			ctx.lineWidth = borderWidth;
 			ctx.fillRect(parent.x+x, parent.y+y, w, h);
 			ctx.strokeRect(parent.x+x, parent.y+y, w, h);
 			if (img) {

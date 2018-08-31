@@ -1,6 +1,6 @@
-var Base = (function(planet){
+var Base = (function(){
     return {
-        planet: planet,
+        planet: null,
         hp: 100,
         mineRate: 0.01,
         energyRate: 0.02,

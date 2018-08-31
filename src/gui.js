@@ -35,28 +35,26 @@ var Gui = {
 		ctx.fillStyle = "#FFF";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = "small-caps 700 32px monospace";
-		ctx.fillText("next wave in", Canvas.width/2, 32);
+
 		ctx.font = "700 64px monospace";
 		ctx.fillText(~~(WaveManager.timer/60), Canvas.width/2, 96);
 
+        ctx.font = "small-caps 700 32px monospace";
+		ctx.fillText("next wave in", Canvas.width/2, 32);
+
 		// Minerals.
-		ctx.font = "small-caps 700 32px monospace";
 		ctx.fillText("minerals", Canvas.width/2+300, 64-16);
 		ctx.fillText(~~Base.minerals, Canvas.width/2+300, 64+16);
 
 		// Energy.
-		ctx.font = "small-caps 700 32px monospace";
 		ctx.fillText("energy", Canvas.width/2+600, 64-16);
 		ctx.fillText(~~Base.energy, Canvas.width/2+600, 64+16);
 
 		// Days.
-		ctx.font = "small-caps 700 32px monospace";
 		ctx.fillText("survived", Canvas.width/2-300, 64-16);
 		ctx.fillText(WaveManager.currentWave + " waves", Canvas.width/2-300, 64+16);
 
 		// Base health.
-		ctx.font = "small-caps 700 32px monospace";
 		ctx.fillText("base status", Canvas.width/2-600, 64-16);
 		ctx.fillText(~~Base.planet.hp + "%", Canvas.width/2-600, 64+16);
 
@@ -90,11 +88,17 @@ Gui.setup();
 
 function createSelectionDisplay() {
 
+	// Positioning.
 	var w = 360;
 	var h = 120;
 	var x = Canvas.width/2 - w/2;
 	var y = Canvas.height-128 - h;
 	var elements = [];
+
+	// Styling.
+	var backgroundColor = "rgba(0, 0, 0, 0.5)";
+	var borderColor = "#FFF";
+	var borderWidth = 2;
 
 	var object = {
 
@@ -113,8 +117,9 @@ function createSelectionDisplay() {
 			if (object.target === null) return;
 
 			// Background.
-			ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
-			ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+			ctx.fillStyle = backgroundColor;
+			ctx.strokeStyle = borderColor;
+			ctx.lineWidth = borderWidth;
 			ctx.fillRect(x, y, w, h);
 			ctx.strokeRect(x, y, w, h);
 
