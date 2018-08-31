@@ -142,8 +142,8 @@ function renderBody(body) {
 		return;
 	}
 
+	var isSun = body.type === ORBITAL_TYPE.STAR;
 	if (!body.cache) {
-		var isSun = body.type === ORBITAL_TYPE.STAR;
 		var color = isSun ? "#FFF" : body.color;
 		var glow = isSun ? 50 : 10;
 		var size = body.size + glow;
@@ -201,7 +201,7 @@ function renderBody(body) {
 	ctx.save();
 	ctx.translate(body.x, body.y / View.tilt);
 	ctx.rotate(a);
-	if (body.isSun) {
+	if (isSun) {
 		var scale = 1+Math.sin(performance.now()/30)*0.01;//1 + Math.random() * 0.03;
 		ctx.scale(scale, scale);
 	}
