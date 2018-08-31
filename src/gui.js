@@ -69,19 +69,19 @@ var Gui = {
 function buildSatellite() {
 	speak("Select an area to build the satellite");
 	gameState = GAME_STATE.CREATE;
-	build = 'satellite';
+	build = ORBITAL_TYPE.SATELLITE;//'satellite';
 }
 
 function buildMiningStation() {
 	speak("Select an area to build the mining station");
 	gameState = GAME_STATE.CREATE;
-	build = 'miningStation';
+	build = ORBITAL_TYPE.MINING;//'miningStation';
 }
 
 function buildDefensePlatform() {
 	speak("Select an area to build the defense platform");
 	gameState = GAME_STATE.CREATE;
-	build = 'defenseStation';
+	build = ORBITAL_TYPE.DEFENSE;//'defenseStation';
 }
 
 Gui.setup();

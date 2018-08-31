@@ -46,13 +46,6 @@ function clamp(value, min, max) {
 	return value > max ? max : value < min ? min : value;
 }
 
-// IS THIS STILL USED?!
-function clicked(x, y, w, h) {
-	var a = Mouse.x;
-	var b = Mouse.y;
-	return (a > x && a < x + w && b > y && b < y + h);
-}
-
 function nearestOrbital(x, y) {
 	var pos = { x: x, y: y };
 	var minDistance = 999999;
@@ -109,7 +102,12 @@ function clickNearest() {
 
 function selectOrbitSize() {
 	//if (getDistance(buildOn, { x: Mouse.vs, y: Mouse.vy }) <= buildOn * buildOrbitSize) {
-	Orbital[build](buildOn);
+	switch (build) {
+		case (ORBITAL_TYPE.SATELLITE): Orbital.satellite(buildOn); break;
+		case (ORBITAL_TYPE.MINING): Orbital.mingingStation(buildOn); break;
+		case (ORBITAL_TYPE.DEFENSE): Orbital.defenseStation(buildOn); break;
+	}
+
 	build = null;
 	buildOn = null;
 	gameState = GAME_STATE.RUNNING;
