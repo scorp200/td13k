@@ -103,7 +103,6 @@ function update(repeat) {
 			Rocket.update();
 			clickNearest();
 		} else if (gameState === GAME_STATE.CREATE) {
-			console.log("Building:", build, buildOn);
 			if (!buildOn)
 				clickNearest();
 			else if (Mouse.released) {
