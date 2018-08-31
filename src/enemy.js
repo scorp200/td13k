@@ -19,15 +19,18 @@ EnemyShip.prototype = {
 
 	update: function() {
 
-		//Apply buffs there is probably a better way to handle this, but its works for now
-		var opts = { speed: this.speed, range: this.range };
+		// Apply buffs.
+		var opts = [];
+		opts[BUFF_TYPE.SPEED] = this.speed;
+		opts[BUFF_TYPE.RANGE] = this.range;
 		var n = this.buffs.length;
 		while (n--) {
 			var buff = this.buffs[n];
 			opts[buff.type] *= buff.value;
-			buff.time--;
-			if (buff.time <= 0)
+			if (buff.time-- <= 0) {
+				this.buffs[n] = this.buffs[this.buffs.length-1];
 				this.buffs.length--;
+			}
 		}
 
 		// Accuire and move to target.
@@ -35,14 +38,14 @@ EnemyShip.prototype = {
 		if (this.target) {
 			var a = getAngle(this, this.target);
 			this.moveDirection += getAngleDifference(a, this.moveDirection) * 0.01;
-			this.x -= opts.speed * Math.cos(this.moveDirection);
-			this.y -= opts.speed * Math.sin(this.moveDirection);
+			this.x -= opts[BUFF_TYPE.SPEED] * Math.cos(this.moveDirection);
+			this.y -= opts[BUFF_TYPE.SPEED] * Math.sin(this.moveDirection);
 
 			// Shootzing!
 			if (this.shootTimer-- <= 0) {
 				this.shootTimer = 10;
 				var distance = getDistance(this, this.target);
-				if (distance < opts.range) {
+				if (distance < opts[BUFF_TYPE.RANGE]) {
 					var miss = Math.random() > 0.5;
 					var dir = getAngle(this, this.target);
 					var range = miss ? 2000 : distance;
@@ -128,8 +131,12 @@ EnemyShip.updateAll = function() {
 	}
 }
 
-EnemyShip.addBuff = function(inst, opts) {
-
+EnemyShip.addBuff = function(inst, type, value, time) {
+	inst.buffs.push({
+		type: type,
+		value: value,
+		time: time
+	});
 }
 
 EnemyShip.destroyAll = function() {

@@ -29,3 +29,12 @@ var ORBITAL_TYPE = {
 	DEFENSE: 4,
 	MOON: 5
 }
+
+/**
+ * Buff types for applying to ships.
+ * @enum {number}
+ */
+var BUFF_TYPE = {
+	SPEED: 0,
+	RANGE: 1
+}

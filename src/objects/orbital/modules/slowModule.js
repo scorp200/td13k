@@ -1,7 +1,7 @@
 function slowCode(station, level) {
 	var cost = 300;
 	var energyCost = 1;
-	var attackSpeed = 1000 / 3;
+	var attackSpeed = 60 * 1;
 	var slowTime = 100;
 	var slowRate = 0.05;
 	var range = 300;
@@ -17,7 +17,7 @@ function slowCode(station, level) {
 					var inst = EnemyShip.allInstances[n];
 					var distance = getDistance(inst, station);
 					if (distance < range) {
-						inst.buffs.push({ type: 'speed', value: slowRate, time: slowTime });
+						EnemyShip.addBuff(inst, BUFF_TYPE.SPEED, slowRate, slowTime);
 					}
 				}
 			}
