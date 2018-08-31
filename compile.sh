@@ -24,6 +24,5 @@ src/buttons.js \
 src/graphics.js \
 src/starscape.js \
 src/orbital.js \
-src/enemy.js \
 src/loadingscreen.js \
 src/game.js

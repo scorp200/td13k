@@ -98,7 +98,7 @@ function update(repeat) {
 		if (gameState === GAME_STATE.RUNNING) {
 			orbitals.forEach(function(e) { e.update(); });
 			WaveManager.update();
-			EnemyShip.updateAll();
+			EnemyShip.update();
 			Laser.update();
 			Rocket.update();
 			clickNearest();
@@ -133,7 +133,7 @@ function render() {
 		ctx.globalAlpha = 1;
 		renderAllOrbits();
 		renderAllBodies();
-		EnemyShip.renderAll();
+		EnemyShip.render();
 		renderComLines();
 		Laser.render();
 		Rocket.render();

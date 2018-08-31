@@ -40,11 +40,8 @@ var WaveManager = {
             var a = Math.random() * TAU;
             var x = Math.cos(a) * 3000;
             var y = Math.sin(a) * 3000;
-            var ship = new EnemyShip(x, y);
-            ship.moveDirection = a;
+            var ship = EnemyShip.create(x, y, a);
         }
     }
 
 }
-
-//WaveManager.init();

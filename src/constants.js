@@ -36,5 +36,7 @@ var ORBITAL_TYPE = {
  */
 var BUFF_TYPE = {
 	SPEED: 0,
-	RANGE: 1
+	RANGE: 1,
+	TURNING: 2,
+	FIRE_RATE: 4
 }
