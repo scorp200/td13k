@@ -26,8 +26,8 @@ var View = (function() {
 	}
 
     function update() {
-        if (Mouse.scrollIn || Mouse.scrollOut) {
-            var shift = Mouse.scrollIn ? 0.1 : -0.1;
+        if (Mouse.scrollDir !== 0) {
+            var shift = Mouse.scrollDir * 0.1;
             zoomTarget = clamp(zoomTarget+shift, 0.1, 2);
         }
         tilt = Math.min(1 + (zoom - 0.1), 2);

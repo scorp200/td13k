@@ -5,17 +5,15 @@ var Mouse = (function() {
 	var y = 0;
 	var vx = 0;
 	var vy = 0;
+	var scrollDir = 0;
 	var click = false;
 	var released = false;
 	var down = false;
-	var scrollOut = false;
-	var scrollIn = false;
 
 	function update() {
 		click = false;
 		released = false;
-		scrollIn = false;
-		scrollOut = false;
+		scrollDir = 0;
 	}
 
 	/**
@@ -68,8 +66,7 @@ var Mouse = (function() {
 
 	//
 	window.addEventListener("wheel", function(e) {
-		scrollOut = e.deltaY > 0;
-		scrollIn = e.deltaY < 0;
+		scrollDir = Math.sign(e.deltaY);
 	}, false);
 
 	//
@@ -84,8 +81,7 @@ var Mouse = (function() {
 		get click() { return click; },
 		get released() { return released; },
 		get down() { return down; },
-		get scrollOut() { return scrollOut; },
-		get scrollIn() { return scrollIn; }
+		get scrollDir() { return scrollDir; }
 	}
 
 })();
