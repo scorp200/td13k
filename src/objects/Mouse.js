@@ -10,6 +10,10 @@ var Mouse = (function() {
 	var released = false;
 	var down = false;
 
+	/**
+	 * Resets single moment states.
+	 * @return {void}
+	 */
 	function update() {
 		click = false;
 		released = false;
