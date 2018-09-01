@@ -41,11 +41,14 @@ var View = (function() {
         }
 
 		// Pan when mouse down and threshold reached.
-        if (Mouse.down && Math.abs(anchorMouseX - Mouse.x) > dragThreshold) {
+        if (anchorMouseX !== 0 && Mouse.down && Math.abs(anchorMouseX - Mouse.x) > dragThreshold) {
 			drag = true;
             xTarget = anchorX + (anchorMouseX - Mouse.x);
             yTarget = anchorY + (anchorMouseY - Mouse.y);
         } else {
+			if (drag) {
+				anchorMouseX = 0;
+			}
             drag = false;
         }
 
