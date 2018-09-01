@@ -1,69 +1,96 @@
-var View = {
-	x: 0,
-	y: 0,
-    xTarget: 0,
-    yTarget: 0,
-    anchorX: 0,
-    anchorY: 0,
-    anchorMouseX: 0,
-    anchorMouseY: 0,
-	zoom: 1,
-	zoomTarget: 1,
-    tilt: 2,
-    smooth: 5,
-	init: function() {
-		View.x = 0;
-		View.y = 0;
-		View.xTarget = 0;
-	    View.yTarget = 0;
-		View.zoom = 1;
-		View.zoomTarget = 1;
-	    View.tilt = 2;
-	},
-    update: function() {
+var View = (function() {
+
+	var x = 0;
+	var y = 0;
+    var xTarget = 0;
+    var yTarget = 0;
+    var anchorX = 0;
+    var anchorY = 0;
+    var anchorMouseX = 0;
+    var anchorMouseY = 0;
+	var zoom = 1;
+	var zoomTarget = 1;
+    var tilt = 2;
+    var smooth = 5;
+	var drag = false;
+	var dragThreshold = 5;
+
+	function init() {
+		x = 0;
+		y = 0;
+		xTarget = 0;
+	    yTarget = 0;
+		zoom = 1;
+		zoomTarget = 1;
+	    tilt = 2;
+	}
+
+    function update() {
         if (Mouse.scrollIn || Mouse.scrollOut) {
             var shift = Mouse.scrollIn ? 0.1 : -0.1;
-            View.zoomTarget = clamp(View.zoomTarget+shift, 0.1, 2);
+            zoomTarget = clamp(zoomTarget+shift, 0.1, 2);
         }
-        View.tilt = Math.min(1 + (View.zoom - 0.1), 2);
-        if (Mouse.click/* && !pop.display*/) {
-            View.drag = true;
-            View.anchorX = View.x;
-            View.anchorY = View.y;
-            View.anchorMouseX = Mouse.x;
-            View.anchorMouseY = Mouse.y;
-        }
-        if (Mouse.drag && View.drag) {
-            View.xTarget = View.anchorX + (View.anchorMouseX - Mouse.x);
-            View.yTarget = View.anchorY + (View.anchorMouseY - Mouse.y);
-        } else if(Mouse.released) {
-            View.drag = false;
+        tilt = Math.min(1 + (zoom - 0.1), 2);
+
+		// Set anchors for panning.
+        if (Mouse.click) {
+            anchorX = x;
+            anchorY = y;
+            anchorMouseX = Mouse.x;
+            anchorMouseY = Mouse.y;
         }
 
-        var zoomDelta = View.zoom;
-		View.zoom += lerp(View.zoom, View.zoomTarget, View.smooth, 0.001);
-        zoomDelta = View.zoom - zoomDelta;
+		// Pan when mouse down and threshold reached.
+        if (Mouse.down && Math.abs(anchorMouseX - Mouse.x) > dragThreshold) {
+			drag = true;
+            xTarget = anchorX + (anchorMouseX - Mouse.x);
+            yTarget = anchorY + (anchorMouseY - Mouse.y);
+        } else {
+            drag = false;
+        }
+
+        var zoomDelta = zoom;
+		zoom += lerp(zoom, zoomTarget, smooth, 0.001);
+        zoomDelta = zoom - zoomDelta;
         if (Math.abs(zoomDelta) > 0.001) {
-            View.x += Mouse.vx * zoomDelta;
-            View.y += Mouse.vy * zoomDelta;
-            View.xTarget += Mouse.vx * zoomDelta;
-            View.yTarget += Mouse.vy * zoomDelta;
+            x += Mouse.vx * zoomDelta;
+            y += Mouse.vy * zoomDelta;
+            xTarget += Mouse.vx * zoomDelta;
+            yTarget += Mouse.vy * zoomDelta;
         }
 
-        View.x += lerp(View.x, View.xTarget, View.smooth, 0.001);
-		View.y += lerp(View.y, View.yTarget, View.smooth, 0.001);
+        x += lerp(x, xTarget, smooth, 0.001);
+		y += lerp(y, yTarget, smooth, 0.001);
 
-    },
-	clear: function() {
-		View.reset();
+    }
+
+	function clear() {
+		reset();
 		ctx.clearRect(0, 0, Canvas.width, Canvas.height);
-	},
-	reset: function() {
-		ctx.setTransform(1, 0, 0, 1, 0, 0);
-	},
-	position: function() {
-		var x = -View.x + Canvas.width / 2;
-		var y = -View.y + Canvas.height / 2;
-		ctx.setTransform(View.zoom, 0, 0, View.zoom, x, y);
 	}
-};
+
+	function reset() {
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+	}
+
+	function position() {
+		var px = -x + Canvas.width / 2;
+		var py = -y + Canvas.height / 2;
+		ctx.setTransform(zoom, 0, 0, zoom, px, py);
+	}
+
+	// Export.
+	return {
+		get x() { return x; },
+		get y() { return y; },
+		get zoom() { return zoom; },
+		get tilt() { return tilt; },
+		get drag() { return drag; },
+		init: init,
+		clear: clear,
+		reset: reset,
+		position: position,
+		update: update
+	}
+
+})();

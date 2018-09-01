@@ -150,7 +150,7 @@ var EnemyShip = (function() {
 					inst1.y += ym;
 					inst2.x -= xm;
 					inst2.y -= ym;
-					break; // Hackky quick exit, works just as well!
+					break; // No point checking multiple collisions...
 				}
 			}
 		}

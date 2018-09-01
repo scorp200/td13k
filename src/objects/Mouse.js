@@ -6,7 +6,6 @@ var Mouse = (function() {
 	var vx = 0;
 	var vy = 0;
 	var click = false;
-	var drag = false;
 	var released = false;
 	var down = false;
 	var scrollOut = false;
@@ -51,9 +50,6 @@ var Mouse = (function() {
 		y = e.clientY - rect.top;
 		vx = (x + View.x - Canvas.width / 2) / View.zoom;
 		vy = (y + View.y - Canvas.height / 2) * View.tilt / View.zoom;
-		if (down) {
-			drag = true;
-		}
 	}, false);
 
 	//
@@ -65,10 +61,9 @@ var Mouse = (function() {
 	//
 	window.addEventListener("mouseup", function(e) {
 		down = false;
-		if (!drag) {
+		if (!View.drag) {
 			released = true;
 		}
-		drag = false;
 	}, false);
 
 	//
@@ -87,7 +82,6 @@ var Mouse = (function() {
 		get vx() { return vx; },
 		get vy() { return vy; },
 		get click() { return click; },
-		get drag() { return drag; },
 		get released() { return released; },
 		get down() { return down; },
 		get scrollOut() { return scrollOut; },
