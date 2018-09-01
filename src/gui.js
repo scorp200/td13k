@@ -6,6 +6,7 @@ var Gui = {
 	elements: [],
 	tooltip: "",
 	selection: null,
+	subtitles: [],
 
 	setup: function() {
 		var center = Canvas.width/2;
@@ -24,9 +25,20 @@ var Gui = {
 		Gui.elements.forEach(function(e) {
 			e.update();
 		});
+
+		var n = Gui.subtitles.length;
+		while (n--) {
+			var sub = Gui.subtitles[n];
+			if (!sub.time--) {
+				Gui.subtitles.splice(n, 1);
+			}
+		}
+
 	},
 
 	render: function() {
+
+		// Render attached elements.
 		Gui.elements.forEach(function(e) {
 			e.render();
 		});
@@ -64,6 +76,15 @@ var Gui = {
 		// Tooltip.
 		ctx.font = "small-caps 700 16px monospace";
 		ctx.fillText(Gui.tooltip, Canvas.width/2, Canvas.height-96);
+
+		// Subtitles.
+		ctx.textAlign = "left";
+        ctx.textBaseline = "bottom";
+		var dy = 20;
+		Gui.subtitles.forEach(function(sub) {
+			ctx.fillText('"' + sub.text + '"', 20, Canvas.height-dy);
+			dy += 20;
+		});
 
 	}
 
