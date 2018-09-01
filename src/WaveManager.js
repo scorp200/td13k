@@ -22,6 +22,8 @@ var WaveManager = (function() {
 	 * @return {void}
 	 */
     function init() {
+		currentWave = 0;
+	    cooldown = 10;
         timer = cooldown * 60;
     }
 
@@ -34,7 +36,7 @@ var WaveManager = (function() {
     		spawn();
             currentWave++;
 			spawnCount += 20;
-			init();
+			timer = cooldown * 60;
 
             var i = ~~(Math.random()*speechFlavor.length);
             speak(speechFlavor[i]);

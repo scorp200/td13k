@@ -102,12 +102,14 @@ function clickNearest() {
 }
 
 function selectOrbitSize() {
+	var c;
 	switch (build) {
-		case (ORBITAL_TYPE.SATELLITE): Orbital.satellite(buildOn, buildDistance); break;
-		case (ORBITAL_TYPE.MINING): Orbital.miningStation(buildOn, buildDistance); break;
-		case (ORBITAL_TYPE.DEFENSE): Orbital.defenseStation(buildOn, buildDistance); break;
+		case (ORBITAL_TYPE.SATELLITE): c = Orbital.satellite(buildOn, buildDistance); break;
+		case (ORBITAL_TYPE.MINING): c = Orbital.miningStation(buildOn, buildDistance); break;
+		case (ORBITAL_TYPE.DEFENSE): c = Orbital.defenseStation(buildOn, buildDistance); break;
 	}
 
+	c.orbit.radAngle = getAngle({x: Mouse.vx, y: Mouse.vy}, buildOn);
 	build = null;
 	buildOn = null;
 	gameState = GAME_STATE.RUNNING;
