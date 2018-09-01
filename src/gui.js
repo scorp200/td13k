@@ -31,35 +31,38 @@ var Gui = {
 			e.render();
 		});
 
+		//
+		var scale = clamp(Canvas.width / 1920, 0.5, 1);
+
 		// Wave counter.
 		ctx.fillStyle = "#FFF";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
-		ctx.font = "700 64px monospace";
+		ctx.font = "700 48px monospace";
 		ctx.fillText(~~(WaveManager.timer/60), Canvas.width/2, 96);
 
-        ctx.font = "small-caps 700 32px monospace";
-		ctx.fillText("next wave in", Canvas.width/2, 32);
+        ctx.font = "small-caps 700 24px monospace";
+		ctx.fillText("next wave in", Canvas.width/2, 48);
 
 		// Minerals.
-		ctx.fillText("minerals", Canvas.width/2+300, 64-16);
-		ctx.fillText(~~Base.minerals, Canvas.width/2+300, 64+16);
+		ctx.fillText("minerals", Canvas.width/2+300*scale, 64-16);
+		ctx.fillText(~~Base.minerals, Canvas.width/2+300*scale, 64+16);
 
 		// Energy.
-		ctx.fillText("energy", Canvas.width/2+600, 64-16);
-		ctx.fillText(~~Base.energy, Canvas.width/2+600, 64+16);
+		ctx.fillText("energy", Canvas.width/2+600*scale, 64-16);
+		ctx.fillText(~~Base.energy, Canvas.width/2+600*scale, 64+16);
 
 		// Days.
-		ctx.fillText("survived", Canvas.width/2-300, 64-16);
-		ctx.fillText(WaveManager.currentWave + " waves", Canvas.width/2-300, 64+16);
+		ctx.fillText("survived", Canvas.width/2-300*scale, 64-16);
+		ctx.fillText(WaveManager.currentWave + " waves", Canvas.width/2-300*scale, 64+16);
 
 		// Base health.
-		ctx.fillText("base status", Canvas.width/2-600, 64-16);
-		ctx.fillText(~~Base.planet.hp + "%", Canvas.width/2-600, 64+16);
+		ctx.fillText("base status", Canvas.width/2-600*scale, 64-16);
+		ctx.fillText(~~Base.planet.hp + "%", Canvas.width/2-600*scale, 64+16);
 
 		// Tooltip.
-		ctx.font = "small-caps 700 24px monospace";
+		ctx.font = "small-caps 700 16px monospace";
 		ctx.fillText(Gui.tooltip, Canvas.width/2, Canvas.height-96);
 
 	}
