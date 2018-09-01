@@ -3,11 +3,11 @@ var WaveManager = (function() {
 
     // Timing.
     var currentWave = 0;
-    var cooldown = 1;
+    var cooldown = 10;
     var timer = 0;
 
     // Wave spawning.
-    var spawnCount = 10;
+    var spawnCount = 20;
 
     // Speech flavor.
     var speechFlavor = [
@@ -32,8 +32,10 @@ var WaveManager = (function() {
     function update() {
         if (!timer--) {
     		spawn();
-            init();
             currentWave++;
+			spawnCount += 20;
+			init();
+
             var i = ~~(Math.random()*speechFlavor.length);
             speak(speechFlavor[i]);
         }

@@ -24,12 +24,18 @@ function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
 	t.upgrades = [];
 	t.online = false;
 	if (orbit) {
+
+		// Clear orbit cache to force refresh.
+		orbit.orbitCache = null;
+
+		// Assign orbit parameters.
 		t.orbit = {
 			planet: orbit,
 			distance: distance,
 			moveSpeed: moveSpeed,
 			radAngle: radAngle
 		};
+
 	}
 	t.update = function() {
 
@@ -38,6 +44,9 @@ function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
 			var index = orbitals.indexOf(t);
 			orbitals[index] = orbitals[orbitals.length - 1];
 			orbitals.length -= 1;
+			if (t.orbit) {
+				t.orbit.planet.orbitCache = null;
+			}
 		}
 
 		// Update orbit.
@@ -48,8 +57,10 @@ function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
 			t.y = e.distance * Math.sin(e.radAngle) + e.planet.y;
 		}
 
-		// Update module is present.
-		t.module && t.module.update();
+		// Update module is present and online.
+		if (t.online) {
+			t.module && t.module.update();
+		}
 
 	}
 	t.render = function() {

@@ -8,6 +8,7 @@ var EnemyShip = (function() {
 	var instances = [];
 	var moveSpd = 5;
 	var range = 500;
+	var damage = 0.2;
 
 	var size = partitionWidth * partitionWidth;
 	while (size--) {
@@ -85,7 +86,7 @@ var EnemyShip = (function() {
 						var r = miss ? 2000 : distance;
 						Laser.create(inst.x, inst.y, dir, r, "#F00");
 						if (!miss) {
-							//inst.target.hp -= 1;
+							inst.target.hp -= damage;
 						}
 					}
 				}
@@ -113,7 +114,7 @@ var EnemyShip = (function() {
 			var inst = instances[n];
 			ctx.save();
 			ctx.translate(inst.x, inst.y / View.tilt - inst.z * View.tilt);
-			ctx.scale(0.3, 0.3 / View.tilt);
+			ctx.scale(1, 1 / View.tilt);
 			ctx.rotate(inst.moveDir);
 			ctx.drawImage(sprEnemyShip, ox, oy);
 			ctx.restore();
