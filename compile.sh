@@ -8,14 +8,10 @@ src/constants.js \
 src/utils/*.js \
 src/objects/orbital/modules/*.js \
 src/objects/*.js \
+src/data/*.js \
 src/utils.js \
 src/speech.js \
 src/lib/player-small.js \
-src/data/song.js \
-src/data/song2.js \
-src/data/sfx_click.js \
-src/data/sprite_satellite.js \
-src/data/sprEnemyShip.js \
 src/WaveManager.js \
 src/music.js \
 src/base.js \
