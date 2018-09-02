@@ -1,4 +1,3 @@
-
 function extend(f1, f2) {
 	return function() {
 		f1();
@@ -93,7 +92,6 @@ function clickNearest() {
 					Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
 				} else if (gameState === GAME_STATE.CREATE && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
 					build.on = nearest;
-					build.maxDistance = build.on.size * build.multiplier;
 				}
 				sndClick.play();
 			}
@@ -108,7 +106,7 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 	var words = text.split(' ');
 	var line = '';
 
-	for(var n = 0; n < words.length; n++) {
+	for (var n = 0; n < words.length; n++) {
 		var testLine = line + words[n] + ' ';
 		var metrics = context.measureText(testLine);
 		var testWidth = metrics.width;
@@ -116,8 +114,7 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 			context.fillText(line, x, y);
 			line = words[n] + ' ';
 			y += lineHeight;
-		}
-		else {
+		} else {
 			line = testLine;
 		}
 	}

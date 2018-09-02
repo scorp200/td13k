@@ -1,5 +1,4 @@
 var build = (function() {
-	var t = {};
 	var what = null;
 	var on = null;
 	var multiplier = 20;
@@ -17,6 +16,8 @@ var build = (function() {
 		console.log(on == build.on);
 		if (!on) {
 			clickNearest();
+			if (on)
+				maxDistance = on.size * multiplier;
 		} else if (Mouse.released) {
 			selectOrbitSize();
 		} else {
@@ -54,16 +55,13 @@ var build = (function() {
 		gameState = GAME_STATE.RUNNING;
 	}
 
+	function setTarget() {
+
+	}
+
 	return {
-		get what() { return what },
 		set what(val) { what = val },
-		get on() { return on },
 		set on(val) { on = val },
-		get distance() { return distance },
-		set distance(val) { distance = val },
-		get maxDistance() { return maxDistance },
-		set maxDistance(val) { maxDistance = val },
-		get multiplier() { return multiplier },
 		update: update,
 		render: render,
 		init: init,
