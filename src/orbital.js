@@ -90,10 +90,7 @@ Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
 	return t;
 }
 
-Orbital.miningStation = function(orbit, distance) {
-	var radAngle = splitToMax(4, orbit);
-	if (radAngle === undefined)
-		return;
+Orbital.miningStation = function(orbit, distance, radAngle) {
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, distance || orbit.size * 3, -0.005, null);
 	t.name = "Mining Station";
 	t.type = ORBITAL_TYPE.MINING;
@@ -105,10 +102,7 @@ Orbital.miningStation = function(orbit, distance) {
 	return t;
 }
 
-Orbital.satellite = function(orbit, distance) {
-	var radAngle = splitToMax(3, orbit);
-	if (radAngle === undefined)
-		return;
+Orbital.satellite = function(orbit, distance, radAngle) {
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, distance || orbit.size * 5, 0.01, radAngle);
 	t.name = "Satellite";
 	t.type = ORBITAL_TYPE.SATELLITE;
@@ -121,10 +115,7 @@ Orbital.satellite = function(orbit, distance) {
 	return t;
 }
 
-Orbital.defenseStation = function(orbit, distance) {
-	var radAngle = splitToMax(2, orbit);
-	if (radAngle === undefined)
-		return;
+Orbital.defenseStation = function(orbit, distance, radAngle) {
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, distance || orbit.size * 7, 0.005, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
@@ -159,19 +150,4 @@ function getOrbitalsByType(type) {
 		}
 	}
 	return arr;
-}
-
-// I can barely understand this function. >.<
-// Made it work-ish without needing multiple arrays.
-function splitToMax(max, orbit) {
-	var radAngle = 0;
-	if (orbitals.length && orbitals[0].orbit) {
-		radAngle = orbitals[0].orbit.radAngle;
-	}
-	orbitals.forEach(function(e) {
-		if (e.orbit && e.orbit.planet == orbit) {
-			radAngle += TAU / max;
-		}
-	});
-	return radAngle;
 }
