@@ -1,60 +1,71 @@
 var build = (function() {
 	var t = {};
-	var t.what = null;
-	var t.on = { x: 0 };
-	var t.multiplier = 20;
-	var t.distance = null;
-	var t.maxDistance = null;
+	var what = null;
+	var on = null;
+	var multiplier = 20;
+	var distance = null;
+	var maxDistance = null;
 
-	t.init = function() {
-		t.what = null;
-		t.on = { x: 0 };
-		t.distance = null;
-		t.maxDistance = null;
+	function init() {
+		what = null;
+		on = null;
+		distance = null;
+		maxDistance = null;
 	}
 
-	t.update = function() {
-		console.log(t.on == build.t.on);
-		if (!t.on) {
-			t.on = clickNearest();
-			if (t.on)
-				t.maxDistance = t.on.size * t.multiplier;
+	function update() {
+		console.log(on == build.on);
+		if (!on) {
+			clickNearest();
 		} else if (Mouse.released) {
 			selectOrbitSize();
 		} else {
-			t.distance = getDistance(t.on, { x: Mouse.vx, y: Mouse.vy });
-			t.distance = t.distance > t.maxDistance ? t.maxDistance : t.distance;
+			distance = getDistance(on, { x: Mouse.vx, y: Mouse.vy });
+			distance = distance > maxDistance ? maxDistance : distance;
 		}
 	}
 
-	t.render = function() {
-		if (t.on) {
+	function render() {
+		if (on) {
 			ctx.strokeStyle = "#0F0";
 			ctx.beginPath();
-			ctx.arc(t.on.x, t.on.y, t.distance, 0, TAU);
+			ctx.arc(on.x, on.y, distance, 0, TAU);
 			ctx.lineWidth = 3;
 			ctx.stroke();
 		}
 	}
 
-	t.selectOrbitSize = function() {
+	function selectOrbitSize() {
 		var c;
-		var radAngle = getAngle({ x: Mouse.vx, y: Mouse.vy }, t.on);
-		switch (t.what) {
+		var radAngle = getAngle({ x: Mouse.vx, y: Mouse.vy }, on);
+		switch (what) {
 			case (ORBITAL_TYPE.SATELLITE):
-				c = Orbital.satellite(t.on, t.distance, radAngle);
+				c = Orbital.satellite(on, distance, radAngle);
 				break;
 			case (ORBITAL_TYPE.MINING):
-				c = Orbital.miningStation(t.on, t.distance, radAngle);
+				c = Orbital.miningStation(on, distance, radAngle);
 				break;
 			case (ORBITAL_TYPE.DEFENSE):
-				c = Orbital.defenseStation(t.on, t.distance, radAngle);
+				c = Orbital.defenseStation(on, distance, radAngle);
 				break;
 		}
-		t.what = null;
-		t.on = null;
+		what = null;
+		on = null;
 		gameState = GAME_STATE.RUNNING;
 	}
 
-	return t;
+	return {
+		get what() { return what },
+		set what(val) { what = val },
+		get on() { return on },
+		set on(val) { on = val },
+		get distance() { return distance },
+		set distance(val) { distance = val },
+		get maxDistance() { return maxDistance },
+		set maxDistance(val) { maxDistance = val },
+		get multiplier() { return multiplier },
+		update: update,
+		render: render,
+		init: init,
+	}
 })();
