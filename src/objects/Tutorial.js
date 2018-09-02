@@ -2,6 +2,10 @@
 var Tutorial = (function() {
 
 	var missions = [{
+		text: "Welcome to Exo... You are the commander of a long forgotten expedition to a distant star. Many hundreds of years ago you and your people set out to inhabit the galaxy. Upon reaching your destination, you were able to establish a base on a nearby planet. Not long after, you find yourself under seige from mysterious forces. Are they aliens, or maybe your own race, hundreds of years ahead of you in technology, catching up to you... Either way, this is your home now... Defend it.",
+		event: TUTORIAL_EVENT.INTRO,
+		lifetime: 23 * 60
+	},{
 		text: "You can move your view of the star system around by clicking and dragging anywhere on-screen.",
 		event: TUTORIAL_EVENT.MOUSE
 	},{
@@ -17,9 +21,17 @@ var Tutorial = (function() {
 	var timer = 60;
 	var completed = [];
 	var currentMission = 0;
-	var text;
+	var text = "";
 	var event;
-	setMission();
+	var started = false;
+
+	/**
+	 *
+	 */
+	function start() {
+		started = true;
+		setMission();
+	}
 
 	/**
 	 * @return {void}
@@ -28,6 +40,8 @@ var Tutorial = (function() {
 		if (missions[currentMission]) {
 			text = missions[currentMission].text;
 			event = missions[currentMission].event;
+			speak(text);
+			console.log("gonna work?");
 		}
 	}
 
@@ -43,15 +57,19 @@ var Tutorial = (function() {
 	 */
 	function update() {
 
-		if (timer-- <= 0) {
-			setMission();
-		}
-
 		if (text !== "") {
-			if (completed[missions[currentMission].event] === true) {
+			var mission = missions[currentMission];
+			if (mission.lifetime !== undefined && mission.lifetime-- <= 0) {
+				completed[mission.event] = true;
+			}
+			if (completed[mission.event] === true) {
 				currentMission++;
 				text = "";
 				timer = 60;
+			}
+		} else {
+			if (started && timer-- <= 0) {
+				setMission();
 			}
 		}
 	}
@@ -70,7 +88,7 @@ var Tutorial = (function() {
 		ctx.strokeStyle = borderColor;
 		ctx.lineWidth = borderWidth;
 		ctx.beginPath();
-		ctx.rect(20, Canvas.height-20-200, 400, 200);
+		ctx.rect(20, Canvas.height-20-200, 500, 200);
 		ctx.fill();
 		ctx.stroke();
 
@@ -78,13 +96,14 @@ var Tutorial = (function() {
 		ctx.fillStyle = "#FFF";
 		ctx.textAlign = "top";
         ctx.textBaseline = "left";
-		wrapText(ctx, text, 28, Canvas.height-192, 400-16, 20);
+		wrapText(ctx, text, 28, Canvas.height-192, 500-16, 20);
 
 	}
 
 	// Export.
 	return {
 		get text() { return text; },
+		start: start,
 		update: update,
 		render: render,
 		complete: complete

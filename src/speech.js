@@ -23,11 +23,13 @@ function speak(text) {
 	});
 	if (speechEnabled && ENABLE_VOICE) {
 		speechSynth.cancel();
-		var speech = new SpeechSynthesisUtterance(text);
-		speech.rate = 1;
-		speech.pitch = 0.1;
-		speech.lang = "en";
-		//speech.voice = voices[voiceIndex % voices.length];
-		speechSynth.speak(speech);
+		var newText = text.split(". ");
+		newText.forEach(function(t) {
+			var speech = new SpeechSynthesisUtterance(t+".");
+			speech.rate = 1;
+			speech.pitch = 0.1;
+			speech.lang = "en";
+			speechSynth.speak(speech);
+		});
 	}
 }

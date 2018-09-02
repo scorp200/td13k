@@ -33,6 +33,7 @@ var Game = {
 		EnemyShip.destroyAll();
 		Laser.clear();
 		WaveManager.init();
+		Tutorial.start();
 
 		// Setup planets (procgen this?)
 		var s = Orbital.sun(getHSL(60, 100, 50), 50, 0, 0);
@@ -59,8 +60,6 @@ var Game = {
 	}
 
 }
-
-Game.init();
 
 // Update game.
 var lastTick = performance.now();

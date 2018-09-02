@@ -18,6 +18,7 @@ var LoadingScreen = {
             }
             if (Mouse.click) {
                 gameState = GAME_STATE.RUNNING;
+				Game.init();
                 if (musSpace.pause) {
                     musicLoop(musStarry);
                 }
