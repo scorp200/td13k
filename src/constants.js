@@ -40,3 +40,11 @@ var BUFF_TYPE = {
 	TURNING: 2,
 	FIRE_RATE: 4
 }
+
+/**
+ *
+ */
+var TUTORIAL_EVENT = {
+	MOUSE: 0,
+	PAUSE: 1
+}

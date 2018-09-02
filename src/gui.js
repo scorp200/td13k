@@ -86,6 +86,9 @@ var Gui = {
 			dy += 20;
 		});
 
+		// Tutorial
+		Tutorial.render();
+
 	}
 
 }
