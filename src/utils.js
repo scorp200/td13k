@@ -92,26 +92,13 @@ function clickNearest() {
 					Gui.selection.openAt(Mouse.x, Mouse.y);
 					Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
 				} else if (gameState === GAME_STATE.CREATE && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
-					buildOn = nearest;
-					buildMaxDistance = buildOn.size * buildOrbitSize;
+					build.on = nearest;
+					build.maxDistance = build.on.size * build.multiplier;
 				}
 				sndClick.play();
 			}
 		}
 	}
-}
-
-function selectOrbitSize() {
-	var c;
-	var radAngle = getAngle({x: Mouse.vx, y: Mouse.vy}, buildOn);
-	switch (build) {
-		case (ORBITAL_TYPE.SATELLITE): c = Orbital.satellite(buildOn, buildDistance, radAngle); break;
-		case (ORBITAL_TYPE.MINING): c = Orbital.miningStation(buildOn, buildDistance, radAngle); break;
-		case (ORBITAL_TYPE.DEFENSE): c = Orbital.defenseStation(buildOn, buildDistance, radAngle); break;
-	}
-	build = null;
-	buildOn = null;
-	gameState = GAME_STATE.RUNNING;
 }
 
 /**

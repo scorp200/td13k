@@ -29,6 +29,7 @@ var Game = {
 		// Clear any previous game.
 		orbitals = [];
 		View.init();
+		build.init();
 		EnemyShip.destroyAll();
 		Laser.clear();
 		WaveManager.init();
@@ -105,14 +106,7 @@ function update(repeat) {
 			Rocket.update();
 			clickNearest();
 		} else if (gameState === GAME_STATE.CREATE) {
-			if (!buildOn)
-				clickNearest();
-			else if (Mouse.released) {
-				selectOrbitSize();
-			} else {
-				buildDistance = getDistance(buildOn, { x: Mouse.vx, y: Mouse.vy });
-				buildDistance = buildDistance > buildMaxDistance ? buildMaxDistance : buildDistance;
-			}
+			build.update();
 		}
 
 	}
@@ -165,13 +159,7 @@ function render() {
 
 		// Draw building radius.
 		if (gameState === GAME_STATE.CREATE) {
-			if (buildOn) {
-				ctx.strokeStyle = "#0F0";
-				ctx.beginPath();
-				ctx.arc(buildOn.x, buildOn.y, buildDistance, 0, TAU);
-				ctx.lineWidth = 3;
-				ctx.stroke();
-			}
+			build.render();
 		}
 
 		var centerX = Canvas.width / 2;

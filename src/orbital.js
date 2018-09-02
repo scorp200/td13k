@@ -1,11 +1,6 @@
 var orbitals = [];
 //var coms = [];
 //var def = [];
-var build = null;
-var buildOn = null;
-var buildOrbitSize = 20;
-var buildDistance = null;
-var buildMaxDistance = null;
 
 OrbitalUpgrades.init();
 
