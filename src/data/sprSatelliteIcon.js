@@ -1,4 +1,4 @@
-// sprSatellite
+// sprSatelliteIcon
 var sprSatelliteIcon = (function() {
 
     var canv = document.createElement("CANVAS");
@@ -7,16 +7,22 @@ var sprSatelliteIcon = (function() {
     canv.height = 48;
 
     ctx.fillStyle = "#FFF";
+	ctx.strokeStyle = "#FFF";
+	ctx.lineWidth = 2;
 
 	ctx.rect(4, 4, 40, 40);
 	ctx.clip();
 
 	ctx.translate(24, 24);
 	ctx.rotate(PI/4);
-    ctx.fillRect(-4, -4, 8, 8);
-	ctx.fillRect(-2, -8, 4, 16);
-	ctx.fillRect(-5, 12-4, 10, 24);
-	ctx.fillRect(-5, -12-20, 10, 24);
+    ctx.fillRect(-9, -4, 8, 8);
+	ctx.fillRect(-7, -8, 4, 16);
+	ctx.fillRect(-12, 12-4, 14, 24);
+	ctx.fillRect(-12, -12-20, 14, 24);
+
+	ctx.beginPath();
+	ctx.arc(30, 0, 20, 0, TAU);
+	ctx.stroke();
 
     return canv;
 

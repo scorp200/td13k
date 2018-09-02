@@ -15,8 +15,8 @@ var Gui = {
 		Gui.elements = [
 			Gui.selection,
 			Button(Gui, center-24-60, bottom-64, 48, 48, "Build Satellite", sprSatelliteIcon, buildSatellite),
-			Button(Gui, center-24, bottom-64, 48, 48, "Build Mining Station", null, buildMiningStation),
-			Button(Gui, center+24+12, bottom-64, 48, 48, "Build Defense Platform", null, buildDefensePlatform)
+			Button(Gui, center-24, bottom-64, 48, 48, "Build Mining Station", sprMiningStationIcon, buildMiningStation),
+			Button(Gui, center+24+12, bottom-64, 48, 48, "Build Defense Platform", sprDefensePlatformIcon, buildDefensePlatform)
 		];
 	},
 
