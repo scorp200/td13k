@@ -13,6 +13,7 @@ Settings.init();
 // Pause the game.
 document.addEventListener("keypress", function(e) {
 	if (e.key === " ") {
+		Tutorial.complete(TUTORIAL_EVENT.PAUSE);
 		if (gameState === GAME_STATE.PAUSED) {
 			gameState = GAME_STATE.RUNNING;
 		} else {
@@ -95,6 +96,7 @@ function update(repeat) {
 		hoverName = "";
 		View.update();
 		Gui.update();
+		Tutorial.update();
 		if (gameState === GAME_STATE.RUNNING) {
 			orbitals.forEach(function(e) { e.update(); });
 			WaveManager.update();

@@ -41,7 +41,7 @@ var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 			ctx.fillRect(parent.x+x, parent.y+y, w, h);
 			ctx.strokeRect(parent.x+x, parent.y+y, w, h);
 			if (img) {
-				ctx.drawImage(img, parent.x+x, parent.y+y, w, h);
+				ctx.drawImage(img, parent.x+x+4, parent.y+y+4);
 			}
 		}
 
