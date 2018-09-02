@@ -166,7 +166,7 @@ function render() {
 		ctx.setTransform(1, 0, 0, 1, centerX, centerY);
 		View.reset();
 		Gui.render();
-		drawDebug();
+		//drawDebug();
 
 	}
 }

@@ -57,7 +57,7 @@ function getOrbitCache(body) {
 		ctxOrbit.beginPath();
 		ctxOrbit.lineWidth = 2 / drawScale;
 		ctxOrbit.strokeStyle = body.color;
-		ctxOrbit.globalAlpha = 0.6;
+		ctxOrbit.globalAlpha = 1;
 		ctxOrbit.arc(0, 0, orbit.distance, 0, TAU/4, false);
 		ctxOrbit.stroke();
 		ctxOrbit.setLineDash(dashStyleReset);
@@ -80,6 +80,7 @@ function renderOrbit(body) {
 
 	var scaleLevel = Math.floor(View.zoom*4);
 	if (body.orbitCache && body.orbitCache[scaleLevel]) {
+		ctx.globalAlpha = 0.1;
 		var cache = body.orbitCache[scaleLevel];
 		ctx.save();
 		ctx.translate(body.x, body.y / View.tilt);
@@ -94,6 +95,7 @@ function renderOrbit(body) {
 		ctx.restore();
 	}
 
+	// ONLINE circle.
 	ctx.fillStyle = body.online ? "#0F0" : "#F00";
 	ctx.beginPath();
 	ctx.arc(body.x, body.y / View.tilt - 20, 5, 0, TAU);
@@ -106,7 +108,7 @@ function renderTrail(body) {
 	var orbit = body.orbit;
 	if (orbit) {
 		ctx.beginPath();
-		ctx.globalAlpha = 0.4;
+		ctx.globalAlpha = 0.1;
 		ctx.strokeStyle = body.color;
 		ctx.lineWidth = 4 / View.zoom;
 		ctx.save();
@@ -255,7 +257,7 @@ function renderComLines() {
 	resetComlines();
 	var lines = getComlines(Base.planet);
 
-	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.8);
+	ctx.globalAlpha = clamp(0.1 / View.zoom, 0.1, 0.4);
     ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 4);
     ctx.strokeStyle = "#0F0";
 

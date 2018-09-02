@@ -61,6 +61,7 @@ var View = (function() {
             y += Mouse.vy * zoomDelta;
             xTarget += Mouse.vx * zoomDelta;
             yTarget += Mouse.vy * zoomDelta;
+			Tutorial.complete(TUTORIAL_EVENT.ZOOM);
         }
 
         x += lerp(x, xTarget, smooth, 0.001);

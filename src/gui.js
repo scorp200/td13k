@@ -89,6 +89,10 @@ var Gui = {
 		// Tutorial
 		Tutorial.render();
 
+		// FPS.
+		ctx.font = "small-caps 500 8px monospace";
+		ctx.fillText("FPS: " + Fps.fps, 10, 20);
+
 	}
 
 }

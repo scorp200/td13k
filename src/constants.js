@@ -47,5 +47,6 @@ var BUFF_TYPE = {
 var TUTORIAL_EVENT = {
 	INTRO: 0,
 	MOUSE: 1,
-	PAUSE: 2
+	PAUSE: 2,
+	ZOOM: 3
 }
