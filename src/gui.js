@@ -16,11 +16,11 @@ var Gui = {
 			Gui.selection,
 			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite", sprSatelliteIcon, buildSatellite),
 			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station", sprMiningStationIcon, buildMiningStation),
-			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildDefensePlatform),
-			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", sprDefensePlatformIcon, buildDefensePlatform),
-			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", sprDefensePlatformIcon, buildDefensePlatform),
-			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", sprDefensePlatformIcon, buildDefensePlatform),
-			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", sprDefensePlatformIcon, buildDefensePlatform)
+			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildLaserPlatform),
+			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", null, buildLaserPlatform),
+			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", null, buildLaserPlatform),
+			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", null, buildLaserPlatform),
+			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", null, buildLaserPlatform)
 		];
 	},
 
@@ -104,19 +104,19 @@ var Gui = {
 function buildSatellite() {
 	speak("Select an area to build the satellite");
 	gameState = GAME_STATE.CREATE;
-	build.what = ORBITAL_TYPE.SATELLITE;//'satellite';
+	build.what = ORBITAL_TYPE.SATELLITE;
 }
 
 function buildMiningStation() {
 	speak("Select an area to build the mining station");
 	gameState = GAME_STATE.CREATE;
-	build.what = ORBITAL_TYPE.MINING;//'miningStation';
+	build.what = ORBITAL_TYPE.MINING;
 }
 
-function buildDefensePlatform() {
+function buildLaserPlatform() {
 	speak("Select an area to build the defense platform");
 	gameState = GAME_STATE.CREATE;
-	build.what = ORBITAL_TYPE.DEFENSE;//'defenseStation';
+	build.what = ORBITAL_TYPE.DEFENSE;
 }
 
 Gui.setup();

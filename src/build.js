@@ -23,6 +23,7 @@ var build = (function() {
 		} else {
 			distance = getDistance(on, { x: Mouse.vx, y: Mouse.vy });
 			distance = distance > maxDistance ? maxDistance : distance;
+			distance = Math.floor(distance/50) * 50;
 		}
 	}
 

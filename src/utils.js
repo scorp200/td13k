@@ -92,7 +92,7 @@ function clickNearest(build) {
 				} else {
 					Gui.selection.target = nearest;
 					Gui.selection.openAt(Mouse.x, Mouse.y);
-					Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
+					//Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
 				}
 				sndClick.play();
 			}
