@@ -103,47 +103,47 @@ var Gui = {
 
 function buildSatellite() {
 	speak("Select an area to build the satellite");
-	gameState = GAME_STATE.CREATE;
+	build.pending = true;
 	build.what = ORBITAL_TYPE.SATELLITE;
 }
 
 function buildMiningStation() {
 	speak("Select an area to build the mining station");
-	gameState = GAME_STATE.CREATE;
+	build.pending = true;
 	build.what = ORBITAL_TYPE.MINING;
 }
 
 function buildLaserPlatform() {
 	speak("Select an area to build the defense platform");
-	gameState = GAME_STATE.CREATE;
+	build.pending = true;
 	build.what = ORBITAL_TYPE.DEFENSE;
 	build.module = "laser";
 }
 
 function buildBeamPlatform() {
 	speak("Select an area to build the defense platform");
-	gameState = GAME_STATE.CREATE;
+	build.pending = true;
 	build.what = ORBITAL_TYPE.DEFENSE;
 	build.module = "beam";
 }
 
 function buildRocketPlatform() {
 	speak("Select an area to build the defense platform");
-	gameState = GAME_STATE.CREATE;
+	build.pending = true;
 	build.what = ORBITAL_TYPE.DEFENSE;
 	build.module = "rocket";
 }
 
 function buildEmpPlatform() {
 	speak("Select an area to build the defense platform");
-	gameState = GAME_STATE.CREATE;
+	build.pending = true;
 	build.what = ORBITAL_TYPE.DEFENSE;
 	build.module = "slow";
 }
 
 function buildLightningPlatform() {
 	speak("Select an area to build the defense platform");
-	gameState = GAME_STATE.CREATE;
+	build.pending = true;
 	build.what = ORBITAL_TYPE.DEFENSE;
 	build.module = "zap";
 }

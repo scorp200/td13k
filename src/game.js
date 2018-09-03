@@ -97,15 +97,18 @@ function update(repeat) {
 		View.update();
 		Gui.update();
 		Tutorial.update();
-		clickNearest();
-		if (gameState === GAME_STATE.RUNNING) {
-			orbitals.forEach(function(e) { e.update(); });
-			WaveManager.update();
-			EnemyShip.update();
-			Laser.update();
-			Rocket.update();
-		} else if (gameState === GAME_STATE.CREATE) {
+
+		if (build.pending) {
 			build.update();
+		} else {
+			if (gameState === GAME_STATE.RUNNING) {
+				clickNearest();
+				orbitals.forEach(function(e) { e.update(); });
+				WaveManager.update();
+				EnemyShip.update();
+				Laser.update();
+				Rocket.update();
+			}
 		}
 
 	}
@@ -158,7 +161,7 @@ function render() {
 		}
 
 		// Draw building radius.
-		if (gameState === GAME_STATE.CREATE) {
+		if (build.pending) {
 			build.render();
 		}
 

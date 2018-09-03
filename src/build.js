@@ -1,4 +1,6 @@
 var build = (function() {
+
+	var pending = false;
 	var what = null;
 	var module = 0;
 	var on = null;
@@ -53,9 +55,10 @@ var build = (function() {
 				setModuleUpgrade(c, module, 1);
 				break;
 		}
+		c.update();
 		what = null;
 		on = null;
-		gameState = GAME_STATE.RUNNING;
+		pending = false;
 	}
 
 	function setTarget() {
@@ -63,8 +66,10 @@ var build = (function() {
 	}
 
 	return {
-		set what(val) { what = val },
-		set module(val) { module = val },
+		get pending() { return pending; },
+		set pending(val) { pending = val; },
+		set what(val) { what = val; },
+		set module(val) { module = val; },
 		update: update,
 		render: render,
 		init: init,

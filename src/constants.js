@@ -14,8 +14,7 @@ var TAU = PI * 2;
 var GAME_STATE = {
 	LOADING: 0,
 	RUNNING: 1,
-	CREATE: 2,
-	PAUSED: 3
+	PAUSED: 2
 }
 
 /**
