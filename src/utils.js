@@ -86,12 +86,12 @@ function clickNearest() {
 			hoverName = nearest.name;
 			if (!Mouse.target && !Mouse.drag) {
 				speak("selected " + nearest.name);
-				if (gameState === GAME_STATE.RUNNING) {
+				if (gameState === GAME_STATE.CREATE && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
+					build.on = nearest;
+				} else {
 					Gui.selection.target = nearest;
 					Gui.selection.openAt(Mouse.x, Mouse.y);
 					Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
-				} else if (gameState === GAME_STATE.CREATE && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
-					build.on = nearest;
 				}
 				sndClick.play();
 			}
