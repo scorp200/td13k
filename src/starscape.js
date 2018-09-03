@@ -44,7 +44,7 @@ function drawStarscape() {
 
 // Draw gradient background (star glow effect).
 // Renders a gradient to a canvas, and draws that scaled up later.
-var gbQuality = 2048;
+var gbQuality = 128;
 var cBackground = document.createElement("CANVAS");
 var ctxBackground = cBackground.getContext("2d", { alpha: false });
 cBackground.width = gbQuality;
