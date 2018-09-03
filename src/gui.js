@@ -17,10 +17,10 @@ var Gui = {
 			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite", sprSatelliteIcon, buildSatellite),
 			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station", sprMiningStationIcon, buildMiningStation),
 			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildLaserPlatform),
-			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", null, buildLaserPlatform),
-			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", null, buildLaserPlatform),
-			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", null, buildLaserPlatform),
-			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", null, buildLaserPlatform)
+			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", null, buildBeamPlatform),
+			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", null, buildRocketPlatform),
+			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", null, buildEmpPlatform),
+			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", null, buildLightningPlatform)
 		];
 	},
 
@@ -117,6 +117,35 @@ function buildLaserPlatform() {
 	speak("Select an area to build the defense platform");
 	gameState = GAME_STATE.CREATE;
 	build.what = ORBITAL_TYPE.DEFENSE;
+	build.module = "laser";
+}
+
+function buildBeamPlatform() {
+	speak("Select an area to build the defense platform");
+	gameState = GAME_STATE.CREATE;
+	build.what = ORBITAL_TYPE.DEFENSE;
+	build.module = "beam";
+}
+
+function buildRocketPlatform() {
+	speak("Select an area to build the defense platform");
+	gameState = GAME_STATE.CREATE;
+	build.what = ORBITAL_TYPE.DEFENSE;
+	build.module = "rocket";
+}
+
+function buildEmpPlatform() {
+	speak("Select an area to build the defense platform");
+	gameState = GAME_STATE.CREATE;
+	build.what = ORBITAL_TYPE.DEFENSE;
+	build.module = "slow";
+}
+
+function buildLightningPlatform() {
+	speak("Select an area to build the defense platform");
+	gameState = GAME_STATE.CREATE;
+	build.what = ORBITAL_TYPE.DEFENSE;
+	build.module = "zap";
 }
 
 Gui.setup();

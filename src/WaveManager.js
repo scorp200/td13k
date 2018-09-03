@@ -3,7 +3,7 @@ var WaveManager = (function() {
 
     // Timing.
     var currentWave = 0;
-    var cooldown = 60;
+    var cooldown = 10;
     var timer = 0;
 
     // Wave spawning.
@@ -23,7 +23,7 @@ var WaveManager = (function() {
 	 */
     function init() {
 		currentWave = 0;
-	    cooldown = 60;
+	    cooldown = 10;
         timer = cooldown * 60;
     }
 

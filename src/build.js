@@ -1,5 +1,6 @@
 var build = (function() {
 	var what = null;
+	var module = 0;
 	var on = null;
 	var multiplier = 20;
 	var distance = null;
@@ -49,6 +50,7 @@ var build = (function() {
 				break;
 			case (ORBITAL_TYPE.DEFENSE):
 				c = Orbital.defenseStation(on, distance, radAngle);
+				setModuleUpgrade(c, module, 1);
 				break;
 		}
 		what = null;
@@ -62,6 +64,7 @@ var build = (function() {
 
 	return {
 		set what(val) { what = val },
+		set module(val) { module = val },
 		update: update,
 		render: render,
 		init: init,
