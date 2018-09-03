@@ -60,7 +60,7 @@ function getOrbitCache(body) {
 		ctxOrbit.globalAlpha = 1;
 		ctxOrbit.arc(0, 0, orbit.distance, 0, TAU/4, false);
 		ctxOrbit.stroke();
-		ctxOrbit.setLineDash(dashStyleReset);
+		ctxOrbit.setLineDash([]);
 		cache.hasBody[body.id] = true;
 
 	}
@@ -70,8 +70,6 @@ function getOrbitCache(body) {
 }
 
 // Render orbit
-var dashStyle = [5, 5];
-var dashStyleReset = [];
 function renderOrbit(body) {
 
 	if (body.orbit) {
@@ -228,25 +226,40 @@ function resetComlines() {
 	}
 }
 
+// Comline stuff.
+var pairs = [];
+var list = [];
+
 /**
  * @param {Object} node
  * @param {Array=} list
  */
-function getComlines(node, list) {
+function getComlines(node, start) {
 	node.online = true;
-	list = list || [];
+	if (start) {
+		pairs.length = 0;
+		list.length = 0;
+	}
+	var next = [];
 	list.push(node);
 	var n = orbitals.length;
 	while (n--) {
 		var inst = orbitals[n];
 		var inList = list.indexOf(inst) >= 0;
-		if (node !== inst && !inList && canOfferConnection(node)) {
+		if (node !== inst && !inList && canOfferConnection(node) && canReceiveConnection(inst)) {
 			if (getDistance(node, inst) <= Base.comRange) {
-				getComlines(inst, list);
+				pairs.push(node, inst);
+				next.push(inst);
+				list.push(inst);
 			}
 		}
 	}
-	return list;
+
+	next.forEach(function(i) {
+		getComlines(i);
+	});
+
+	return pairs;
 }
 
 function canOfferConnection(t) {
@@ -264,7 +277,7 @@ function canReceiveConnection(t) {
 function renderComLines() {
 
 	resetComlines();
-	var lines = getComlines(Base.planet);
+	var lines = getComlines(Base.planet, true);
 
 	ctx.globalAlpha = clamp(0.1 / View.zoom, 0.1, 0.4);
     ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 4);
@@ -272,19 +285,14 @@ function renderComLines() {
 
 	ctx.beginPath();
     var up = 75 * (View.tilt - 1);
-    for (var n=0; n<lines.length; n++) {
-        var t = lines[n];
-        for (var i=n; i<lines.length; i++) {
-            var e = lines[i];
-            if (e != t && getDistance(e, t) <= Base.comRange
-			&& canOfferConnection(t) && canReceiveConnection(e)) {
-				var y1 = t.y / View.tilt;
-				var y2 = e.y / View.tilt;
-                ctx.moveTo(t.x, y1);
-                ctx.bezierCurveTo(t.x, y1-up, e.x, y2-up, e.x, y2);
-            }
-        }
-    }
+	for (var n=0; n<lines.length; n+=2) {
+		var a = lines[n];
+		var b = lines[n+1];
+		var y1 = a.y / View.tilt;
+		var y2 = b.y / View.tilt;
+		ctx.moveTo(a.x, y1);
+		ctx.bezierCurveTo(a.x, y1-up, b.x, y2-up, b.x, y2);
+	}
 	ctx.stroke();
 
 }

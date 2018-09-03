@@ -17,10 +17,10 @@ var Gui = {
 			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite", sprSatelliteIcon, buildSatellite),
 			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station", sprMiningStationIcon, buildMiningStation),
 			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildLaserPlatform),
-			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", null, buildBeamPlatform),
-			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", null, buildRocketPlatform),
-			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", null, buildEmpPlatform),
-			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", null, buildLightningPlatform)
+			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", sprBeamPlatformIcon, buildBeamPlatform),
+			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", sprRocketPlatformIcon, buildRocketPlatform),
+			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", sprEmpPlatformIcon, buildEmpPlatform),
+			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", sprLightningPlatformIcon, buildLightningPlatform)
 		];
 	},
 
