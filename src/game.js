@@ -129,6 +129,7 @@ function render() {
 		View.position();
 		orbitals.forEach(function(e) { e.render(); });
 		ctx.globalAlpha = 1;
+		renderAllTrails();
 		renderAllOrbits();
 		renderAllBodies();
 		EnemyShip.render();

@@ -80,7 +80,7 @@ function renderOrbit(body) {
 
 	var scaleLevel = Math.floor(View.zoom*4);
 	if (body.orbitCache && body.orbitCache[scaleLevel]) {
-		ctx.globalAlpha = 0.1;
+		ctx.globalAlpha = 0.3;
 		var cache = body.orbitCache[scaleLevel];
 		ctx.save();
 		ctx.translate(body.x, body.y / View.tilt);
@@ -103,21 +103,30 @@ function renderOrbit(body) {
 
 }
 
+// Render all trails.
+function renderAllTrails() {
+	ctx.beginPath();
+	ctx.globalAlpha = 0.3;
+	ctx.strokeStyle = "#BDF";//body.color;
+	ctx.lineWidth = 2 / View.zoom;
+	var n = orbitals.length;
+	while (n--) {
+		renderTrail(orbitals[n]);
+	}
+	ctx.stroke();
+}
+
 // Render trail
 function renderTrail(body) {
 	var orbit = body.orbit;
 	if (orbit) {
-		ctx.beginPath();
-		ctx.globalAlpha = 0.1;
-		ctx.strokeStyle = body.color;
-		ctx.lineWidth = 4 / View.zoom;
 		ctx.save();
 		var tilt = 1 / View.tilt;
 		ctx.transform(1, 0, 0, tilt, orbit.planet.x, orbit.planet.y * tilt)
-		var trail = orbit.radAngle - orbit.moveSpeed * orbit.distance / 2;
+		var trail = orbit.radAngle - orbit.moveSpeed * 100;
+		ctx.moveTo(Math.cos(trail)*orbit.distance, Math.sin(trail)*orbit.distance);
 		ctx.arc(0, 0, orbit.distance, trail, orbit.radAngle, orbit.moveSpeed < 0);
 		ctx.restore();
-		ctx.stroke();
 	}
 }
 
@@ -138,7 +147,7 @@ function renderBody(body) {
 		ctx.save();
 		ctx.translate(body.x, body.y / View.tilt);
 		ctx.rotate(a);
-		ctx.scale(0.2, 0.2);
+		ctx.scale(0.3, 0.3);
 		ctx.drawImage(sprSatellite, -sprSatellite.width/2, -sprSatellite.height/2);
 		ctx.restore();
 		return;
