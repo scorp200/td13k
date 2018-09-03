@@ -78,7 +78,8 @@ function nearestTargetableOrbital(x, y) {
 	return orbitals[closest];
 }
 
-function clickNearest() {
+function clickNearest(build) {
+	var ret = null;
 	if (Mouse.released) {
 		Gui.selection.target = null;
 		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
@@ -86,8 +87,8 @@ function clickNearest() {
 			hoverName = nearest.name;
 			if (!Mouse.target && !Mouse.drag) {
 				speak("selected " + nearest.name);
-				if (gameState === GAME_STATE.CREATE && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
-					build.on = nearest;
+				if (build && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
+					ret = nearest;
 				} else {
 					Gui.selection.target = nearest;
 					Gui.selection.openAt(Mouse.x, Mouse.y);
@@ -97,6 +98,7 @@ function clickNearest() {
 			}
 		}
 	}
+	return ret;
 }
 
 /**

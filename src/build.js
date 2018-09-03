@@ -13,11 +13,11 @@ var build = (function() {
 	}
 
 	function update() {
-		console.log(on == build.on);
 		if (!on) {
-			clickNearest();
-			if (on)
+			on = clickNearest(true);
+			if (on) {
 				maxDistance = on.size * multiplier;
+			}
 		} else if (Mouse.released) {
 			selectOrbitSize();
 		} else {
@@ -61,7 +61,6 @@ var build = (function() {
 
 	return {
 		set what(val) { what = val },
-		set on(val) { on = val },
 		update: update,
 		render: render,
 		init: init,

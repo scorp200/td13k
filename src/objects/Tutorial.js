@@ -32,8 +32,10 @@ var Tutorial = (function() {
 	 *
 	 */
 	function start() {
-		started = true;
-		setMission();
+		if (ENABLE_TUTORIAL) {
+			started = true;
+			setMission();
+		}
 	}
 
 	/**
