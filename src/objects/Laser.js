@@ -9,9 +9,10 @@ var Laser = (function() {
      * @param {number} a Angle
      * @param {number} lifetime
      * @param {string} color
+	 * @param {number=} spd
      * @return {void}
      */
-    function create(x, y, a, lifetime, color) {
+    function create(x, y, a, lifetime, color, spd) {
 
         // Create map for this color if it doesn't exist yet.
         (!map[color]) && (map[color] = []);
@@ -21,7 +22,8 @@ var Laser = (function() {
             x: x,
             y: y,
             radAngle: a,
-            lifetime: lifetime - moveSpeed
+            lifetime: lifetime - moveSpeed,
+			spd: spd || moveSpeed
         });
 
     }
@@ -36,12 +38,12 @@ var Laser = (function() {
             var n = m.length;
             while (n--) {
                 var inst = m[n];
-                inst.lifetime -= moveSpeed;
+                inst.lifetime -= inst.spd;
                 if (inst.lifetime <= 0) {
                     destroy(m, n);
                 } else {
-                    inst.x -= Math.cos(inst.radAngle) * moveSpeed;
-                    inst.y -= Math.sin(inst.radAngle) * moveSpeed;
+                    inst.x -= Math.cos(inst.radAngle) * inst.spd;
+                    inst.y -= Math.sin(inst.radAngle) * inst.spd;
                 }
             }
         }

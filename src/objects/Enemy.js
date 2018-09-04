@@ -114,7 +114,7 @@ var EnemyShip = (function() {
 			var inst = instances[n];
 			ctx.save();
 			ctx.translate(inst.x, inst.y / View.tilt - inst.z * View.tilt);
-			ctx.scale(1, 1 / View.tilt);
+			ctx.scale(2, 2 / View.tilt);
 			ctx.rotate(inst.moveDir);
 			ctx.drawImage(sprEnemyShip, ox, oy);
 			ctx.restore();
@@ -126,6 +126,7 @@ var EnemyShip = (function() {
 	 * @return {void}
 	 */
 	function destroy(n) {
+		Explosion.create(instances[n].x, instances[n].y);
 		instances[n] = instances[instances.length-1];
 		instances.length--;
 	}
