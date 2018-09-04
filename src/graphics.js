@@ -191,7 +191,7 @@ function renderBody(body) {
             context.beginPath();
             context.arc(size, size, body.size, 0, 2*Math.PI, false);
             context.clip();
-            while (repeat--) {
+            while (repeat) {
 				context.beginPath();
 				context.globalAlpha = 0.05;
 				context.fillStyle = "#000";
@@ -199,9 +199,11 @@ function renderBody(body) {
 				context.shadowBlur = 10;
 				context.save();
 				context.transform(1, 0, 0, 1, size-o/2+(body.size-o)/2, size);
-				context.arc(0, 0, o--*2, -TAU / 4, TAU / 4);
+				context.arc(0, 0, o*2, -TAU / 4, TAU / 4);
 				context.fill();
 				context.restore();
+				o -= Math.max(body.size/20, 1);
+				repeat -= Math.max(body.size/20, 1);
             }
 		}
 	}
@@ -279,8 +281,8 @@ function renderComLines() {
 	resetComlines();
 	var lines = getComlines(Base.planet, true);
 
-	ctx.globalAlpha = clamp(0.1 / View.zoom, 0.1, 0.4);
-    ctx.lineWidth = clamp(1 / View.zoom * 2, 1, 4);
+	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.4);
+    ctx.lineWidth = clamp(1 / View.zoom, 2, 5);
     ctx.strokeStyle = "#0F0";
 
 	ctx.beginPath();
