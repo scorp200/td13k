@@ -51,6 +51,7 @@ var Gui = {
 		var scale = clamp(Canvas.width / 1920, 0.5, 1);
 
 		// Wave counter.
+		ctx.globalAlpha = 1;
 		ctx.fillStyle = "#FFF";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -105,51 +106,86 @@ var Gui = {
 
 }
 
-function buildSatellite() {
-	speak("Select an area to build the satellite");
-	build.pending = true;
-	build.what = ORBITAL_TYPE.SATELLITE;
+function buildSatellite(check) {
+	if (check) {
+		return Base.minerals >= 50;
+	} else {
+		speak("Select an area to build the satellite");
+		build.pending = true;
+		build.what = ORBITAL_TYPE.SATELLITE;
+		build.cost = 50;
+	}
 }
 
-function buildMiningStation() {
-	speak("Select an area to build the mining station");
-	build.pending = true;
-	build.what = ORBITAL_TYPE.MINING;
+function buildMiningStation(check) {
+	if (check) {
+		return Base.minerals >= 50;
+	} else {
+		speak("Select an area to build the mining station");
+		build.pending = true;
+		build.what = ORBITAL_TYPE.MINING;
+		build.cost = 50;
+	}
 }
 
-function buildLaserPlatform() {
-	speak("Select an area to build the defense platform");
-	build.pending = true;
-	build.what = ORBITAL_TYPE.DEFENSE;
-	build.module = "laser";
+function buildLaserPlatform(check) {
+	if (check) {
+		return Base.minerals >= 100;
+	} else {
+		speak("Select an area to build the defense platform");
+		build.pending = true;
+		build.what = ORBITAL_TYPE.DEFENSE;
+		build.module = "laser";
+		build.cost = 100;
+	}
 }
 
-function buildBeamPlatform() {
-	speak("Select an area to build the defense platform");
-	build.pending = true;
-	build.what = ORBITAL_TYPE.DEFENSE;
-	build.module = "beam";
+function buildBeamPlatform(check) {
+	if (check) {
+		return Base.minerals >= 120;
+	} else {
+		speak("Select an area to build the defense platform");
+		build.pending = true;
+		build.what = ORBITAL_TYPE.DEFENSE;
+		build.module = "beam";
+		build.cost = 120;
+	}
 }
 
-function buildRocketPlatform() {
-	speak("Select an area to build the defense platform");
-	build.pending = true;
-	build.what = ORBITAL_TYPE.DEFENSE;
-	build.module = "rocket";
+function buildRocketPlatform(check) {
+	if (check) {
+		return Base.minerals >= 140;
+	} else {
+		speak("Select an area to build the defense platform");
+		build.pending = true;
+		build.what = ORBITAL_TYPE.DEFENSE;
+		build.module = "rocket";
+		build.cost = 140;
+	}
 }
 
-function buildEmpPlatform() {
-	speak("Select an area to build the defense platform");
-	build.pending = true;
-	build.what = ORBITAL_TYPE.DEFENSE;
-	build.module = "slow";
+function buildEmpPlatform(check) {
+	if (check) {
+		return Base.minerals >= 160;
+	} else {
+		speak("Select an area to build the defense platform");
+		build.pending = true;
+		build.what = ORBITAL_TYPE.DEFENSE;
+		build.module = "slow";
+		build.cost = 160;
+	}
 }
 
-function buildLightningPlatform() {
-	speak("Select an area to build the defense platform");
-	build.pending = true;
-	build.what = ORBITAL_TYPE.DEFENSE;
-	build.module = "zap";
+function buildLightningPlatform(check) {
+	if (check) {
+		return Base.minerals >= 170;
+	} else {
+		speak("Select an area to build the defense platform");
+		build.pending = true;
+		build.what = ORBITAL_TYPE.DEFENSE;
+		build.module = "zap";
+		build.cost = 170;
+	}
 }
 
 Gui.setup();

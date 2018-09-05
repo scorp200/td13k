@@ -23,7 +23,7 @@ var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 			if (Mouse.overRegion(parent.x+x, parent.y+y, w, h)) {
 				Gui.tooltip = text;
 				if (Mouse.click) {
-					if (onClick) {
+					if (onClick && onClick(true)) {
 						onClick();
 						if (speech) {
 							speak(speech);
@@ -35,6 +35,10 @@ var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 
 		// Render the button.
 		render: function() {
+			ctx.globalAlpha = 1.0;
+			if (onClick && !onClick(true)) {
+				ctx.globalAlpha = 0.2;
+			}
 			ctx.fillStyle = fillStyle;
 			ctx.strokeStyle = strokeStyle;
 			ctx.lineWidth = borderWidth;

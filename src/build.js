@@ -7,6 +7,7 @@ var build = (function() {
 	var multiplier = 20;
 	var distance = null;
 	var maxDistance = null;
+	var cost = 0;
 
 	function init() {
 		what = null;
@@ -60,6 +61,8 @@ var build = (function() {
 		what = null;
 		on = null;
 		pending = false;
+		Base.minerals -= cost;
+		cost = 0;
 	}
 
 	function setTarget() {
@@ -71,6 +74,7 @@ var build = (function() {
 		set pending(val) { pending = val; },
 		set what(val) { what = val; },
 		set module(val) { module = val; },
+		set cost(val) { cost = val; },
 		update: update,
 		render: render,
 		init: init,
