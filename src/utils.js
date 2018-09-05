@@ -78,7 +78,7 @@ function nearestTargetableOrbital(x, y) {
 	return orbitals[closest];
 }
 
-function clickNearest(build) {
+function clickNearest(b) {
 	var ret = null;
 	if (Mouse.released) {
 		Gui.selection.target = null;
@@ -87,9 +87,9 @@ function clickNearest(build) {
 			hoverName = nearest.name;
 			if (!Mouse.target && !Mouse.drag) {
 				speak("selected " + nearest.name);
-				if (build && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
+				if (b && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
 					ret = nearest;
-				} else {
+				} else if (!build.pending) {
 					Gui.selection.target = nearest;
 					Gui.selection.openAt(Mouse.x, Mouse.y);
 					//Gui.selection.addButtons(OrbitalUpgrades.get(nearest));

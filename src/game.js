@@ -100,7 +100,7 @@ function update(repeat) {
 
 		if (build.pending) {
 			build.update();
-		} else {
+		}// else {
 			if (gameState === GAME_STATE.RUNNING) {
 				clickNearest();
 				orbitals.forEach(function(e) { e.update(); });
@@ -109,7 +109,7 @@ function update(repeat) {
 				Laser.update();
 				Rocket.update();
 			}
-		}
+		//}
 
 	}
 
