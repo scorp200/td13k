@@ -21,7 +21,6 @@ function laserCode(station, level) {
                     }
                 }
             }
-        },
-        render: NOOP
+        }
     }
 }

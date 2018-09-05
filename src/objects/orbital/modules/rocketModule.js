@@ -20,7 +20,6 @@ function rocketCode(station, level) {
                     Rocket.create(station.x, station.y, dir, life, "#00B" /*createExplosion.bind(target.x, target.y, 1000)*/);
                 }
             }
-        },
-        render: NOOP
+        }
     };
 }

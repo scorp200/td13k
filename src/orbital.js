@@ -60,7 +60,7 @@ function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
 	}
 	t.render = function() {
 		//renderTrail(t);
-		t.module && t.module.render();
+		t.module && t.module.render && t.module.render();
 	}
 	orbitals.push(t);
 	return t;

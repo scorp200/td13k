@@ -97,6 +97,10 @@ var Gui = {
 		ctx.font = "small-caps 500 8px monospace";
 		ctx.fillText("FPS: " + Fps.fps, 10, 20);
 
+		// Pause status.
+		var offset = gameState === GAME_STATE.PAUSED ? 0 : 80;
+		ctx.drawImage(sprPauseIcon, offset, 0, 80, 80, Canvas.width-90, 30, 60, 60);
+
 	}
 
 }
