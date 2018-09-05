@@ -95,8 +95,8 @@ var Gui = {
 		Tutorial.render();
 
 		// FPS.
-		ctx.font = "small-caps 500 8px monospace";
-		ctx.fillText("FPS: " + Fps.fps, 10, 20);
+		ctx.font = "small-caps 500 12px monospace";
+		ctx.fillText("FPS: " + Fps.fps, 10, 26);
 
 		// Pause status.
 		var offset = gameState === GAME_STATE.PAUSED ? 0 : 80;

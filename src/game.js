@@ -38,7 +38,7 @@ var Game = {
 		// Setup planets (procgen this?)
 		var s = Orbital.sun(getHSL(60, 100, 50), 100, 0, 0);
 		var s1 = Orbital.planet(getHSL(180, 39, 62), 20, s, 1000, 0.003, Math.random() * TAU);
-		Base.planet = s1;
+		Base.create(s1);
 		var s1a = Orbital.planet(getHSL(-1, 60, 70), 10, s1, 200, -0.002, Math.random() * TAU);
 		var s2 = Orbital.planet(getHSL(-1, 60, 70), 50, s, 2000, 0.0015, Math.random() * TAU);
 		var s2a = Orbital.planet(getHSL(-1, 60, 70), 10, s2, s2.size * 8, 0.01, Math.random() * TAU);
@@ -100,16 +100,16 @@ function update(repeat) {
 
 		if (build.pending) {
 			build.update();
-		}// else {
-			if (gameState === GAME_STATE.RUNNING) {
-				clickNearest();
-				orbitals.forEach(function(e) { e.update(); });
-				WaveManager.update();
-				EnemyShip.update();
-				Laser.update();
-				Rocket.update();
-			}
-		//}
+		}
+
+		if (gameState === GAME_STATE.RUNNING) {
+			clickNearest();
+			orbitals.forEach(function(e) { e.update(); });
+			WaveManager.update();
+			EnemyShip.update();
+			Laser.update();
+			Rocket.update();
+		}
 
 	}
 
