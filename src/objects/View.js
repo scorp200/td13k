@@ -25,6 +25,10 @@ var View = (function() {
 	    tilt = 2;
 	}
 
+	/**
+	 * Update View.
+	 * @return {void}
+	 */
     function update() {
         if (Mouse.scrollDir !== 0) {
             var shift = Mouse.scrollDir * 0.1;
@@ -40,8 +44,10 @@ var View = (function() {
             anchorMouseY = Mouse.y;
         }
 
-		// Pan when mouse down and threshold reached.
-        if (anchorMouseX !== 0 && Mouse.down && (drag || Math.abs(anchorMouseX - Mouse.x) > dragThreshold)) {
+		// Pan when mouse down and threshold passed.
+		var xt = Math.abs(anchorMouseX - Mouse.x) > dragThreshold;
+		var yt = Math.abs(anchorMouseY - Mouse.y) > dragThreshold;
+        if (anchorMouseX !== 0 && Mouse.down && (drag || xt || yt)) {
 			drag = true;
             xTarget = anchorX + (anchorMouseX - Mouse.x);
             yTarget = anchorY + (anchorMouseY - Mouse.y);
