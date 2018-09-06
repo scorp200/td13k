@@ -8,7 +8,7 @@ var Fps = (function() {
     return {
 
         /**
-         * @param {number} tFrame
+         * @param {number} tFrame Time bewtween last and current frame.
          * @return {void} Directly sets private "fps" variable.
          */
         update: function(tFrame) {

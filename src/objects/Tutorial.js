@@ -106,7 +106,8 @@ var Tutorial = (function() {
 		var mission = missions[currentMission];
 		if (completed[mission.event] === true) {
 			ctx.textAlign = "center";
-			ctx.fillText("click to continue...", 270, Canvas.height/2+50);
+			ctx.font = "small-caps 600 12px monospace";
+			ctx.fillText("click to continue...", 270, Canvas.height/2+55);
 		}
 
 	}

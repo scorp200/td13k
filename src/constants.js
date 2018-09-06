@@ -1,9 +1,9 @@
 var Canvas = document.getElementById("c");
 var ctx = Canvas.getContext("2d", { alpha: false });
 var NOOP = function() {};
-var ENABLE_MUSIC = true;
-var ENABLE_VOICE = true;
-var ENABLE_TUTORIAL = true;
+var ENABLE_MUSIC = false;
+var ENABLE_VOICE = false;
+var ENABLE_TUTORIAL = false;
 var PI = Math.PI;
 var TAU = PI * 2;
 

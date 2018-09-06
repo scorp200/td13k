@@ -151,6 +151,19 @@ function renderBody(body) {
 		return;
 	}
 
+	if (body.type === ORBITAL_TYPE.DEFENSE) {
+		var a = getAngle(body, orbitals[0]);
+		ctx.save();
+		ctx.translate(body.x, body.y / View.tilt);
+		ctx.scale(0.5, 0.5);
+		ctx.drawImage(sprDefensePlatform, -sprDefensePlatform.width/2, -sprDefensePlatform.height/2+10);
+		ctx.scale(1.2, 0.7);
+		ctx.rotate(body.aimDirection);
+		ctx.drawImage(sprDefensePlatformLaser, -sprDefensePlatformLaser.width/2, -sprDefensePlatformLaser.height/2);
+		ctx.restore();
+		return;
+	}
+
 	var isSun = body.type === ORBITAL_TYPE.STAR;
 	if (!body.cache) {
 		var color = isSun ? "#FFF" : body.color;

@@ -15,6 +15,7 @@ function laserCode(station, level) {
                     var miss = Math.random() > 0.5;
                     var life = miss ? 2000 : getDistance(station, target);
                     var dir = getAngle(station, target);
+					station.aimDirection = dir;
                     Laser.create(station.x, station.y, dir, life, "#0F0");
                     if (!miss) {
                         target.hp -= 2;

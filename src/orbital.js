@@ -18,6 +18,7 @@ function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
 	t.module = null;
 	t.upgrades = [];
 	t.online = false;
+	t.aimDirection = 0;
 	if (orbit) {
 
 		// Clear orbit cache to force refresh.
