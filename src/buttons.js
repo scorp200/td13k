@@ -35,10 +35,7 @@ var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 
 		// Render the button.
 		render: function() {
-			ctx.globalAlpha = 1.0;
-			if (onClick && !onClick(true)) {
-				ctx.globalAlpha = 0.2;
-			}
+			ctx.globalAlpha = onClick && !onClick(true) ? 0.2 : 1;
 			ctx.fillStyle = fillStyle;
 			ctx.strokeStyle = strokeStyle;
 			ctx.lineWidth = borderWidth;

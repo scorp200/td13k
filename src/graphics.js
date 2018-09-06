@@ -140,10 +140,13 @@ function renderAllBodies() {
 // Render body (star, planet, death star)
 function renderBody(body) {
 
+	var dx = body.x;
+	var dy = body.y / View.tilt;
+
 	if (body.type === ORBITAL_TYPE.SATELLITE) {
 		var a = getAngle(body, orbitals[0]);
 		ctx.save();
-		ctx.translate(body.x, body.y / View.tilt);
+		ctx.translate(dx, dy);
 		ctx.rotate(a);
 		ctx.scale(0.3, 0.3);
 		ctx.drawImage(sprSatellite, -sprSatellite.width/2, -sprSatellite.height/2);
@@ -154,7 +157,7 @@ function renderBody(body) {
 	if (body.type === ORBITAL_TYPE.DEFENSE) {
 		var a = getAngle(body, orbitals[0]);
 		ctx.save();
-		ctx.translate(body.x, body.y / View.tilt);
+		ctx.translate(dx, dy);
 		ctx.scale(0.5, 0.5);
 		ctx.drawImage(sprDefensePlatform, -sprDefensePlatform.width/2, -sprDefensePlatform.height/2+10);
 		ctx.scale(1.2, 0.7);
@@ -223,7 +226,7 @@ function renderBody(body) {
 
 	var a = getAngle(body, orbitals[0]);
 	ctx.save();
-	ctx.translate(body.x, body.y / View.tilt);
+	ctx.translate(dx, dy);
 	ctx.rotate(a);
 	if (isSun) {
 		var scale = 1+Math.sin(performance.now()/30)*0.01;//1 + Math.random() * 0.03;

@@ -142,16 +142,17 @@ var EnemyShip = (function() {
 			var i = partition.length;
 			while (i--) {
 				var inst2 = partition[i];
-				if (inst1 === inst2) continue;
-				var distance = getDistanceRaw(inst1, inst2);
-				if (distance < 200) {
-					var xm = (inst1.x - inst2.x) * 0.25;
-					var ym = (inst1.y - inst2.y) * 0.25;
-					inst1.x += xm;
-					inst1.y += ym;
-					inst2.x -= xm;
-					inst2.y -= ym;
-					break; // No point checking multiple collisions...
+				if (inst1 !== inst2) {
+					var distance = getDistanceRaw(inst1, inst2);
+					if (distance < 200) {
+						var xm = (inst1.x - inst2.x) / 4;
+						var ym = (inst1.y - inst2.y) / 4;
+						inst1.x += xm;
+						inst1.y += ym;
+						inst2.x -= xm;
+						inst2.y -= ym;
+						break; // No point checking multiple collisions...
+					}
 				}
 			}
 		}
@@ -177,26 +178,6 @@ var EnemyShip = (function() {
 	}
 
 	/**
-	 * @param {Object} pos Any object with x and y properties.
-	 * @param {number} maxRange
-	 * @return {Object}
-	 */
-	function furthest(pos, maxRange) {
-		var furthest = null;
-		var distance = 0;
-		var n = instances.length;
-		while (n--) {
-			var inst = instances[n];
-			var newDistance = getDistance(pos, inst);	// Change to Raw?
-			if (newDistance > distance && newDistance < maxRange) {
-				furthest = inst;
-				distance = newDistance;
-			}
-		}
-		return furthest;
-	}
-
-	/**
 	 *
 	 */
 	function addBuff(inst, type, value, time) {
@@ -218,8 +199,8 @@ var EnemyShip = (function() {
 	 *
 	 */
 	function getPartition(x, y) {
-		x = Math.floor((x + spaceSize / 2) / partitionSize);
-		y = Math.floor((y + spaceSize / 2) / partitionSize);
+		x = ~~((x + spaceSize / 2) / partitionSize);
+		y = ~~((y + spaceSize / 2) / partitionSize);
 		var index = y * partitionWidth + x;
 		return partitions[index];
 	}
@@ -231,7 +212,6 @@ var EnemyShip = (function() {
 		update: update,
 		render: render,
 		nearest: nearest,
-		furthest: furthest,
 		addBuff: addBuff,
 		destroyAll: destroyAll
 	}

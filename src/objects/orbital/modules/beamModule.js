@@ -11,7 +11,7 @@ function beamCode(station, level) {
 		type: "beam",
 		level: level,
 		update: function() {
-			target = EnemyShip.furthest(station, length);
+			target = EnemyShip.nearest(station, length);
 			if (!target) return;
 			angleTarget = getAngle(station, target);
 			if (shootDir == null) shootDir = angleTarget;

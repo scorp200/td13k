@@ -7,8 +7,8 @@ function laserCode(station, level) {
         type: "laser",
         level: level,
         update: function() {
-            if (shootTimer-- <= 0) {
-                shootTimer = 2 - Math.min(level / 10, 2);
+            if (!shootTimer--) {
+                shootTimer = 2;// - Math.min(level / 10, 2);
                 var target = EnemyShip.nearest(station, range);
                 if (target && Base.energy >= shootCost) {
                     Base.energy -= shootCost;
