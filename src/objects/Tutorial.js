@@ -66,7 +66,7 @@ var Tutorial = (function() {
 			if (mission.lifetime !== undefined && mission.lifetime-- <= 0) {
 				completed[mission.event] = true;
 			}
-			if (completed[mission.event] === true) {
+			if (completed[mission.event] === true && Mouse.clickRegion(20, Canvas.height/2-20-200/2, 500, 200)) {
 				currentMission++;
 				text = "";
 				timer = 60;
@@ -98,9 +98,16 @@ var Tutorial = (function() {
 
 		// Text.
 		ctx.fillStyle = "#FFF";
-		ctx.textAlign = "top";
-        ctx.textBaseline = "left";
-		wrapText(ctx, text, 28, Canvas.height/2-192/2, 500-16, 20);
+		ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+		wrapText(ctx, text, 28, Canvas.height/2-192/2-16, 500-16, 20);
+
+		// Continue prompt.
+		var mission = missions[currentMission];
+		if (completed[mission.event] === true) {
+			ctx.textAlign = "center";
+			ctx.fillText("click to continue...", 270, Canvas.height/2+50);
+		}
 
 	}
 
