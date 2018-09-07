@@ -96,7 +96,7 @@ function renderOrbit(body) {
 	// ONLINE circle.
 	ctx.fillStyle = body.online ? "#0F0" : "#F00";
 	ctx.beginPath();
-	ctx.arc(body.x, body.y / View.tilt - 20, 5, 0, TAU);
+	ctx.arc(body.x, body.y / View.tilt - 30, 3, 0, TAU);
 	ctx.fill();
 
 }

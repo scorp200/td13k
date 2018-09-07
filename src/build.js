@@ -8,6 +8,7 @@ var build = (function() {
 	var distance = null;
 	var maxDistance = null;
 	var cost = 0;
+	var spacing = 100;
 
 	function init() {
 		what = null;
@@ -28,12 +29,13 @@ var build = (function() {
 		} else {
 			distance = getDistance(on, { x: Mouse.vx, y: Mouse.vy });
 			distance = distance > maxDistance ? maxDistance : distance;
-			distance = Math.floor(distance/50) * 50;
+			distance = Math.round(distance/spacing) * spacing;
 		}
 	}
 
 	function render() {
 		if (on) {
+			ctx.globalAlpha = 0.5;
 			ctx.strokeStyle = "#0F0";
 			ctx.beginPath();
 			ctx.arc(on.x, on.y, distance, 0, TAU);

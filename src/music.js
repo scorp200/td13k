@@ -13,6 +13,9 @@ var Sound = {
 
 // Generate sfx
 sndClick = addSfx(sndClick);
+for(var n=0; n<laserSounds.length; n++) {
+	laserSounds[n] = addSfx(laserSounds[n]);
+}
 
 // Generate music
 var musSpace = addTrack(song);

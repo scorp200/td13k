@@ -20,6 +20,13 @@ function laserCode(station, level) {
                     if (!miss) {
                         target.hp -= 2;
                     }
+
+					// Sound effect.
+					if (Math.random() > 0.7) {
+						var index = ~~(Math.random()*laserSounds.length);
+						playSound(laserSounds[index]);
+					}
+
                 }
             }
         }

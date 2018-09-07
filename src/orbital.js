@@ -28,7 +28,7 @@ function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
 		t.orbit = {
 			planet: orbit,
 			distance: distance,
-			moveSpeed: moveSpeed,
+			moveSpeed: moveSpeed/2,
 			radAngle: radAngle
 		};
 
@@ -77,11 +77,11 @@ Orbital.sun = function(color, size, x, y) {
 Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
 	distance = Math.floor((distance + size / 2)/50)*50;
 	var t = Orbital(color, size, 0, 0, orbit, distance, moveSpeed, radAngle);
-	t.name = "Planet";
 	if (orbit.type === ORBITAL_TYPE.PLANET) {
 		t.name = "Moon";
 		t.type = ORBITAL_TYPE.MOON;
 	} else {
+		t.name = "Planet";
 		t.type = ORBITAL_TYPE.PLANET;
 	}
 	//t.update = extend(t.update, function() {})
@@ -95,7 +95,7 @@ Orbital.miningStation = function(orbit, distance, radAngle) {
 	t.type = ORBITAL_TYPE.MINING;
 	t.update = extend(t.update, function() {
 		if (t.online) {
-			Base.minerals += Base.mineRate;
+			Base.minerals += Base.mineRate * clamp(1-distance/500, 0.1, 1);
 		}
 	});
 	return t;
@@ -109,7 +109,7 @@ Orbital.satellite = function(orbit, distance, radAngle) {
 	t.cache = sprSatellite;
 	t.update = extend(t.update, function() {
 		if (t.online) {
-			Base.energy += Base.energyRate;
+			Base.energy += Base.energyRate * clamp(1-distance/500, 0.1, 1);;
 		}
 	});
 	return t;
