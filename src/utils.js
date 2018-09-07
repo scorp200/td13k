@@ -94,7 +94,7 @@ function clickNearest(b) {
 					Gui.selection.openAt(Mouse.x, Mouse.y);
 					//Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
 				}
-				sndClick.play();
+				playSound(sndClick);
 			}
 		}
 	}

@@ -8,6 +8,7 @@ var Settings = (function() {
     style.color = "#FFF";
     style.margin = "16px";
     style.listStyle = "none";
+	style.fontFamily = "monospace";
     document.body.appendChild(ul);
 
     function addSetting(text, callback) {
@@ -39,6 +40,10 @@ var Settings = (function() {
             if (!init) {
                 musicLoop(currentMusic);
             }
+        });
+
+		addSetting("sfx", function(init) {
+            ENABLE_SFX = this.checked;
         });
 
         addSetting("voice", function() {

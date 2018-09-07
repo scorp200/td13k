@@ -94,3 +94,12 @@ function musicLoop(sound) {
         currentMusic.pause();
     }
 }
+
+/**
+ *
+ */
+function playSound(snd) {
+	if (ENABLE_SFX) {
+		snd.play();
+	}
+}

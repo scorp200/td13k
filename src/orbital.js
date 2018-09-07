@@ -79,6 +79,7 @@ Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
 	var t = Orbital(color, size, 0, 0, orbit, distance, moveSpeed, radAngle);
 	t.name = "Planet";
 	if (orbit.type === ORBITAL_TYPE.PLANET) {
+		t.name = "Moon";
 		t.type = ORBITAL_TYPE.MOON;
 	} else {
 		t.type = ORBITAL_TYPE.PLANET;
@@ -119,6 +120,7 @@ Orbital.defenseStation = function(orbit, distance, radAngle) {
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, distance, 0.005, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
+	t.cache = sprDefensePlatform;
 	setModuleUpgrade(t, "laser", 1);
 	return t;
 }
