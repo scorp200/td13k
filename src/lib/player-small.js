@@ -302,6 +302,7 @@ var CPlayer = function() {
 
         // Next iteration. Return progress (1.0 == done!).
         mCurrentCol++;
+		//console.log(mCurrentCol / mSong.numChannels);
         return mCurrentCol / mSong.numChannels;
     };
 

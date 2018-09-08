@@ -19,7 +19,6 @@ for(var n=0; n<laserSounds.length; n++) {
 
 // Generate music
 var musSpace = addTrack(song);
-var musStarry = addTrack(song2);
 
 function addSfx(sound) {
     var player = new CPlayer();
@@ -44,8 +43,8 @@ var loadingProgressMusic = 0;
 function generateMusic() {
     for(var n=0; n<Music.tracks.length; n++) {
         var track = Music.tracks[n];
-        if (track._loading) {
-            track._loading = track.generate() >= 1;
+		track._loading = track.generate();
+        if (track._loading >= 1) {
             loadingProgressMusic += 1;
     		var wave = track.createWave();
     		var url = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
@@ -62,8 +61,8 @@ var loadingProgressSound = 0;
 function generateSound() {
     for(var n=0; n<Sound.board.length; n++) {
         var track = Sound.board[n];
+		track._loading = track.generate() >= 1;
         if (track._loading) {
-            track._loading = track.generate() >= 1;
             loadingProgressSound += 1;
     		var wave = track.createWave();
     		var url = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
@@ -84,9 +83,9 @@ function musicLoop(sound) {
             sound.hasListener = true;
             sound.addEventListener("ended", function() {
                 this.currentTime = 0;
-                var newTrack = Music.tracks[Music.current]._snd;
-                Music.current = Music.tracks.indexOf(newTrack);
-                musicLoop(newTrack);
+                //var newTrack = Music.tracks[Music.current]._snd;
+                //Music.current = Music.tracks.indexOf(newTrack);
+                musicLoop(sound);
             }, false);
             currentMusic.play();
         } else {
