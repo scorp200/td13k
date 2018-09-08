@@ -4,7 +4,7 @@ var NOOP = function() {};
 var ENABLE_MUSIC = false;
 var ENABLE_SFX = false;
 var ENABLE_VOICE = false;
-var ENABLE_TUTORIAL = false;
+var ENABLE_TUTORIAL = true;
 var PI = Math.PI;
 var TAU = PI * 2;
 
@@ -49,5 +49,6 @@ var TUTORIAL_EVENT = {
 	INTRO: 0,
 	MOUSE: 1,
 	PAUSE: 2,
-	ZOOM: 3
+	ZOOM: 3,
+	BUILD: 4
 }

@@ -65,6 +65,7 @@ var build = (function() {
 		pending = false;
 		Base.minerals -= cost;
 		cost = 0;
+		Tutorial.complete(TUTORIAL_EVENT.BUILD);
 	}
 
 	function setTarget() {

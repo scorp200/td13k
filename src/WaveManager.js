@@ -32,6 +32,11 @@ var WaveManager = (function() {
 	 * @return {void}
 	 */
     function update() {
+
+		if (!Tutorial.end) {
+			return;
+		}
+
         if (!timer--) {
     		spawn();
             currentWave++;

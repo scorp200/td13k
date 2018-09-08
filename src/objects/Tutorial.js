@@ -14,6 +14,31 @@ var Tutorial = (function() {
 	},{
 		text: "The SPACEBAR can be used to pause and un-pause the game. Try it now.",
 		event: TUTORIAL_EVENT.PAUSE
+	},{
+		text: "To survive in this star system, you will have to build to gather resources and defend yourself.",
+		event: TUTORIAL_EVENT.PAUSE
+	},{
+		text: "At the top of your screen is general information. From left to right. The structural status of your base, when this hits 0 you are no more. The number of enemy waves you have survived. Seconds until the next wave. Your stored minerals. And your stored energy.",
+		event: TUTORIAL_EVENT.PAUSE
+	},{
+		text: "At the bottom of your screen are your construction options. Satellites are use to generate energy from the sun and relay connection to your main base. Mining stations gather minerals from planets. The rest are just weapons of destruction.",
+		event: TUTORIAL_EVENT.PAUSE
+	},{
+		text: "Try constructing something now. Select one of the icons. Select the star or a planet to build station in orbit of. Then select the orbit distance.",
+		event: TUTORIAL_EVENT.BUILD
+	},{
+		text: "Satellites and stations can only function with a connection to your main base. Anything not connected is considered offline, and will do nothing. However, when offline, they will be undetectable by enemy ships.",
+		event: TUTORIAL_EVENT.BUILD
+	},{
+		text: "To extend your functional range, you will have to build multiple satellites to relay the signal. Anything close enough to your base is already online, new satellites may have to be constructed around other celestial bodies. The connection is shown with green lines branching out from your base.",
+		event: TUTORIAL_EVENT.BUILD
+	},{
+		text: "That's as much as I can help you. My programmers thought it wise not to provide me with information on your weapon systems. You will have to work that out yourself.",
+		event: TUTORIAL_EVENT.BUILD
+	},{
+		text: "Good luck...",
+		event: TUTORIAL_EVENT.BUILD,
+		end: true
 	}];
 
 	// Visual styling.
@@ -21,6 +46,7 @@ var Tutorial = (function() {
 	var borderColor = "#FFF";
 	var borderWidth = 2;
 
+	var end = false;
 	var timer = 60;
 	var completed = [];
 	var currentMission = 0;
@@ -45,6 +71,7 @@ var Tutorial = (function() {
 		if (missions[currentMission]) {
 			text = missions[currentMission].text;
 			event = missions[currentMission].event;
+			end = missions[currentMission].end === true;
 			speak(text);
 		}
 	}
@@ -115,6 +142,7 @@ var Tutorial = (function() {
 	// Export.
 	return {
 		get text() { return text; },
+		get end() { return end; },
 		start: start,
 		update: update,
 		render: render,

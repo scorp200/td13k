@@ -1,12 +1,10 @@
 var LoadingScreen = {
 
     ready: false,
-    cooldown: 1,
 
     update: function() {
 
-        if (LoadingScreen.cooldown-- > 0) { // This bit is for TESTING
-        } else if (Music.loading) {
+        if (Music.loading) {
             generateMusic();
         } else if (Sound.loading) {
             generateSound();
