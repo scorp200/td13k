@@ -122,3 +122,15 @@ function wrapText(context, text, x, y, maxWidth, lineHeight) {
 	}
 	context.fillText(line, x, y);
 }
+
+/**
+ * @param {number} x
+ * @param {number} y
+ * @return {Object} Vector2D
+ */
+function Vector2D(x, y) {
+	return {
+		x: x,
+		y: y
+	}
+}

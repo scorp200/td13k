@@ -1,35 +1,41 @@
-var LoadingScreen = {
+var LoadingScreen = (function() {
 
-    ready: false,
+    var ready = false;
+	var firstTick = false;
 
-    update: function() {
+    function update() {
 
-        if (Music.loading) {
+		if (!firstTick) {
+			firstTick = true;
+		} else if (Music.loading) {
             generateMusic();
         } else if (Sound.loading) {
             generateSound();
         } else {
-            if (!LoadingScreen.ready) {
-                LoadingScreen.ready = true;
+            if (!ready) {
+                ready = true;
                 musicLoop(musSpace);
                 speak("Welcum to Exo");
             }
-            if (Mouse.click) {
+
+			var x = Canvas.width/2 - 200;
+	        var y = Canvas.height/2+64 - 100;
+            if (Mouse.clickRegion(x, y, 400, 200)) {
                 gameState = GAME_STATE.RUNNING;
 				Game.init();
                 if (musSpace.pause) {
                     musicLoop(musSpace);
                 }
             }
+
         }
 
-    },
+    }
 
-    render: function() {
+    function render() {
         var centerX = Canvas.width / 2;
         var centerY = Canvas.height / 2;
 
-        //ctx.beginPath();
         ctx.fillStyle = "#FFF";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
@@ -46,7 +52,7 @@ var LoadingScreen = {
         } else if (Sound.loading) {
             ctx.fillText("Loading sounds...", centerX, centerY+64);
         } else {
-            ctx.fillText("Click to continue!", centerX, centerY+64);
+            ctx.fillText("click here to play!", centerX, centerY+64);
         }
 
         ctx.font = "small-caps 700 16px monospace";
@@ -58,4 +64,10 @@ var LoadingScreen = {
 		ctx.fillText("works best in Chrome, quality in other browsers will vary!", centerX, Canvas.height-28);
     }
 
-}
+	// Export.
+	return {
+		update: update,
+		render: render
+	}
+
+})();

@@ -60,7 +60,6 @@ function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
 
 	}
 	t.render = function() {
-		//renderTrail(t);
 		t.module && t.module.render && t.module.render();
 	}
 	orbitals.push(t);
@@ -94,9 +93,17 @@ Orbital.miningStation = function(orbit, distance, radAngle) {
 	t.name = "Mining Station";
 	t.type = ORBITAL_TYPE.MINING;
 	t.update = extend(t.update, function() {
+
+		// Disable mineral gain if tutorial still active.
+		if (!Tutorial.end) {
+			return;
+		}
+
+		// Gain minerals. Only when online.
 		if (t.online) {
 			Base.minerals += Base.mineRate * clamp(1-distance/500, 0.1, 1);
 		}
+
 	});
 	return t;
 }
@@ -108,9 +115,17 @@ Orbital.satellite = function(orbit, distance, radAngle) {
 	t.type = ORBITAL_TYPE.SATELLITE;
 	t.cache = sprSatellite;
 	t.update = extend(t.update, function() {
+
+		// Disable energy gain if tutorial still active.
+		if (!Tutorial.end) {
+			return;
+		}
+
+		// Gain energy. Only when online.
 		if (t.online) {
 			Base.energy += Base.energyRate * clamp(1-distance/500, 0.1, 1);;
 		}
+
 	});
 	return t;
 }

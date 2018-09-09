@@ -1,13 +1,11 @@
 //
 var WaveManager = (function() {
 
-    // Timing.
+    // Vars.
     var currentWave = 0;
-    var cooldown = 10;
+    var cooldown = 60;
     var timer = 0;
-
-    // Wave spawning.
-    var spawnCount = 1000;
+    var spawnCount = 20;
 
     // Speech flavor.
     var speechFlavor = [
@@ -23,7 +21,7 @@ var WaveManager = (function() {
 	 */
     function init() {
 		currentWave = 0;
-	    cooldown = 10;
+	    cooldown = 60;
         timer = cooldown * 60;
     }
 
@@ -33,6 +31,7 @@ var WaveManager = (function() {
 	 */
     function update() {
 
+		// Disable countdown if tutorial is still running.
 		if (!Tutorial.end) {
 			return;
 		}
@@ -40,6 +39,7 @@ var WaveManager = (function() {
         if (!timer--) {
     		spawn();
             currentWave++;
+			cooldown -= 1;
 			spawnCount += 20;
 			timer = cooldown * 60;
 

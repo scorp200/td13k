@@ -9,6 +9,8 @@ var build = (function() {
 	var maxDistance = null;
 	var cost = 0;
 	var spacing = 100;
+	var proximity = 70;
+	var valid = false;
 
 	function init() {
 		what = null;
@@ -24,19 +26,26 @@ var build = (function() {
 				maxDistance = on.size * multiplier;
 			}
 		} else if (Mouse.released) {
-			selectOrbitSize();
+			if (valid) {
+				selectOrbitSize();
+			}
 			Mouse.update();
 		} else {
-			distance = getDistance(on, { x: Mouse.vx, y: Mouse.vy });
+			var x = Mouse.vx;
+			var y = Mouse.vy;
+			var vec = Vector2D(x, y);
+			var near = nearestOrbital(x, y);
+			distance = getDistance(on, vec);
 			distance = distance > maxDistance ? maxDistance : distance;
 			distance = Math.round(distance/spacing) * spacing;
+			valid = getDistance(near, vec) >= proximity;
 		}
 	}
 
 	function render() {
 		if (on) {
 			ctx.globalAlpha = 0.5;
-			ctx.strokeStyle = "#0F0";
+			ctx.strokeStyle = valid ? "#0F0" : "#F00";
 			ctx.beginPath();
 			ctx.arc(on.x, on.y, distance, 0, TAU);
 			ctx.lineWidth = 3;
@@ -46,7 +55,8 @@ var build = (function() {
 
 	function selectOrbitSize() {
 		var c;
-		var radAngle = getAngle({ x: Mouse.vx, y: Mouse.vy }, on);
+		var vec = Vector2D(Mouse.vx, Mouse.vy);
+		var radAngle = getAngle(vec, on);
 		switch (what) {
 			case (ORBITAL_TYPE.SATELLITE):
 				c = Orbital.satellite(on, distance, radAngle);
