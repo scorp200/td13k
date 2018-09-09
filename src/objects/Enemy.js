@@ -9,6 +9,7 @@ var EnemyShip = (function() {
 	var moveSpd = 5;
 	var range = 500;
 	var damage = 0.2;
+	var buffArray = [];
 
 	var size = partitionWidth * partitionWidth;
 	while (size--) {
@@ -55,13 +56,13 @@ var EnemyShip = (function() {
 			}
 
 			// Apply buffs.
-			var opts = [];
-			opts[BUFF_TYPE.SPEED] = moveSpd;
-			opts[BUFF_TYPE.RANGE] = range;
+			buffArray.length = 0;
+			buffArray[BUFF_TYPE.SPEED] = moveSpd;
+			buffArray[BUFF_TYPE.RANGE] = range;
 			var i = inst.buffs.length;
 			while (i--) {
 				var buff = inst.buffs[i];
-				opts[buff.type] *= buff.value;
+				buffArray[buff.type] *= buff.value;
 				if (buff.time-- <= 0) {
 					inst.buffs[i] = inst.buffs[inst.buffs.length-1];
 					inst.buffs.length--;
@@ -73,14 +74,14 @@ var EnemyShip = (function() {
 			if (inst.target) {
 				var a = getAngle(inst, inst.target);
 				inst.moveDir += getAngleDifference(a, inst.moveDir) * 0.01;
-				inst.x -= opts[BUFF_TYPE.SPEED] * Math.cos(inst.moveDir);
-				inst.y -= opts[BUFF_TYPE.SPEED] * Math.sin(inst.moveDir);
+				inst.x -= buffArray[BUFF_TYPE.SPEED] * Math.cos(inst.moveDir);
+				inst.y -= buffArray[BUFF_TYPE.SPEED] * Math.sin(inst.moveDir);
 
 				// Shootzing!
 				if (inst.shootTime-- <= 0) {
 					inst.shootTime = 10;
 					var distance = getDistance(inst, inst.target);
-					if (distance < opts[BUFF_TYPE.RANGE]) {
+					if (distance < buffArray[BUFF_TYPE.RANGE]) {
 						var miss = Math.random() > 0.5;
 						var dir = getAngle(inst, inst.target);
 						var r = miss ? 2000 : distance;
@@ -97,9 +98,10 @@ var EnemyShip = (function() {
 				destroy(n);
 			}
 
-		}
+			//
+			flockCollision(inst);
 
-		flockCollision()
+		}
 
 	}
 
@@ -121,7 +123,7 @@ var EnemyShip = (function() {
 		}
 	}
 
-	/**
+	/**￼
 	 * @param {number} n The index of the ship to destroy.
 	 * @return {void}
 	 */
@@ -131,34 +133,31 @@ var EnemyShip = (function() {
 		instances.length--;
 	}
 
-	/**
+	/***************************************************************************
 	 *
+	 * @return {void}
 	 */
-	function flockCollision() {
-		var n = instances.length;
-		while (n--) {
-			var inst1 = instances[n];
-			var partition = getPartition(inst1.x, inst1.y);
-			var i = partition.length;
-			while (i--) {
-				var inst2 = partition[i];
-				if (inst1 !== inst2) {
-					var distance = getDistanceRaw(inst1, inst2);
-					if (distance < 200) {
-						var xm = (inst1.x - inst2.x) / 4;
-						var ym = (inst1.y - inst2.y) / 4;
-						inst1.x += xm;
-						inst1.y += ym;
-						inst2.x -= xm;
-						inst2.y -= ym;
-						break; // No point checking multiple collisions...
-					}
+	function flockCollision(inst1) {
+		var partition = inst1.partition;
+		var i = partition.length;
+		while (i--) {
+			var inst2 = partition[i];
+			if (inst1 !== inst2) {
+				var distance = getDistanceRaw(inst1, inst2);
+				if (distance < 200) {
+					var xm = (inst1.x - inst2.x) / 4;
+					var ym = (inst1.y - inst2.y) / 4;
+					inst1.x += xm;
+					inst1.y += ym;
+					inst2.x -= xm;
+					inst2.y -= ym;
+					break; // No point checking multiple collisions...
 				}
 			}
 		}
 	}
 
-	/**
+	/***************************************************************************
 	 * @param {Object} pos Any object with x and y properties.
 	 * @param {number} dist
 	 * @return {Object}
@@ -177,8 +176,12 @@ var EnemyShip = (function() {
 		return nearest;
 	}
 
-	/**
-	 *
+	/***************************************************************************
+	 * @param {Object} inst An instant of an enemy ship.
+	 * @param {number} type Type of buff.
+	 * @param {number} value
+	 * @param {number} time How long the buff should last.
+	 * @return {void}
 	 */
 	function addBuff(inst, type, value, time) {
 		inst.buffs.push({
@@ -188,15 +191,17 @@ var EnemyShip = (function() {
 		});
 	}
 
-	/**
-	 *
+	/***************************************************************************
+	 * @return {void}
 	 */
 	function destroyAll() {
 		instances.length = 0;
 	}
 
-	/**
-	 *
+	/***************************************************************************
+	 * @param {number} x
+	 * @param {number} y
+	 * @return {Array}
 	 */
 	function getPartition(x, y) {
 		x = ~~((x + spaceSize / 2) / partitionSize);

@@ -15,12 +15,24 @@ if (speechSynth) {
 	}
 }
 
-// Wrapper for speaking a new sentence.
-function speak(text) {
-	Gui.subtitles.push({
-		text: text,
-		time: 60 * 4
-	});
+/**
+ * Wrapper for speaking a new sentence.
+ * @param {string} text The text to be spoken.
+ * @param {boolean} suppress Whether to supress subtiles for this speech.
+ * @return {void}
+ */
+function speak(text, suppress) {
+
+	// Subtitles.
+	if (!suppress) {
+		Gui.subtitles.push({
+			text: text,
+			time: 60 * 4
+		});
+	}
+
+	// Speak.
+	// Large texts are split into individual sentences, to avoid long text bug.
 	if (speechEnabled && ENABLE_VOICE) {
 		speechSynth.cancel();
 		var newText = text.split(". ");
@@ -32,4 +44,5 @@ function speak(text) {
 			speechSynth.speak(speech);
 		});
 	}
+
 }

@@ -95,6 +95,8 @@ var Gui = {
 		Tutorial.render();
 
 		// FPS.
+		ctx.textAlign = "left";
+        ctx.textBaseline = "bottom";
 		ctx.font = "small-caps 500 12px monospace";
 		ctx.fillText("FPS: " + Fps.fps, 10, 26);
 

@@ -61,6 +61,8 @@ var Tutorial = (function() {
 		if (ENABLE_TUTORIAL) {
 			started = true;
 			setMission();
+		} else {
+			end = true;
 		}
 	}
 
@@ -72,7 +74,7 @@ var Tutorial = (function() {
 			text = missions[currentMission].text;
 			event = missions[currentMission].event;
 			end = missions[currentMission].end === true;
-			speak(text);
+			speak(text, true);
 		}
 	}
 
