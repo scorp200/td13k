@@ -1,5 +1,7 @@
-// Setup Canvas (move to graphics.js)
 var hoverName = "";
+
+// Graphical settings.
+var orbitLineQuality = 2;
 
 // Keep canvas same size as window.
 resize();
@@ -43,22 +45,22 @@ function getOrbitCache(body) {
 			if (o.orbit && o.orbit.planet === orbit.planet)
 				maxDist = Math.max(maxDist, o.orbit.distance + 40);
 		});
-		cache.width = maxDist;
-		cache.height = maxDist;
+		cache.width = maxDist / orbitLineQuality;
+		cache.height = maxDist / orbitLineQuality;
 		orbit.planet.orbitCache[scaleLevel] = cache;
 		cache.hasBody = [];
 	}
 
 	// Render particular body's orbit line.
 	if (!cache.hasBody[body.id]) {
-		var drawScale = 0.2 + scaleLevel / 4;
+		var drawScale = (0.2 + scaleLevel / 4) * orbitLineQuality;
 		var ctxOrbit = cache.getContext("2d");
 		ctxOrbit.setLineDash([5 / drawScale, 5 / drawScale]);
 		ctxOrbit.beginPath();
 		ctxOrbit.lineWidth = 2 / drawScale;
 		ctxOrbit.strokeStyle = body.color;
 		ctxOrbit.globalAlpha = 1;
-		ctxOrbit.arc(0, 0, orbit.distance, 0, TAU/4, false);
+		ctxOrbit.arc(0, 0, orbit.distance / orbitLineQuality, 0, TAU/4, false);
 		ctxOrbit.stroke();
 		ctxOrbit.setLineDash([]);
 		cache.hasBody[body.id] = true;
@@ -82,7 +84,7 @@ function renderOrbit(body) {
 		var cache = body.orbitCache[scaleLevel];
 		ctx.save();
 		ctx.translate(body.x, body.y / View.tilt);
-		ctx.scale(1, 1 / View.tilt);
+		ctx.scale(orbitLineQuality, orbitLineQuality / View.tilt);
 		ctx.drawImage(cache, 0, 0, cache.width, cache.height);
 		ctx.scale(-1, 1);
 		ctx.drawImage(cache, 0, 0);

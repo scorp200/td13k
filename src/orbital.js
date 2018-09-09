@@ -89,7 +89,7 @@ Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
 
 Orbital.miningStation = function(orbit, distance, radAngle) {
 	distance = Math.floor((distance || orbit.size * 3)/50)*50;
-	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, distance, -0.005, null);
+	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, distance, -0.005, radAngle);
 	t.name = "Mining Station";
 	t.type = ORBITAL_TYPE.MINING;
 	t.update = extend(t.update, function() {

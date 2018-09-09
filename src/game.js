@@ -35,7 +35,10 @@ var Game = {
 		WaveManager.init();
 		Tutorial.start();
 
+		SystemGenerator.generate();
+
 		// Setup planets (procgen this?)
+		/*
 		var s = Orbital.sun(getHSL(60, 100, 50), 100, 0, 0);
 		var s1 = Orbital.planet(getHSL(180, 39, 62), 20, s, 1000, 0.003, Math.random() * TAU);
 		Base.create(s1);
@@ -57,6 +60,7 @@ var Game = {
 		var ds1 = Orbital.defenseStation(s1);
 		var ds2 = Orbital.defenseStation(s1);
 		var ds3 = Orbital.defenseStation(s2);
+		*/
 	}
 
 }
