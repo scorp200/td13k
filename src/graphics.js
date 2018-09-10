@@ -209,7 +209,7 @@ function renderBody(body) {
             context.beginPath();
             context.arc(size, size, body.size, 0, 2*Math.PI, false);
             context.clip();
-            while (repeat) {
+            while (repeat && o > 0) {
 				context.beginPath();
 				context.globalAlpha = 0.05;
 				context.fillStyle = "#000";

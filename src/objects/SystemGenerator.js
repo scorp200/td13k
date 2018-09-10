@@ -5,10 +5,13 @@ var SystemGenerator = (function() {
 	var maxPlanets = 9;
 	var minDistance = 500;
 	var maxDistance = 1000;
+	var minSize = 20;
+	var maxSize = 50;
 
 	// Setup.
 	var planetRange = maxPlanets - minPlanets;
 	var distanceRange = maxDistance - minDistance;
+	var sizeRange = maxSize - minSize;
 
 	/**
 	 *
@@ -28,13 +31,25 @@ var SystemGenerator = (function() {
 		for (var n=0; n<numberOfPlanets; n++) {
 
 			var col = getHSL(-1, 39, 62);
-			var size = 20;
+			var size = minSize + ~~(Math.random() * sizeRange);
 			var spd = 0.003;
 			var rot = Math.random() * TAU;
 			var planet = Orbital.planet(col, size, star, dist, spd, rot);
 			planets.push(planet);
 
 			dist += minDistance + ~~(Math.random() * distanceRange);
+
+			// Generate moons.
+			var numberOfMoons = 0 + ~~(Math.random() * 3);
+			mdist = 100;
+			for (var m=0; m<numberOfMoons; m++) {
+				var mcol = getHSL(-1, 39, 62);
+				var msize =  ~~(size*0.1 +Math.random() * size*0.3);
+				var mspd = 0.01;
+				var mrot = Math.random() * TAU;
+				var moon = Orbital.planet(mcol, msize, planet, mdist, mspd, mrot);
+				mdist += 100;
+			}
 
 		}
 
