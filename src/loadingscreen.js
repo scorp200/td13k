@@ -2,6 +2,7 @@ var LoadingScreen = (function() {
 
     var ready = false;
 	var firstTick = false;
+	var hovering = false;
 
     function update() {
 
@@ -18,14 +19,18 @@ var LoadingScreen = (function() {
                 speak("Welcum to Exo");
             }
 
+			hovering = false;
 			var x = Canvas.width/2 - 200;
-	        var y = Canvas.height/2+64 - 100;
-            if (Mouse.clickRegion(x, y, 400, 200)) {
-                gameState = GAME_STATE.RUNNING;
-				Game.init();
-                if (musSpace.pause) {
-                    musicLoop(musSpace);
-                }
+	        var y = Canvas.height/2+64 - 70;
+            if (Mouse.overRegion(x, y, 400, 140)) {
+				hovering = true;
+				if (Mouse.click) {
+	                gameState = GAME_STATE.RUNNING;
+					Game.init();
+	                if (musSpace.pause) {
+	                    musicLoop(musSpace);
+	                }
+				}
             }
 
         }
@@ -52,7 +57,9 @@ var LoadingScreen = (function() {
         } else if (Sound.loading) {
             ctx.fillText("Loading sounds...", centerX, centerY+64);
         } else {
+			ctx.globalAlpha = hovering ? 1 : 0.5;
             ctx.fillText("click here to play!", centerX, centerY+64);
+			ctx.globalAlpha = 1;
         }
 
         ctx.font = "small-caps 700 16px monospace";
