@@ -41,7 +41,7 @@ var SystemGenerator = (function() {
 
 			// Generate moons.
 			var numberOfMoons = 0 + ~~(Math.random() * 3);
-			mdist = 100;
+			var mdist = 200;
 			for (var m=0; m<numberOfMoons; m++) {
 				var mcol = getHSL(-1, 39, 62);
 				var msize =  ~~(size*0.1 +Math.random() * size*0.3);

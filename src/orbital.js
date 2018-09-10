@@ -1,11 +1,8 @@
 var orbitals = [];
-//var coms = [];
-//var def = [];
 
 OrbitalUpgrades.init();
 
 function Orbital(color, size, x, y, orbit, distance, moveSpeed, radAngle) {
-	console.log(moveSpeed);
 	if (radAngle === undefined) radAngle = 0;
 	var t = {};
 	t.name = "";
@@ -75,7 +72,7 @@ Orbital.sun = function(color, size, x, y) {
 }
 
 Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
-	distance = Math.floor((distance + size / 2)/50)*50;
+	//distance = Math.floor((distance + size / 2)/50)*50;
 	var t = Orbital(color, size, 0, 0, orbit, distance, moveSpeed, radAngle);
 	if (orbit.type === ORBITAL_TYPE.PLANET) {
 		t.name = "Moon";
@@ -89,7 +86,7 @@ Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
 }
 
 Orbital.miningStation = function(orbit, distance, radAngle) {
-	distance = Math.floor((distance || orbit.size * 3)/50)*50;
+	//distance = Math.floor((distance || orbit.size * 3)/50)*50;
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, distance, 0.01, radAngle);
 	t.name = "Mining Station";
 	t.type = ORBITAL_TYPE.MINING;
@@ -110,7 +107,7 @@ Orbital.miningStation = function(orbit, distance, radAngle) {
 }
 
 Orbital.satellite = function(orbit, distance, radAngle) {
-	distance = Math.floor((distance || orbit.size * 5)/50)*50;
+	//distance = Math.floor((distance || orbit.size * 5)/50)*50;
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, distance, 0.01, radAngle);
 	t.name = "Satellite";
 	t.type = ORBITAL_TYPE.SATELLITE;
@@ -132,7 +129,7 @@ Orbital.satellite = function(orbit, distance, radAngle) {
 }
 
 Orbital.defenseStation = function(orbit, distance, radAngle) {
-	distance = Math.floor((distance || orbit.size * 7)/50)*50;
+	//distance = Math.floor((distance || orbit.size * 7)/50)*50;
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, distance, 0.01, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;

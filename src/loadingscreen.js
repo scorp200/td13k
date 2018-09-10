@@ -4,21 +4,34 @@ var LoadingScreen = (function() {
 	var firstTick = false;
 	var hovering = false;
 
+	/**
+	 * @return {void}
+	 */
     function update() {
 
-		if (!firstTick) {
-			firstTick = true;
-		} else if (Music.loading) {
-            generateMusic();
-        } else if (Sound.loading) {
-            generateSound();
-        } else {
+		// Prevent hang on first tick.
+		// Then load resources.
+		// Then continue with title screen tick.
+		if (!firstTick) firstTick = true;
+		else if (Music.loading) generateMusic();
+        else if (Sound.loading) generateSound();
+        else {
+
+			// First real step. Say hi, HAL 9000!
             if (!ready) {
                 ready = true;
                 musicLoop(musSpace);
-                speak("Welcum to Exo");
+                speak("Welcome to Exo");
             }
 
+			// Mouse click anywhere, fallback for starting music locally.
+			if (Mouse.click) {
+				if (musSpace.pause) {
+					musicLoop(musSpace);
+				}
+			}
+
+			// Hovering/clicking on the area that starts the game.
 			hovering = false;
 			var x = Canvas.width/2 - 200;
 	        var y = Canvas.height/2+64 - 70;
@@ -27,9 +40,6 @@ var LoadingScreen = (function() {
 				if (Mouse.click) {
 	                gameState = GAME_STATE.RUNNING;
 					Game.init();
-	                if (musSpace.pause) {
-	                    musicLoop(musSpace);
-	                }
 				}
             }
 
@@ -37,6 +47,9 @@ var LoadingScreen = (function() {
 
     }
 
+	/**
+	 * @return {void}
+	 */
     function render() {
         var centerX = Canvas.width / 2;
         var centerY = Canvas.height / 2;
