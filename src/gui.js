@@ -48,6 +48,7 @@ var Gui = {
 		});
 
 		//
+		var cx = Canvas.width / 2;
 		var scale = clamp(Canvas.width / 1920, 0.5, 1);
 
 		// Wave counter.
@@ -60,27 +61,27 @@ var Gui = {
 		ctx.fillText(~~(WaveManager.timer/60), Canvas.width/2, 96);
 
         ctx.font = "small-caps 700 24px monospace";
-		ctx.fillText("next wave in", Canvas.width/2, 48);
+		ctx.fillText("next wave in", cx, 48);
 
 		// Minerals.
-		ctx.fillText("minerals", Canvas.width/2+300*scale, 48);
-		ctx.fillText(~~Base.minerals, Canvas.width/2+300*scale, 80);
+		ctx.fillText("minerals", cx+300*scale, 48);
+		ctx.fillText(~~Base.minerals, cx+300*scale, 80);
 
 		// Energy.
-		ctx.fillText("energy", Canvas.width/2+600*scale, 48);
-		ctx.fillText(~~Base.energy, Canvas.width/2+600*scale, 80);
+		ctx.fillText("energy", cx+600*scale, 48);
+		ctx.fillText(~~Base.energy, cx+600*scale, 80);
 
 		// Days.
-		ctx.fillText("survived", Canvas.width/2-300*scale, 48);
-		ctx.fillText(WaveManager.currentWave + " waves", Canvas.width/2-300*scale, 80);
+		ctx.fillText("survived", cx-300*scale, 48);
+		ctx.fillText(WaveManager.currentWave + " waves", cx-300*scale, 80);
 
 		// Base health.
-		ctx.fillText("base status", Canvas.width/2-600*scale, 48);
-		ctx.fillText(~~Base.planet.hp + "%", Canvas.width/2-600*scale, 80);
+		ctx.fillText("base status", cx-600*scale, 48);
+		ctx.fillText(~~Base.planet.hp + "%", cx-600*scale, 80);
 
 		// Tooltip.
 		ctx.font = "small-caps 700 16px monospace";
-		ctx.fillText(Gui.tooltip, Canvas.width/2, Canvas.height-96);
+		ctx.fillText(Gui.tooltip, cx, Canvas.height-96);
 
 		// Subtitles.
 		ctx.textAlign = "left";
@@ -108,22 +109,20 @@ var Gui = {
 
 }
 
-/**
- * @param {number} type Orbital type.
+/*******************************************************************************
+ * @param {number} type ORBITAL_TYPE.
  * @param {number=} modType ORBITAL_MODULE_TYPE.
  * @param {boolean=} check Check if affordable, or select.
  * @return {boolean}
  */
 function buildOrbital(type, modType, check) {
-	var cost = getCost(type, modType);
+	var cost = Orbital.getCost(type, modType);
 	if (check) {
 		return Base.minerals >= cost;
 	} else {
-		speak("Select an area to build the THING");
-		build.pending = true;
-		build.what = type;
-		build.module = modType;
-		build.cost = cost;
+		var name = Orbital.getName(type, modType);
+		speak("Select an area to build the " + name);
+		Build.createBlueprint(type, modType, cost);
 		return false;
 	}
 }

@@ -15,7 +15,6 @@ src/lib/player-small.js \
 src/WaveManager.js \
 src/music.js \
 src/base.js \
-src/build.js \
 src/gui.js \
 src/buttons.js \
 src/graphics.js \

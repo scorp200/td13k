@@ -45,37 +45,22 @@ function clamp(value, min, max) {
 	return value > max ? max : value < min ? min : value;
 }
 
-function nearestOrbital(x, y) {
-	var pos = { x: x, y: y };
-	var minDistance = 999999;
-	var closest = orbitals[0];
-	var i = orbitals.length;
-	while (i--) {
-		var distance = getDistance(orbitals[i], pos);
-		if (distance < minDistance) {
-			minDistance = distance;
-			closest = i;
-		}
-	}
-	return orbitals[closest];
-}
-
 function nearestTargetableOrbital(x, y) {
 	var pos = { x: x, y: y };
 	var minDistance = 999999;
-	var closest = orbitals[0];
-	var i = orbitals.length;
+	var closest = Orbital.orbitals[0];
+	var i = Orbital.orbitals.length;
 	while (i--) {
-		var orb = orbitals[i];
+		var orb = Orbital.orbitals[i];
 		if ((orb.type > 1 || Base.planet === orb) && orb.online) {
-			var distance = getDistance(orbitals[i], pos);
+			var distance = getDistance(Orbital.orbitals[i], pos);
 			if (distance < minDistance) {
 				minDistance = distance;
 				closest = i;
 			}
 		}
 	}
-	return orbitals[closest];
+	return Orbital.orbitals[closest];
 }
 
 /**
@@ -86,14 +71,14 @@ function clickNearest(b) {
 	var ret = null;
 	if (Mouse.released) {
 		Gui.selection.target = null;
-		var nearest = nearestOrbital(Mouse.vx, Mouse.vy);
+		var nearest = Orbital.nearest(Mouse.vx, Mouse.vy);
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
 			hoverName = nearest.name;
 			if (!Mouse.target && !Mouse.drag) {
-				speak("selected " + nearest.name);
+				speak(nearest.name);
 				if (b && (nearest.type == ORBITAL_TYPE.PLANET || nearest.type == ORBITAL_TYPE.STAR)) {
 					ret = nearest;
-				} else if (!build.pending) {
+				} else if (!Build.pending) {
 					Gui.selection.target = nearest;
 					Gui.selection.openAt(Mouse.x, Mouse.y);
 					//Gui.selection.addButtons(OrbitalUpgrades.get(nearest));

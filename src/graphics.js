@@ -16,9 +16,9 @@ function resize() {
 // Render all orbits.
 function renderAllOrbits() {
 	ctx.globalAlpha = 1;
-	var n = orbitals.length;
+	var n = Orbital.orbitals.length;
 	while (n--) {
-		renderOrbit(orbitals[n]);
+		renderOrbit(Orbital.orbitals[n]);
 	}
 }
 
@@ -41,7 +41,7 @@ function getOrbitCache(body) {
 	if (!cache) {
 		cache = document.createElement("CANVAS");
 		var maxDist = 0;
-		orbitals.forEach(function(o) {
+		Orbital.orbitals.forEach(function(o) {
 			if (o.orbit && o.orbit.planet === orbit.planet)
 				maxDist = Math.max(maxDist, o.orbit.distance + 40);
 		});
@@ -109,9 +109,9 @@ function renderAllTrails() {
 	ctx.globalAlpha = 0.3;
 	ctx.strokeStyle = "#BDF";//body.color;
 	ctx.lineWidth = 2 / View.zoom;
-	var n = orbitals.length;
+	var n = Orbital.orbitals.length;
 	while (n--) {
-		renderTrail(orbitals[n]);
+		renderTrail(Orbital.orbitals[n]);
 	}
 	ctx.stroke();
 }
@@ -133,9 +133,9 @@ function renderTrail(body) {
 // Render all bodies.
 function renderAllBodies() {
 	ctx.globalAlpha = 1;
-	var n = orbitals.length;
+	var n = Orbital.orbitals.length;
 	while (n--) {
-		renderBody(orbitals[n]);
+		renderBody(Orbital.orbitals[n]);
 	}
 }
 
@@ -146,7 +146,7 @@ function renderBody(body) {
 	var dy = body.y / View.tilt;
 
 	if (body.type === ORBITAL_TYPE.SATELLITE) {
-		var a = getAngle(body, orbitals[0]);
+		var a = getAngle(body, Orbital.orbitals[0]);
 		ctx.save();
 		ctx.translate(dx, dy);
 		ctx.rotate(a);
@@ -157,7 +157,7 @@ function renderBody(body) {
 	}
 
 	if (body.type === ORBITAL_TYPE.DEFENSE) {
-		var a = getAngle(body, orbitals[0]);
+		var a = getAngle(body, Orbital.orbitals[0]);
 		ctx.save();
 		ctx.translate(dx, dy);
 		ctx.scale(0.5, 0.5);
@@ -226,7 +226,7 @@ function renderBody(body) {
 		}
 	}
 
-	var a = getAngle(body, orbitals[0]);
+	var a = getAngle(body, Orbital.orbitals[0]);
 	ctx.save();
 	ctx.translate(dx, dy);
 	ctx.rotate(a);
@@ -240,9 +240,9 @@ function renderBody(body) {
 
 // MOVE THIS
 function resetComlines() {
-	var n = orbitals.length;
+	var n = Orbital.orbitals.length;
 	while (n--) {
-		orbitals[n].online = false;
+		Orbital.orbitals[n].online = false;
 	}
 }
 
@@ -263,9 +263,9 @@ function getComlines(node, start) {
 	}
 	var next = [];
 	list.push(node);
-	var n = orbitals.length;
+	var n = Orbital.orbitals.length;
 	while (n--) {
-		var inst = orbitals[n];
+		var inst = Orbital.orbitals[n];
 		var inList = list.indexOf(inst) >= 0;
 		if (node !== inst && !inList && canOfferConnection(node) && canReceiveConnection(inst)) {
 			if (getDistance(node, inst) <= Base.comRange) {

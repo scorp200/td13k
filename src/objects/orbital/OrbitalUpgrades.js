@@ -70,7 +70,7 @@ var OrbitalUpgrades = (function() {
         return {
             img: u.img,
             text: u.name + " (Level " + level + ")",
-            func: setModuleUpgrade.bind(null, t, type, level),
+            func: Orbital.setModuleUpgrade.bind(null, t, type, level),
             speech: "Upgrading level " + m.level + " " + m.type
                     + ", to level " + level + " " + type
         }

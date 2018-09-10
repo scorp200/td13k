@@ -1,24 +1,32 @@
-var build = (function() {
+var Build = (function() {
 
 	var pending = false;
-	var what = null;
+	var what;
+	var on;
+	var distance;
+	var maxDistance;
 	var module = 0;
-	var on = null;
 	var multiplier = 20;
-	var distance = null;
-	var maxDistance = null;
 	var cost = 0;
 	var spacing = 100;
 	var proximity = 70;
 	var valid = false;
 
+	/***************************************************************************
+	 * @return {void}
+	 */
 	function init() {
 		what = null;
 		on = null;
 		distance = null;
 		maxDistance = null;
+		pending = false;
+		valid = false;
 	}
 
+	/***************************************************************************
+	 * @return {void}
+	 */
 	function update() {
 		if (!on) {
 			on = clickNearest(true);
@@ -26,15 +34,15 @@ var build = (function() {
 				maxDistance = on.size * multiplier;
 			}
 		} else if (Mouse.released) {
+			Mouse.update();
 			if (valid) {
 				selectOrbitSize();
 			}
-			Mouse.update();
 		} else {
 			var x = Mouse.vx;
 			var y = Mouse.vy;
 			var vec = Vector2D(x, y);
-			var near = nearestOrbital(x, y);
+			var near = Orbital.nearest(x, y);
 			distance = getDistance(on, vec);
 			distance = distance > maxDistance ? maxDistance : distance;
 			distance = Math.round(distance/spacing) * spacing;
@@ -42,17 +50,25 @@ var build = (function() {
 		}
 	}
 
+	/***************************************************************************
+	 * @return {void}
+	 */
 	function render() {
 		if (on) {
+			ctx.lineWidth = 3;
 			ctx.globalAlpha = 0.5;
 			ctx.strokeStyle = valid ? "#0F0" : "#F00";
 			ctx.beginPath();
 			ctx.arc(on.x, on.y, distance, 0, TAU);
-			ctx.lineWidth = 3;
 			ctx.stroke();
 		}
 	}
 
+	/***************************************************************************
+	 * With the target orbital already selected, this function positions the new
+	 * orbital in orbit.
+	 * @return {void}
+	 */
 	function selectOrbitSize() {
 		var c;
 		var vec = Vector2D(Mouse.vx, Mouse.vy);
@@ -66,30 +82,38 @@ var build = (function() {
 				break;
 			case (ORBITAL_TYPE.DEFENSE):
 				c = Orbital.defenseStation(on, distance, radAngle);
-				setModuleUpgrade(c, module, 1);
+				Orbital.setModuleUpgrade(c, module, 1);
 				break;
 		}
 		c.update();
-		what = null;
-		on = null;
-		pending = false;
 		Base.minerals -= cost;
 		cost = 0;
+		init()
+
 		Tutorial.complete(TUTORIAL_EVENT.BUILD);
-	}
-
-	function setTarget() {
 
 	}
 
+	/***************************************************************************
+	 * Setup building of a new orbital.
+	 * @param {number} type ORBITAL_TYPE.
+	 * @param {number} modType ORBITAL_MODULE_TYPE.
+	 * @param {number} cost How many minerals will this construction cost.
+	 */
+	function createBlueprint(type, modType, cost) {
+		pending = true;
+		what = type;
+		module = modType;
+		cost = cost;
+	}
+
+	// Export.
 	return {
 		get pending() { return pending; },
-		set pending(val) { pending = val; },
-		set what(val) { what = val; },
-		set module(val) { module = val; },
-		set cost(val) { cost = val; },
+		createBlueprint: createBlueprint,
 		update: update,
 		render: render,
 		init: init,
 	}
+
 })();
