@@ -63,20 +63,20 @@ var Gui = {
 		ctx.fillText("next wave in", Canvas.width/2, 48);
 
 		// Minerals.
-		ctx.fillText("minerals", Canvas.width/2+300*scale, 64-16);
-		ctx.fillText(~~Base.minerals, Canvas.width/2+300*scale, 64+16);
+		ctx.fillText("minerals", Canvas.width/2+300*scale, 48);
+		ctx.fillText(~~Base.minerals, Canvas.width/2+300*scale, 80);
 
 		// Energy.
-		ctx.fillText("energy", Canvas.width/2+600*scale, 64-16);
-		ctx.fillText(~~Base.energy, Canvas.width/2+600*scale, 64+16);
+		ctx.fillText("energy", Canvas.width/2+600*scale, 48);
+		ctx.fillText(~~Base.energy, Canvas.width/2+600*scale, 80);
 
 		// Days.
-		ctx.fillText("survived", Canvas.width/2-300*scale, 64-16);
-		ctx.fillText(WaveManager.currentWave + " waves", Canvas.width/2-300*scale, 64+16);
+		ctx.fillText("survived", Canvas.width/2-300*scale, 48);
+		ctx.fillText(WaveManager.currentWave + " waves", Canvas.width/2-300*scale, 80);
 
 		// Base health.
-		ctx.fillText("base status", Canvas.width/2-600*scale, 64-16);
-		ctx.fillText(~~Base.planet.hp + "%", Canvas.width/2-600*scale, 64+16);
+		ctx.fillText("base status", Canvas.width/2-600*scale, 48);
+		ctx.fillText(~~Base.planet.hp + "%", Canvas.width/2-600*scale, 80);
 
 		// Tooltip.
 		ctx.font = "small-caps 700 16px monospace";
@@ -109,84 +109,91 @@ var Gui = {
 }
 
 function buildSatellite(check) {
+	var cost = getCost(ORBITAL_TYPE.SATELLITE, "zap");
 	if (check) {
-		return Base.minerals >= 50;
+		return Base.minerals >= cost;
 	} else {
 		speak("Select an area to build the satellite");
 		build.pending = true;
 		build.what = ORBITAL_TYPE.SATELLITE;
-		build.cost = 50;
+		build.cost = cost;
 	}
 }
 
 function buildMiningStation(check) {
+	var cost = getCost(ORBITAL_TYPE.MINING);
 	if (check) {
-		return Base.minerals >= 50;
+		return Base.minerals >= cost;
 	} else {
 		speak("Select an area to build the mining station");
 		build.pending = true;
 		build.what = ORBITAL_TYPE.MINING;
-		build.cost = 50;
+		build.cost = cost;
 	}
 }
 
 function buildLaserPlatform(check) {
+	var cost = getCost(ORBITAL_TYPE.DEFENSE, "laser");
 	if (check) {
-		return Base.minerals >= 100;
+		return Base.minerals >= cost;
 	} else {
 		speak("Select an area to build the defense platform");
 		build.pending = true;
 		build.what = ORBITAL_TYPE.DEFENSE;
 		build.module = "laser";
-		build.cost = 100;
+		build.cost = cost;
 	}
 }
 
 function buildBeamPlatform(check) {
+	var cost = getCost(ORBITAL_TYPE.DEFENSE, "beam");
 	if (check) {
-		return Base.minerals >= 120;
+		return Base.minerals >= cost;
 	} else {
 		speak("Select an area to build the defense platform");
 		build.pending = true;
 		build.what = ORBITAL_TYPE.DEFENSE;
 		build.module = "beam";
-		build.cost = 120;
+		build.cost = cost;
 	}
 }
 
 function buildRocketPlatform(check) {
+	var cost = getCost(ORBITAL_TYPE.DEFENSE, "rocket");
 	if (check) {
-		return Base.minerals >= 140;
+		return Base.minerals >= cost;
 	} else {
 		speak("Select an area to build the defense platform");
 		build.pending = true;
 		build.what = ORBITAL_TYPE.DEFENSE;
 		build.module = "rocket";
-		build.cost = 140;
+		build.cost = cost;
 	}
 }
 
 function buildEmpPlatform(check) {
+	var cost = getCost(ORBITAL_TYPE.DEFENSE, "slow");
 	if (check) {
-		return Base.minerals >= 160;
+		return Base.minerals >= cost;
 	} else {
 		speak("Select an area to build the defense platform");
 		build.pending = true;
 		build.what = ORBITAL_TYPE.DEFENSE;
 		build.module = "slow";
-		build.cost = 160;
+		build.cost = cost;
 	}
 }
 
 function buildLightningPlatform(check) {
+	var cost = getCost(ORBITAL_TYPE.DEFENSE, "zap");
 	if (check) {
-		return Base.minerals >= 170;
+		return Base.minerals >= cost;
 	} else {
 		speak("Select an area to build the defense platform");
 		build.pending = true;
 		build.what = ORBITAL_TYPE.DEFENSE;
 		build.module = "zap";
-		build.cost = 170;
+		build.cost = cost;
 	}
 }
 

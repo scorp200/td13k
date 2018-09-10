@@ -166,3 +166,23 @@ function getOrbitalsByType(type) {
 	}
 	return arr;
 }
+
+/**
+ * @param {number} o Orbital type.
+ * @param {string=} m Module type.
+ */
+function getCost(o, m) {
+	switch (o) {
+		case (ORBITAL_TYPE.SATELLITE): return 50;
+		case (ORBITAL_TYPE.MINING): return 50;
+		case (ORBITAL_TYPE.DEFENSE):
+			switch (m) {
+				case ("laser"): return 100;
+				case ("beam"): return 120;
+				case ("rocket"): return 140;
+				case ("slow"): return 160;
+				case ("zap"): return 180;
+			}
+	}
+	return 0;
+}
