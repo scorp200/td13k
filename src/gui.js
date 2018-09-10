@@ -14,13 +14,13 @@ var Gui = {
 		Gui.selection = createSelectionDisplay();
 		Gui.elements = [
 			Gui.selection,
-			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite", sprSatelliteIcon, buildSatellite),
-			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station", sprMiningStationIcon, buildMiningStation),
-			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildLaserPlatform),
-			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", sprBeamPlatformIcon, buildBeamPlatform),
-			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", sprRocketPlatformIcon, buildRocketPlatform),
-			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", sprEmpPlatformIcon, buildEmpPlatform),
-			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", sprLightningPlatformIcon, buildLightningPlatform)
+			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite", sprSatelliteIcon, buildOrbital.bind(null, ORBITAL_TYPE.SATELLITE, null)),
+			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station", sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, null)),
+			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "laser")),
+			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", sprBeamPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "beam")),
+			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", sprRocketPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "rocket")),
+			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", sprEmpPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "slow")),
+			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", sprLightningPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "zap"))
 		];
 	},
 
@@ -108,92 +108,23 @@ var Gui = {
 
 }
 
-function buildSatellite(check) {
-	var cost = getCost(ORBITAL_TYPE.SATELLITE, "zap");
+/**
+ * @param {number} type Orbital type.
+ * @param {string=} modType Module type.
+ * @param {boolean=} check Check if affordable, or select.
+ * @return {boolean}
+ */
+function buildOrbital(type, modType, check) {
+	var cost = getCost(type, modType);
 	if (check) {
 		return Base.minerals >= cost;
 	} else {
-		speak("Select an area to build the satellite");
+		speak("Select an area to build the THING");
 		build.pending = true;
-		build.what = ORBITAL_TYPE.SATELLITE;
+		build.what = type;
+		build.module = modType;
 		build.cost = cost;
-	}
-}
-
-function buildMiningStation(check) {
-	var cost = getCost(ORBITAL_TYPE.MINING);
-	if (check) {
-		return Base.minerals >= cost;
-	} else {
-		speak("Select an area to build the mining station");
-		build.pending = true;
-		build.what = ORBITAL_TYPE.MINING;
-		build.cost = cost;
-	}
-}
-
-function buildLaserPlatform(check) {
-	var cost = getCost(ORBITAL_TYPE.DEFENSE, "laser");
-	if (check) {
-		return Base.minerals >= cost;
-	} else {
-		speak("Select an area to build the defense platform");
-		build.pending = true;
-		build.what = ORBITAL_TYPE.DEFENSE;
-		build.module = "laser";
-		build.cost = cost;
-	}
-}
-
-function buildBeamPlatform(check) {
-	var cost = getCost(ORBITAL_TYPE.DEFENSE, "beam");
-	if (check) {
-		return Base.minerals >= cost;
-	} else {
-		speak("Select an area to build the defense platform");
-		build.pending = true;
-		build.what = ORBITAL_TYPE.DEFENSE;
-		build.module = "beam";
-		build.cost = cost;
-	}
-}
-
-function buildRocketPlatform(check) {
-	var cost = getCost(ORBITAL_TYPE.DEFENSE, "rocket");
-	if (check) {
-		return Base.minerals >= cost;
-	} else {
-		speak("Select an area to build the defense platform");
-		build.pending = true;
-		build.what = ORBITAL_TYPE.DEFENSE;
-		build.module = "rocket";
-		build.cost = cost;
-	}
-}
-
-function buildEmpPlatform(check) {
-	var cost = getCost(ORBITAL_TYPE.DEFENSE, "slow");
-	if (check) {
-		return Base.minerals >= cost;
-	} else {
-		speak("Select an area to build the defense platform");
-		build.pending = true;
-		build.what = ORBITAL_TYPE.DEFENSE;
-		build.module = "slow";
-		build.cost = cost;
-	}
-}
-
-function buildLightningPlatform(check) {
-	var cost = getCost(ORBITAL_TYPE.DEFENSE, "zap");
-	if (check) {
-		return Base.minerals >= cost;
-	} else {
-		speak("Select an area to build the defense platform");
-		build.pending = true;
-		build.what = ORBITAL_TYPE.DEFENSE;
-		build.module = "zap";
-		build.cost = cost;
+		return false;
 	}
 }
 

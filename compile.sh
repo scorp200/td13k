@@ -6,7 +6,7 @@ java -jar closure-compiler.jar \
 --assume_function_wrapper \
 src/constants.js \
 src/utils/*.js \
-src/objects/orbital/modules/*.js \
+src/objects/orbital/ '*.js' \
 src/objects/*.js \
 src/data/*.js \
 src/utils.js \
