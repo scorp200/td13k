@@ -1,57 +1,66 @@
 var OrbitalUpgrades = (function() {
 
-    var upgrades = {}
+    var upgrades = [];
 
-    //
+    /**
+	 * @return {void}
+	 */
     function init() {
-        Object.assign(upgrades, {
-        	"laser": {
-        		loc: ORBITAL_TYPE.DEFENSE,
-        		name: "Lasers",
-        		img: null,
-                impl: laserCode
-        	},
-        	"beam": {
-        		loc: ORBITAL_TYPE.DEFENSE,
-        		name: "Beam",
-        		img: null,
-                impl: beamCode
-        	},
-        	"rocket": {
-        		loc: ORBITAL_TYPE.DEFENSE,
-        		name: "Rockets",
-        		img: null,
-                impl: rocketCode
-        	},
-        	"slow": {
-        		loc: ORBITAL_TYPE.DEFENSE,
-        		name: "Slow",
-        		img: null,
-                impl: slowCode
-        	},
-        	"zap": {
-        		loc: ORBITAL_TYPE.DEFENSE,
-        		name: "Lightning",
-        		img: null,
-                impl: zapCode
-        	}
-        });
+
+		upgrades[ORBITAL_MODULE_TYPE.LASER] = {
+    		loc: ORBITAL_TYPE.DEFENSE,
+    		name: "Lasers",
+    		img: null,
+            impl: laserCode
+    	}
+
+		upgrades[ORBITAL_MODULE_TYPE.BEAM] = {
+    		loc: ORBITAL_TYPE.DEFENSE,
+    		name: "Beam",
+    		img: null,
+            impl: beamCode
+    	}
+
+		upgrades[ORBITAL_MODULE_TYPE.ROCKET] = {
+    		loc: ORBITAL_TYPE.DEFENSE,
+    		name: "Rockets",
+    		img: null,
+            impl: rocketCode
+    	}
+
+		upgrades[ORBITAL_MODULE_TYPE.EMP] = {
+    		loc: ORBITAL_TYPE.DEFENSE,
+    		name: "EMP",
+    		img: null,
+            impl: slowCode
+    	}
+
+		upgrades[ORBITAL_MODULE_TYPE.LIGHTNING] = {
+    		loc: ORBITAL_TYPE.DEFENSE,
+    		name: "Lightning",
+    		img: null,
+            impl: zapCode
+    	}
+
     }
 
     /**
-     *
+     * @param {number} loc ORBITAL_TYPE.
+	 * @return {Array}
      */
     function getUpgradesByLocation(loc) {
         var arr = [];
-        for (var name in upgrades) {
-            (upgrades[name].loc === loc) && arr.push(name);
+        for (var n=0; n<upgrades.length; n++) {
+            if (upgrades[n].loc === loc) {
+				arr.push(upgrades[n]);
+			}
         }
         return arr;
     }
 
     /**
      * @param {Object} t Orbital.
-     * @param {string} type Type of module.
+     * @param {number} type ORBITAL_MODULE_TYPE.
      * @return {Object}
      */
     function getUpgrade(t, type) {
@@ -89,7 +98,7 @@ var OrbitalUpgrades = (function() {
     }
 
     /**
-     * @param {string} type Upgrade name. Should change to a constant.
+     * @param {number} type ORBITAL_MODULE_TYPE. Should change to a constant.
      * @return {Function}
      */
     function getImplementation(type) {

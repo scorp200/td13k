@@ -14,13 +14,13 @@ var Gui = {
 		Gui.selection = createSelectionDisplay();
 		Gui.elements = [
 			Gui.selection,
-			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite", sprSatelliteIcon, buildOrbital.bind(null, ORBITAL_TYPE.SATELLITE, null)),
-			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station", sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, null)),
-			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "laser")),
-			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", sprBeamPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "beam")),
-			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", sprRocketPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "rocket")),
-			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", sprEmpPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "slow")),
-			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", sprLightningPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, "zap"))
+			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite", sprSatelliteIcon, buildOrbital.bind(null, ORBITAL_TYPE.SATELLITE, undefined)),
+			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station", sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, undefined)),
+			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER)),
+			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", sprBeamPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM)),
+			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", sprRocketPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET)),
+			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", sprEmpPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.EMP)),
+			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", sprLightningPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LIGHTNING))
 		];
 	},
 
@@ -110,7 +110,7 @@ var Gui = {
 
 /**
  * @param {number} type Orbital type.
- * @param {string=} modType Module type.
+ * @param {number=} modType ORBITAL_MODULE_TYPE.
  * @param {boolean=} check Check if affordable, or select.
  * @return {boolean}
  */

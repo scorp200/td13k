@@ -18,7 +18,7 @@ if (speechSynth) {
 /**
  * Wrapper for speaking a new sentence.
  * @param {string} text The text to be spoken.
- * @param {boolean} suppress Whether to supress subtiles for this speech.
+ * @param {boolean=} suppress Whether to supress subtiles for this speech.
  * @return {void}
  */
 function speak(text, suppress) {

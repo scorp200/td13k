@@ -42,7 +42,7 @@ function slowCode(station, level) {
 	}
 
 	return {
-		type: 'slow',
+		type: ORBITAL_MODULE_TYPE.EMP,
 		level: level,
 		update: update,
 		render: render

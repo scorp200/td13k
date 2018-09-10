@@ -72,7 +72,6 @@ Orbital.sun = function(color, size, x, y) {
 }
 
 Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
-	//distance = Math.floor((distance + size / 2)/50)*50;
 	var t = Orbital(color, size, 0, 0, orbit, distance, moveSpeed, radAngle);
 	if (orbit.type === ORBITAL_TYPE.PLANET) {
 		t.name = "Moon";
@@ -86,7 +85,6 @@ Orbital.planet = function(color, size, orbit, distance, moveSpeed, radAngle) {
 }
 
 Orbital.miningStation = function(orbit, distance, radAngle) {
-	//distance = Math.floor((distance || orbit.size * 3)/50)*50;
 	var t = Orbital(getHSL(212, 100, 97), 2, 0, 0, orbit, distance, 0.01, radAngle);
 	t.name = "Mining Station";
 	t.type = ORBITAL_TYPE.MINING;
@@ -107,7 +105,6 @@ Orbital.miningStation = function(orbit, distance, radAngle) {
 }
 
 Orbital.satellite = function(orbit, distance, radAngle) {
-	//distance = Math.floor((distance || orbit.size * 5)/50)*50;
 	var t = Orbital(getHSL(160, 100, 50), 2, 0, 0, orbit, distance, 0.01, radAngle);
 	t.name = "Satellite";
 	t.type = ORBITAL_TYPE.SATELLITE;
@@ -129,19 +126,18 @@ Orbital.satellite = function(orbit, distance, radAngle) {
 }
 
 Orbital.defenseStation = function(orbit, distance, radAngle) {
-	//distance = Math.floor((distance || orbit.size * 7)/50)*50;
 	var t = Orbital(getHSL(33, 100, 50), 2, 0, 0, orbit, distance, 0.01, radAngle);
 	t.name = "Defense Platform";
 	t.type = ORBITAL_TYPE.DEFENSE;
 	t.cache = sprDefensePlatform;
-	setModuleUpgrade(t, "laser", 1);
+	setModuleUpgrade(t, ORBITAL_MODULE_TYPE.LASER, 1);
 	return t;
 }
 
 /**
  * Sets the upgrade module for the given orbital.
  * @param {Object} station The station to set the module of.
- * @param {string} type	The type of the new module.
+ * @param {number} type	ORBITAL_MODULE_TYPE.
  * @param {number} level THe level of the new module.
  * @return {void}
  */
@@ -169,7 +165,8 @@ function getOrbitalsByType(type) {
 
 /**
  * @param {number} o Orbital type.
- * @param {string=} m Module type.
+ * @param {number=} m Module type.
+ * @return {number} The cost.
  */
 function getCost(o, m) {
 	switch (o) {
@@ -177,11 +174,11 @@ function getCost(o, m) {
 		case (ORBITAL_TYPE.MINING): return 50;
 		case (ORBITAL_TYPE.DEFENSE):
 			switch (m) {
-				case ("laser"): return 100;
-				case ("beam"): return 120;
-				case ("rocket"): return 140;
-				case ("slow"): return 160;
-				case ("zap"): return 180;
+				case (ORBITAL_MODULE_TYPE.LASER): return 100;
+				case (ORBITAL_MODULE_TYPE.BEAM): return 120;
+				case (ORBITAL_MODULE_TYPE.ROCKET): return 140;
+				case (ORBITAL_MODULE_TYPE.EMP): return 160;
+				case (ORBITAL_MODULE_TYPE.LIGHTNING): return 180;
 			}
 	}
 	return 0;

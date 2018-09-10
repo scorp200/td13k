@@ -4,7 +4,7 @@ function laserCode(station, level) {
     var shootTimer = 0;
     var shootCost = 0.1;
     return {
-        type: "laser",
+        type: ORBITAL_MODULE_TYPE.LASER,
         level: level,
         update: function() {
             if (!shootTimer--) {

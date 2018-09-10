@@ -32,6 +32,18 @@ var ORBITAL_TYPE = {
 }
 
 /**
+ *
+ * @enum {number}
+ */
+var ORBITAL_MODULE_TYPE = {
+	LASER: 0,
+	BEAM: 1,
+	ROCKET: 2,
+	EMP: 3,
+	LIGHTNING: 4
+}
+
+/**
  * Buff types for applying to ships.
  * @enum {number}
  */
@@ -43,7 +55,7 @@ var BUFF_TYPE = {
 }
 
 /**
- *
+ * @enum {number}
  */
 var TUTORIAL_EVENT = {
 	INTRO: 0,

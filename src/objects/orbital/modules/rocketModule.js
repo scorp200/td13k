@@ -7,7 +7,7 @@ function rocketCode(station, level) {
     var range = 1500;
     var timer = attackRate;
     return {
-        type: "rocket",
+        type: ORBITAL_MODULE_TYPE.ROCKET,
         level: level,
         update: function() {
             if (!timer--) {

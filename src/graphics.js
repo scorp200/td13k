@@ -252,7 +252,8 @@ var list = [];
 
 /**
  * @param {Object} node
- * @param {Array=} list
+ * @param {boolean=} start Is this the first node in the structure.
+ * @return {Array} list
  */
 function getComlines(node, start) {
 	node.online = true;

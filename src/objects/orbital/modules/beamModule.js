@@ -8,7 +8,7 @@ function beamCode(station, level) {
 	var angleTarget = null;
 	var buffer = 0.1;
 	return {
-		type: "beam",
+		type: ORBITAL_MODULE_TYPE.BEAM,
 		level: level,
 		update: function() {
 			target = EnemyShip.nearest(station, length);

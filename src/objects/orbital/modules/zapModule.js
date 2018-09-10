@@ -6,7 +6,7 @@ function zapCode(station, level) {
 	var damage = 0.1;
 	var targets = [];
 	return {
-		type: 'zap',
+		type: ORBITAL_MODULE_TYPE.LIGHTNING,
 		level: level,
 		update: function() {
 			var n = EnemyShip.allInstances.length;

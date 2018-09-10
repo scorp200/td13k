@@ -78,6 +78,10 @@ function nearestTargetableOrbital(x, y) {
 	return orbitals[closest];
 }
 
+/**
+ * @param {boolean=} b Are we in building mode?
+ * @return {Object}
+ */
 function clickNearest(b) {
 	var ret = null;
 	if (Mouse.released) {
