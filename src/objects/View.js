@@ -15,6 +15,14 @@ var View = (function() {
 	var drag = false;
 	var dragThreshold = 5;
 
+	var keysDown = {};
+	window.addEventListener("keydown", function (event) {
+		keysDown[event.key.toUpperCase()] = true;
+	}, false);
+	window.addEventListener("keyup", function (event) {
+		keysDown[event.key.toUpperCase()] = false;
+	}, false);
+
 	function init() {
 		x = 0;
 		y = 0;
@@ -35,6 +43,13 @@ var View = (function() {
             zoomTarget = clamp(zoomTarget-shift, 0.1, 2);
         }
         tilt = Math.min(1 + (zoom - 0.1), 2);
+
+		// Pan with keyboard.
+		var spd = 50;
+		if (keysDown["ARROWUP"] || keysDown["W"]) yTarget -= spd;
+		if (keysDown["ARROWDOWN"] || keysDown["S"]) yTarget += spd;
+		if (keysDown["ARROWLEFT"] || keysDown["A"]) xTarget -= spd;
+		if (keysDown["ARROWRIGHT"] || keysDown["D"]) xTarget += spd;
 
 		// Set anchors for panning.
         if (Mouse.click) {

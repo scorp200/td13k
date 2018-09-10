@@ -16,8 +16,8 @@ var Base = (function(){
 	function create(p) {
 		planet = p;
 		hp = 100;
-		mineRate = 0.1;
-		energyRate = 0.1;
+		mineRate = 0.05;
+		energyRate = 0.05;
 		attackRange = 300;
 		comRange = 500;
 		minerals = 100;

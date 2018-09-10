@@ -27,7 +27,7 @@ var SystemGenerator = (function() {
 		var dist = 1000;
 		for (var n=0; n<numberOfPlanets; n++) {
 
-			var col = getHSL(180, 39, 62);
+			var col = getHSL(-1, 39, 62);
 			var size = 20;
 			var spd = 0.003;
 			var rot = Math.random() * TAU;
