@@ -35,6 +35,10 @@ var Settings = (function() {
 
     function init() {
 
+		addSetting("tutorial", function() {
+            ENABLE_TUTORIAL = this.checked;
+        });
+
         addSetting("music", function(init) {
             ENABLE_MUSIC = this.checked;
             if (!init) {
