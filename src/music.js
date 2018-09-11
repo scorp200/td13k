@@ -83,8 +83,6 @@ function musicLoop(sound) {
             sound.hasListener = true;
             sound.addEventListener("ended", function() {
                 this.currentTime = 0;
-                //var newTrack = Music.tracks[Music.current]._snd;
-                //Music.current = Music.tracks.indexOf(newTrack);
                 musicLoop(sound);
             }, false);
             currentMusic.play();

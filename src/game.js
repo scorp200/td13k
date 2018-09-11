@@ -1,4 +1,5 @@
 // Cache stuff.
+var starSystem;
 var gameState = GAME_STATE.LOADING;
 var maxDistance = 64;
 
@@ -30,10 +31,10 @@ var Game = {
 		Orbital.orbitals.length = 0;
 		View.init();
 		Build.init();
-		EnemyShip.destroyAll();
 		Laser.clear();
 		WaveManager.init();
-		SystemGenerator.generate();
+		starSystem = SystemGenerator.generate();
+		EnemyShip.init();
 		Tutorial.start();
 
 	}
@@ -93,7 +94,11 @@ function update(repeat) {
 	}
 
 	Mouse.update();
-	--repeat && update(repeat);
+
+	// Repeat update.
+	if (--repeat) {
+		update(repeat);
+	}
 
 }
 

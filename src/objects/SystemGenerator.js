@@ -13,8 +13,8 @@ var SystemGenerator = (function() {
 	var distanceRange = maxDistance - minDistance;
 	var sizeRange = maxSize - minSize;
 
-	/**
-	 *
+	/***************************************************************************
+	 * @return {Object} An object containing generated system's metrics.
 	 */
 	function generate() {
 
@@ -58,6 +58,11 @@ var SystemGenerator = (function() {
 		Orbital.miningStation(planets[0], 100, TAU * 0.33);
 		Orbital.miningStation(planets[0], 100, TAU * 0.66);
 		Orbital.miningStation(planets[0], 100, TAU * 0.99);
+
+		//
+		return {
+			size: dist
+		}
 
 	}
 

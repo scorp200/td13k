@@ -86,7 +86,6 @@ var Build = (function() {
 				break;
 		}
 		c.update();
-		console.log(cost);
 		Base.minerals -= cost;
 		cost = 0;
 		init()

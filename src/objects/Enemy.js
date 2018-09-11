@@ -1,9 +1,9 @@
 //
 var EnemyShip = (function() {
 
-	var spaceSize = 6000;
+	var spaceSize;
+	var partitionWidth;
 	var partitionSize = 100;
-	var partitionWidth = spaceSize / partitionSize;
 	var partitions = [];
 	var instances = [];
 	var moveSpd = 5;
@@ -11,15 +11,25 @@ var EnemyShip = (function() {
 	var damage = 0.2;
 	var buffArray = [];
 
-	var size = partitionWidth * partitionWidth;
-	while (size--) {
-		partitions.push([]);
+	/***************************************************************************
+	 * @return {void}
+	 */
+	function init() {
+		spaceSize = Math.ceil(starSystem.size * 2 / partitionSize) * partitionSize;
+		partitionWidth = spaceSize / partitionSize;
+		partitions.length = 0;
+		var size = partitionWidth * partitionWidth;
+		while (size--) {
+			partitions.push([]);
+		}
+		destroyAll();
 	}
 
 	/***************************************************************************
 	 * @param {number} x
 	 * @param {number} y
 	 * @param {number} a Direction (for both facing and moving).
+	 * @return {Object}
 	 */
 	function create(x, y, a) {
 		instances.push({
@@ -37,6 +47,7 @@ var EnemyShip = (function() {
 
 	/***************************************************************************
 	 * Update all EnemyShip instances.
+	 * @return {void}
 	 */
 	function update() {
 
@@ -105,8 +116,8 @@ var EnemyShip = (function() {
 
 	}
 
-	/**
-	 *
+	/***************************************************************************
+	 * @return {void}
 	 */
 	function render() {
 		var ox = -sprEnemyShip.width / 2;
@@ -123,7 +134,7 @@ var EnemyShip = (function() {
 		}
 	}
 
-	/**￼
+	/**￼*************************************************************************
 	 * @param {number} n The index of the ship to destroy.
 	 * @return {void}
 	 */
@@ -134,7 +145,7 @@ var EnemyShip = (function() {
 	}
 
 	/***************************************************************************
-	 *
+	 * @param {Object} inst1 EnemyShip instance.
 	 * @return {void}
 	 */
 	function flockCollision(inst1) {
@@ -213,12 +224,13 @@ var EnemyShip = (function() {
 	// Export.
 	return {
 		allInstances: instances, // I WANT TO REMOVE THIS!!
+		init: init,
 		create: create,
 		update: update,
 		render: render,
 		nearest: nearest,
-		addBuff: addBuff,
-		destroyAll: destroyAll
+		addBuff: addBuff//,
+		//destroyAll: destroyAll
 	}
 
 })();

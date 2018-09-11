@@ -15,7 +15,7 @@ var WaveManager = (function() {
         "hostiles detected"
     ];
 
-    /**
+    /***************************************************************************
 	 * Inits/resets manager.
 	 * @return {void}
 	 */
@@ -25,7 +25,7 @@ var WaveManager = (function() {
         timer = cooldown * 60;
     }
 
-	/**
+	/***************************************************************************
 	 * Counts down the timer and spawns waves.
 	 * @return {void}
 	 */
@@ -48,12 +48,12 @@ var WaveManager = (function() {
         }
     }
 
-	/**
+	/***************************************************************************
 	 * Spawn ships.
 	 * @return {void}
 	 */
     function spawn() {
-		var dis = 3000;
+		var dis = starSystem.size;
         var n = spawnCount;
         while (n--) {
             var a = Math.random() * TAU;
@@ -63,6 +63,7 @@ var WaveManager = (function() {
         }
     }
 
+	//**************************************************************************
 	// Export.
 	return {
 		init: init,
