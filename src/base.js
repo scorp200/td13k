@@ -20,7 +20,7 @@ var Base = (function(){
 		energyRate = 0.05;
 		attackRange = 300;
 		comRange = 501;
-		minerals = 100;
+		minerals = 1000;
 		energy = 10;
 	}
 

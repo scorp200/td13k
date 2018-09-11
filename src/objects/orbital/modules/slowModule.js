@@ -1,4 +1,5 @@
 function slowCode(station, level) {
+	
 	var cost = 300;
 	var energyCost = 1;
 	var attackSpeed = 60 * 1;
