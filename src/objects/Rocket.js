@@ -2,8 +2,6 @@ var Rocket = (function() {
 
     var map = {};
     var moveSpeed = 20;
-	var spriteOriginX = sprRocket.width / 2;
-	var spriteOriginY = sprRocket.height / 2;
 
 	/***************************************************************************
 	 * @return {void}
@@ -54,6 +52,8 @@ var Rocket = (function() {
 	 * @return {void}
 	 */
     function render() {
+		var spriteOriginX = sprRocket.width / 2;
+		var spriteOriginY = sprRocket.height / 2;
         for (var color in map) {
 			var m = map[color];
             var n = m.length;

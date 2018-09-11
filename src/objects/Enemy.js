@@ -29,7 +29,7 @@ var EnemyShip = (function() {
 	 * @param {number} x
 	 * @param {number} y
 	 * @param {number} a Direction (for both facing and moving).
-	 * @return {Object}
+	 * @return {void}
 	 */
 	function create(x, y, a) {
 		instances.push({

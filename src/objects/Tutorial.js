@@ -6,7 +6,7 @@ var Tutorial = (function() {
 		event: TUTORIAL_EVENT.INTRO,
 		lifetime: 23 * 0
 	},{
-		text: "You can move your view of the star system around by clicking and dragging anywhere on-screen.",
+		text: "You can move your view of the star system around by clicking and dragging anywhere on-screen. YOu can also use the W, A, S and D, or the arrow keys.",
 		event: TUTORIAL_EVENT.MOUSE
 	},{
 		text: "You can also zoom in and out with your mouse wheel.",
@@ -54,8 +54,8 @@ var Tutorial = (function() {
 	var event;
 	var started = false;
 
-	/**
-	 *
+	/***************************************************************************
+	 * @return {void}
 	 */
 	function start() {
 		if (ENABLE_TUTORIAL) {
@@ -66,7 +66,7 @@ var Tutorial = (function() {
 		}
 	}
 
-	/**
+	/***************************************************************************
 	 * @return {void}
 	 */
 	function setMission() {
@@ -74,18 +74,22 @@ var Tutorial = (function() {
 			text = missions[currentMission].text;
 			event = missions[currentMission].event;
 			end = missions[currentMission].end === true;
+			if (end) {
+				GameStorage.set("tutorial", false);
+			}
 			speak(text, true);
 		}
 	}
 
-	/**
+	/***************************************************************************
+	 * @param {number} tutorialEvent TUTORIAL_EVENT.
 	 * @return {void}
 	 */
 	function complete(tutorialEvent) {
 		completed[tutorialEvent] = true;
 	}
 
-	/**
+	/***************************************************************************
 	 * @return {void}
 	 */
 	function update() {
@@ -107,8 +111,8 @@ var Tutorial = (function() {
 		}
 	}
 
-	/**
-	 *
+	/***************************************************************************
+	 * @return {void}
 	 */
 	function render() {
 
@@ -141,6 +145,7 @@ var Tutorial = (function() {
 
 	}
 
+	//**************************************************************************
 	// Export.
 	return {
 		get text() { return text; },

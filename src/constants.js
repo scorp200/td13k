@@ -1,3 +1,4 @@
+var IS_DEV = false;
 var Canvas = document.getElementById("c");
 var ctx = Canvas.getContext("2d", { alpha: false });
 var NOOP = function() {};

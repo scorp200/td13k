@@ -4,12 +4,11 @@ var Base = (function(){
 	var hp;
 	var mineRate;
 	var energyRate;
-	var attackRange;
 	var comRange;
 	var minerals;
 	var energy;
 
-	/**
+	/***************************************************************************
 	 * @param {Object} p Planet the base should be on.
 	 * @return {void}
 	 */
@@ -18,12 +17,12 @@ var Base = (function(){
 		hp = 100;
 		mineRate = 0.05;
 		energyRate = 0.05;
-		attackRange = 300;
 		comRange = 501;
-		minerals = 1000;
-		energy = 10;
+		minerals = IS_DEV ? 1000 : 50;
+		energy = IS_DEV ? 1000 : 10;
 	}
 
+	//**************************************************************************
 	// Export.
     return {
 		create: create,
@@ -31,7 +30,6 @@ var Base = (function(){
         get hp() { return hp; },
         get mineRate() { return mineRate; },
         get energyRate() { return energyRate; },
-        get attackRange() { return attackRange; },
         get comRange() { return comRange; },
         get minerals() { return minerals; },
         get energy() { return energy; },

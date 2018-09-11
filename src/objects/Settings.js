@@ -11,21 +11,30 @@ var Settings = (function() {
 	style.fontFamily = "monospace";
     document.body.appendChild(ul);
 
+	/***************************************************************************
+	 * @param {string} text The label for this input (also use for localStorage)
+	 * @param {Function} callback
+	 * @return {void}
+	 */
     function addSetting(text, callback) {
 
+		// Create DOM elements.
         var li = document.createElement("LI");
         var label = document.createElement("LABEL");
         var input = document.createElement("INPUT");
         label.textContent = text;
         input.type = "checkbox";
-        input.onclick = function() {
-            GameStorage.set(text, input.checked);
-            callback.call(input);
-        }
         li.appendChild(input);
         li.appendChild(label);
         ul.appendChild(li);
 
+		// Create callback function to change and save setting.
+		input.onclick = function() {
+            GameStorage.set(text, input.checked);
+            callback.call(input);
+        }
+
+		// Set saved state of checkbox/setting.
         if (GameStorage.get(text, "true") === "true") {
             input.checked = true;
             callback.call(input, true);
@@ -33,6 +42,9 @@ var Settings = (function() {
 
     }
 
+	/***************************************************************************
+	 * @return {void}
+	 */
     function init() {
 
 		addSetting("tutorial", function() {
@@ -56,6 +68,8 @@ var Settings = (function() {
 
     }
 
+	//**************************************************************************
+	// Export.
     return {
         init: init
     }
