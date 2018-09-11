@@ -16,7 +16,7 @@ var EnemyShip = (function() {
 		partitions.push([]);
 	}
 
-	/**
+	/***************************************************************************
 	 * @param {number} x
 	 * @param {number} y
 	 * @param {number} a Direction (for both facing and moving).
@@ -35,8 +35,8 @@ var EnemyShip = (function() {
 		});
 	}
 
-	/**
-	 *
+	/***************************************************************************
+	 * Update all EnemyShip instances.
 	 */
 	function update() {
 
@@ -158,7 +158,7 @@ var EnemyShip = (function() {
 	}
 
 	/***************************************************************************
-	 * @param {Object} pos Any object with x and y properties.
+	 * @param {Object} pos Vector2.
 	 * @param {number} dist
 	 * @return {Object}
 	 */

@@ -1,58 +1,86 @@
-var Rocket = {
+var Rocket = (function() {
 
-    map: {},
-    instances: [],
-    moveSpeed: 50,
+    var map = {};
+    var moveSpeed = 20;
+	var spriteOriginX = sprRocket.width / 2;
+	var spriteOriginY = sprRocket.height / 2;
 
-    create: function(x, y, dir, lifetime, color, onDestroy) {
-        if (!Rocket.map[color]) {
-            Rocket.map[color] = [];
+	/***************************************************************************
+	 * @return {void}
+	 */
+    function create(x, y, dir, lifetime, color) {
+        if (!map[color]) {
+            map[color] = [];
         }
-        Rocket.map[color].push({
+        map[color].push({
             x: x,
             y: y,
             moveDirection: dir,
-            lifetime: lifetime - Rocket.moveSpeed,
-            onDestroy: onDestroy
+            lifetime: lifetime - moveSpeed
         });
-    },
+    }
 
-    update: function() {
-        for (var color in Rocket.map) {
-            var n = Rocket.map[color].length;
+	/***************************************************************************
+	 * @return {void}
+	 */
+    function update() {
+        for (var color in map) {
+			var m = map[color];
+            var n = m.length;
             while (n--) {
-                var inst = Rocket.map[color][n];
-                inst.lifetime -= Rocket.moveSpeed;
-                if (inst.lifetime <= 0) {
-                    (inst.onDestroy) && inst.onDestroy();
-                    Rocket.destroy(color, n);
+                var inst = m[n];
+				var target = EnemyShip.nearest(inst, 500);
+				var dist = target ? getDistance(inst, target) : 30;
+                if (inst.lifetime-- <= 0 || dist < 30) {
+                    destroy(color, n);
+					Explosion.create(inst.x, inst.y);
+					if (target) {
+						target.hp -= 10;
+					}
                 } else {
-                    inst.x -= Math.cos(inst.moveDirection) * Rocket.moveSpeed;
-                    inst.y -= Math.sin(inst.moveDirection) * Rocket.moveSpeed;
+					if (target) {
+						var a = getAngle(inst, target);
+						var diff = getAngleDifference(a, inst.moveDirection);
+						inst.moveDirection += diff * 0.05;
+					}
+					inst.x -= moveSpeed * Math.cos(inst.moveDirection);
+					inst.y -= moveSpeed * Math.sin(inst.moveDirection);
                 }
             }
         }
-    },
-
-    render: function() {
-        ctx.lineWidth = 1;
-        for (var color in Rocket.map) {
-            ctx.strokeStyle = color;
-            ctx.beginPath();
-            var n = Rocket.map[color].length;
-            while (n--) {
-                var inst = Rocket.map[color][n];
-                var toX = inst.x+Math.cos(inst.moveDirection)*10;
-                var toY = inst.y / View.tilt+Math.sin(inst.moveDirection)*10;
-                ctx.moveTo(inst.x, inst.y / View.tilt);
-                ctx.lineTo(toX, toY);
-            }
-            ctx.stroke();
-        }
-    },
-
-    destroy: function(c, n) {
-        Rocket.map[c].splice(n, 1);
     }
 
-}
+	/***************************************************************************
+	 * @return {void}
+	 */
+    function render() {
+        for (var color in map) {
+			var m = map[color];
+            var n = m.length;
+            while (n--) {
+                var inst = m[n];
+				ctx.save();
+				ctx.translate(inst.x, inst.y / View.tilt);
+				ctx.rotate(inst.moveDirection);
+				ctx.drawImage(sprRocket, spriteOriginX, spriteOriginY);
+				ctx.restore();
+            }
+        }
+    }
+
+	/***************************************************************************
+	 *
+	 */
+    function destroy(c, n) {
+        map[c].splice(n, 1);
+    }
+
+	//**************************************************************************
+	// Export.
+	return {
+		create: create,
+		update: update,
+		render: render
+	}
+
+})();
