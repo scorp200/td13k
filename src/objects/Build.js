@@ -86,6 +86,7 @@ var Build = (function() {
 				break;
 		}
 		c.update();
+		console.log(cost);
 		Base.minerals -= cost;
 		cost = 0;
 		init()
@@ -98,13 +99,13 @@ var Build = (function() {
 	 * Setup building of a new orbital.
 	 * @param {number} type ORBITAL_TYPE.
 	 * @param {number} modType ORBITAL_MODULE_TYPE.
-	 * @param {number} cost How many minerals will this construction cost.
+	 * @param {number} c How many minerals will this construction cost.
 	 */
-	function createBlueprint(type, modType, cost) {
+	function createBlueprint(type, modType, c) {
 		pending = true;
 		what = type;
 		module = modType;
-		cost = cost;
+		cost = c;
 	}
 
 	// Export.
