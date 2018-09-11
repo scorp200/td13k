@@ -139,7 +139,7 @@ function renderAllBodies() {
 	}
 }
 
-// Render body (star, planet, death star)
+// Render body (star, planet, death star).
 function renderBody(body) {
 
 	var dx = body.x;
@@ -152,6 +152,27 @@ function renderBody(body) {
 		ctx.rotate(a);
 		ctx.scale(0.3, 0.3);
 		ctx.drawImage(sprSatellite, -sprSatellite.width/2, -sprSatellite.height/2);
+		ctx.restore();
+		return;
+	}
+
+	if (body.type === ORBITAL_TYPE.MINING) {
+
+		if (body.online) {
+			ctx.strokeStyle = "#B33";
+			ctx.lineWidth = 1 + Math.abs(Math.sin(performance.now()/100));
+			ctx.beginPath();
+			ctx.moveTo(dx, dy);
+			ctx.lineTo(body.orbit.planet.x, body.orbit.planet.y / View.tilt);
+			ctx.stroke();
+		}
+
+		var a = getAngle(body, body.orbit.planet);
+		ctx.save();
+		ctx.translate(dx, dy);
+		ctx.rotate(a);
+		ctx.scale(0.3, 0.3);
+		ctx.drawImage(sprMiningStation, -sprSatellite.width/2, -sprSatellite.height/2);
 		ctx.restore();
 		return;
 	}
