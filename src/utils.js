@@ -70,7 +70,6 @@ function nearestTargetableOrbital(x, y) {
 function clickNearest(b) {
 	var ret = null;
 	if (Mouse.released) {
-		//Gui.selection.target = null;
 		Gui.setSelectionTarget(null);
 		var nearest = Orbital.nearest(Mouse.vx, Mouse.vy);
 		if (getDistance(nearest, { x: Mouse.vx, y: Mouse.vy }) < maxDistance) {
@@ -81,9 +80,6 @@ function clickNearest(b) {
 					ret = nearest;
 				} else if (!Build.pending) {
 					Gui.setSelectionTarget(nearest, Mouse);
-					//Gui.selection.target = nearest;
-					//Gui.selection.openAt(Mouse.x, Mouse.y);
-					//Gui.selection.addButtons(OrbitalUpgrades.get(nearest));
 				}
 				playSound(sndClick);
 			}

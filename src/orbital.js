@@ -200,15 +200,15 @@ var Orbital = (function() {
 	 */
 	function getCost(o, m) {
 		switch (o) {
-			case (ORBITAL_TYPE.SATELLITE): return 50;
+			case (ORBITAL_TYPE.SATELLITE): return 30;
 			case (ORBITAL_TYPE.MINING): return 50;
 			case (ORBITAL_TYPE.DEFENSE):
 				switch (m) {
 					case (ORBITAL_MODULE_TYPE.LASER): return 100;
-					case (ORBITAL_MODULE_TYPE.BEAM): return 120;
-					case (ORBITAL_MODULE_TYPE.ROCKET): return 140;
-					case (ORBITAL_MODULE_TYPE.EMP): return 160;
-					case (ORBITAL_MODULE_TYPE.LIGHTNING): return 180;
+					case (ORBITAL_MODULE_TYPE.BEAM): return 150;
+					case (ORBITAL_MODULE_TYPE.ROCKET): return 200;
+					case (ORBITAL_MODULE_TYPE.EMP): return 250;
+					case (ORBITAL_MODULE_TYPE.LIGHTNING): return 300;
 				}
 		}
 		return 0;

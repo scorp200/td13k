@@ -7,19 +7,22 @@ function slowCode(station, level) {
 	var range = 400;
 	var timer = attackSpeed;
 	var scale = 0;
-	var shootCost = 0.1;
+	var shootCost = 10;
 
 	function update() {
 		if (timer-- <= 0 && Base.energy >= shootCost) {
-			scale = 0;
-			timer = attackSpeed;
-			Base.energy -= shootCost;
-			var n = EnemyShip.allInstances.length;
-			while (n--) {
-				var inst = EnemyShip.allInstances[n];
-				var distance = getDistance(inst, station);
-				if (distance < range) {
-					EnemyShip.addBuff(inst, BUFF_TYPE.SPEED, slowRate, slowTime);
+			var nearest = EnemyShip.nearest();
+			if (nearest && getDistance(station, nearest) < range) {
+				scale = 0;
+				timer = attackSpeed;
+				Base.energy -= shootCost;
+				var n = EnemyShip.allInstances.length;
+				while (n--) {
+					var inst = EnemyShip.allInstances[n];
+					var distance = getDistance(inst, station);
+					if (distance < range) {
+						EnemyShip.addBuff(inst, BUFF_TYPE.SPEED, slowRate, slowTime);
+					}
 				}
 			}
 		}
@@ -34,7 +37,7 @@ function slowCode(station, level) {
 		if (scale < range) {
 			ctx.save();
 			ctx.beginPath();
-			ctx.fillStyle = '#c6e2ff';
+			ctx.strokeStyle = '#c6e2ff';
 			ctx.translate(station.x, station.y / View.tilt);
 			ctx.scale(1, 1/View.tilt);
 			ctx.arc(0, 0, scale, 0, TAU);
