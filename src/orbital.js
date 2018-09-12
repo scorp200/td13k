@@ -33,6 +33,8 @@ var Orbital = (function() {
 				radAngle: radAngle
 			};
 
+			t.orbit.moveSpeed /= t.orbit.distance / 100;
+
 		}
 		t.update = function() {
 
@@ -82,8 +84,8 @@ var Orbital = (function() {
 		} else {
 			t.name = "Planet";
 			t.type = ORBITAL_TYPE.PLANET;
+			t.orbit.moveSpeed /= t.orbit.distance / 10000;
 		}
-		//t.update = extend(t.update, function() {})
 		return t;
 	}
 
@@ -91,6 +93,7 @@ var Orbital = (function() {
 		var t = create(getHSL(212, 100, 97), 2, 0, 0, orbit, distance, 0.01, radAngle);
 		t.name = "Mining Station";
 		t.type = ORBITAL_TYPE.MINING;
+		t.cache = sprMiningStation;
 		t.update = extend(t.update, function() {
 
 			// Disable mineral gain if tutorial still active.

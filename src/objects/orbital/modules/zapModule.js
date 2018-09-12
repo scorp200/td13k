@@ -1,7 +1,7 @@
 function zapCode(station, level) {
 
 	var cost = 350;
-	var energyCost = 1;
+	var shootCost = 0.01;
 	var maxTargets = 10;
 	var maxRange = 300;
 	var damage = 0.1;
@@ -16,7 +16,8 @@ function zapCode(station, level) {
  		var last = EnemyShip.nearest(station, maxRange);
  		if (!last)
  			return;
- 		while (n--) {
+ 		while (n-- && Base.energy >= shootCost) {
+			Base.energy -= shootCost;
  			var inst = EnemyShip.allInstances[n];
  			var distance = getDistance(last, inst);
  			if (distance <= maxRange) {

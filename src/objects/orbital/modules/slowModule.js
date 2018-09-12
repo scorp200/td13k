@@ -1,18 +1,19 @@
 function slowCode(station, level) {
-	
+
 	var cost = 300;
-	var energyCost = 1;
-	var attackSpeed = 60 * 1;
+	var attackSpeed = 60 * 2;
 	var slowTime = 100;
 	var slowRate = 0.05;
-	var range = 300;
+	var range = 400;
 	var timer = attackSpeed;
 	var scale = 0;
+	var shootCost = 0.1;
 
 	function update() {
-		if (timer-- <= 0) {
+		if (timer-- <= 0 && Base.energy >= shootCost) {
 			scale = 0;
 			timer = attackSpeed;
+			Base.energy -= shootCost;
 			var n = EnemyShip.allInstances.length;
 			while (n--) {
 				var inst = EnemyShip.allInstances[n];
