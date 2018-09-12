@@ -30,6 +30,7 @@ var Game = {
 		// Clear any previous game.
 		Orbital.orbitals.length = 0;
 		starSystem = SystemGenerator.generate();
+		Orbital.orbitals.forEach(function(e) { e.update(); });
 		View.init();
 		Build.init();
 		Laser.clear();

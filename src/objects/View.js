@@ -24,7 +24,6 @@ var View = (function() {
 	}, false);
 
 	function init() {
-		Base.planet.update();
 		x = Base.planet.x;
 		y = Base.planet.y / 2;
 		xTarget = Base.planet.x;
