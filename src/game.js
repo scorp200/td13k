@@ -36,6 +36,7 @@ var Game = {
 		starSystem = SystemGenerator.generate();
 		EnemyShip.init();
 		Tutorial.start();
+		Gui.setup();
 
 	}
 

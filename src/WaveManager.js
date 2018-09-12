@@ -21,7 +21,6 @@ var WaveManager = (function() {
 	 */
     function init() {
 		currentWave = 0;
-	    cooldown = 10;
         timer = cooldown * 60;
     }
 

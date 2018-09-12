@@ -14,13 +14,13 @@ var Gui = {
 		Gui.selection = createSelectionDisplay();
 		Gui.elements = [
 			Gui.selection,
-			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite", sprSatelliteIcon, buildOrbital.bind(null, ORBITAL_TYPE.SATELLITE, undefined)),
-			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station", sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, undefined)),
-			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform", sprDefensePlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER)),
-			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform", sprBeamPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM)),
-			Button(Gui, center+24+12, bottom-64, 48, 48, "Missle Platform", sprRocketPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET)),
-			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform", sprEmpPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.EMP)),
-			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform", sprLightningPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LIGHTNING))
+			Button(Gui, center-24-180, bottom-64, 48, 48, "Satellite (" + Orbital.getCost(ORBITAL_TYPE.SATELLITE, undefined) + " minerals)", sprSatelliteIcon, buildOrbital.bind(null, ORBITAL_TYPE.SATELLITE, undefined)),
+			Button(Gui, center-24-120, bottom-64, 48, 48, "Mining Station (" + Orbital.getCost(ORBITAL_TYPE.SATELLITE, undefined) + " minerals)", sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, undefined)),
+			Button(Gui, center-24-60, bottom-64, 48, 48, "Laser Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER) + " minerals)", sprDefensePlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER)),
+			Button(Gui, center-24, bottom-64, 48, 48, "Beam Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM) + " minerals)", sprBeamPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM)),
+			Button(Gui, center+24+12, bottom-64, 48, 48, "Rocket Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET) + " minerals)", sprRocketPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET)),
+			Button(Gui, center+24+72, bottom-64, 48, 48, "EMP Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.EMP) + " minerals)", sprEmpPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.EMP)),
+			Button(Gui, center+24+132, bottom-64, 48, 48, "Lighting Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LIGHTNING) + " minerals)", sprLightningPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LIGHTNING))
 		];
 	},
 
@@ -126,8 +126,6 @@ function buildOrbital(type, modType, check) {
 		return false;
 	}
 }
-
-Gui.setup();
 
 function createSelectionDisplay() {
 
