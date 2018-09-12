@@ -6,7 +6,11 @@ var GameStorage = (function() {
      * @return {void}
      */
     function set(key, value) {
-        window.localStorage.setItem(key, value);
+		try {
+        	window.localStorage.setItem(key, value);
+		} catch(e) {
+			console.warn(e);
+		}
     }
 
     /**
@@ -15,7 +19,12 @@ var GameStorage = (function() {
      * @return {string}
      */
     function get(key, defaultValue) {
-        return window.localStorage.getItem(key) || defaultValue;
+		try {
+        	return window.localStorage.getItem(key) || defaultValue;
+		} catch(e) {
+			console.warn(e);
+			return defaultValue;
+		}
     }
 
     // Export.

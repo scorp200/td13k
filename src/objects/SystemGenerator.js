@@ -2,7 +2,7 @@ var SystemGenerator = (function() {
 
 	// Parameters.
 	var minPlanets = 2;
-	var maxPlanets = 9;
+	var maxPlanets = 5;
 	var minDistance = 500;
 	var maxDistance = 1000;
 	var minSize = 20;
@@ -37,7 +37,7 @@ var SystemGenerator = (function() {
 			var planet = Orbital.planet(col, size, star, dist, spd, rot);
 			planets.push(planet);
 
-			dist += minDistance + ~~(Math.random() * distanceRange);
+			dist += ~~((minDistance + ~~(Math.random() * distanceRange))/100) * 100;
 
 			// Generate moons.
 			var numberOfMoons = 0 + ~~(Math.random() * 3);

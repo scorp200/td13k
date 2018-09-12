@@ -24,10 +24,11 @@ var View = (function() {
 	}, false);
 
 	function init() {
-		x = 0;
-		y = 0;
-		xTarget = 0;
-	    yTarget = 0;
+		Base.planet.update();
+		x = Base.planet.x;
+		y = Base.planet.y / 2;
+		xTarget = Base.planet.x;
+	    yTarget = Base.planet.y / 2;
 		zoom = 1;
 		zoomTarget = 1;
 	    tilt = 2;

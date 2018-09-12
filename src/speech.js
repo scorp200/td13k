@@ -1,5 +1,5 @@
 //
-var speechSynth = speechSynthesis;
+var speechSynth = window.speechSynthesis;
 var speechEnabled = false;
 var voices;
 var voiceIndex = 3;

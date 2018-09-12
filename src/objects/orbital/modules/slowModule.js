@@ -7,12 +7,12 @@ function slowCode(station, level) {
 	var range = 400;
 	var timer = attackSpeed;
 	var scale = 0;
-	var shootCost = 10;
+	var shootCost = 30;
 
 	function update() {
 		if (timer-- <= 0 && Base.energy >= shootCost) {
-			var nearest = EnemyShip.nearest();
-			if (nearest && getDistance(station, nearest) < range) {
+			var nearest = EnemyShip.nearest(station, range);
+			if (nearest) {
 				scale = 0;
 				timer = attackSpeed;
 				Base.energy -= shootCost;

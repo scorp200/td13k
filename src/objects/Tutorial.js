@@ -59,6 +59,7 @@ var Tutorial = (function() {
 	 */
 	function start() {
 		if (ENABLE_TUTORIAL) {
+			gameState = GAME_STATE.PAUSED;
 			started = true;
 			setMission();
 		} else {

@@ -29,11 +29,11 @@ var Game = {
 
 		// Clear any previous game.
 		Orbital.orbitals.length = 0;
+		starSystem = SystemGenerator.generate();
 		View.init();
 		Build.init();
 		Laser.clear();
 		WaveManager.init();
-		starSystem = SystemGenerator.generate();
 		EnemyShip.init();
 		Tutorial.start();
 		Gui.setup();

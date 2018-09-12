@@ -125,7 +125,7 @@ function renderTrail(body) {
 		ctx.save();
 		var tilt = 1 / View.tilt;
 		ctx.transform(1, 0, 0, tilt, orbit.planet.x, orbit.planet.y * tilt)
-		var trail = orbit.radAngle - orbit.moveSpeed * 100;
+		var trail = orbit.radAngle - orbit.moveSpeed * orbit.distance;
 		ctx.moveTo(Math.cos(trail)*orbit.distance, Math.sin(trail)*orbit.distance);
 		ctx.arc(0, 0, orbit.distance, trail, orbit.radAngle, orbit.moveSpeed < 0);
 		ctx.restore();
