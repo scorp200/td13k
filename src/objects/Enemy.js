@@ -169,7 +169,7 @@ var EnemyShip = (function() {
 	}
 
 	/***************************************************************************
-	 * @param {Object} pos Vector2.
+	 * @param {Object} pos Vector2D.
 	 * @param {number} dist
 	 * @return {Object}
 	 */

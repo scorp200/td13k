@@ -25,10 +25,7 @@ function speak(text, suppress) {
 
 	// Subtitles.
 	if (!suppress) {
-		Gui.subtitles.push({
-			text: text,
-			time: 60 * 4
-		});
+		Gui.addSubtitles(text, 60*4);
 	}
 
 	// Speak.

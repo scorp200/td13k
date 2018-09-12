@@ -21,7 +21,7 @@ var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 		// Handles tooltip and clicking.
 		update: function() {
 			if (Mouse.overRegion(parent.x+x, parent.y+y, w, h)) {
-				Gui.tooltip = text;
+				Gui.setTooltip(text);
 				if (Mouse.click) {
 					if (onClick && onClick(true)) {
 						onClick();

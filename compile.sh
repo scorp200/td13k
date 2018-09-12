@@ -4,7 +4,6 @@ java -jar closure-compiler.jar \
 --output_wrapper_file src/build_index.html \
 --js_output_file build/index.html \
 --assume_function_wrapper \
---formatting pretty_print \
 src/constants.js \
 src/utils/*.js \
 src/objects/orbital/ '*.js' \
