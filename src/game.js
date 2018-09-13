@@ -72,7 +72,7 @@ function update(repeat) {
 		// Base destroyed.
 		if (Orbital.orbitals.indexOf(Base.planet) === -1) {
 			gameState = GAME_STATE.LOADING;
-			Game.init();
+			//Game.init();
 		}
 
 		hoverName = "";
