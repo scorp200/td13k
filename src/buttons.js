@@ -11,7 +11,7 @@
  */
 var Button = function(parent, x, y, w, h, text, img, onClick, speech) {
 
-	var fillStyle = "rgba(0, 0, 0, 0.5)";
+	var fillStyle = "rgba(0,0,0,0.5)";
 	var strokeStyle = "#FFF";
 	var borderWidth = 2;
 

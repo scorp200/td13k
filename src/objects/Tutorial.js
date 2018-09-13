@@ -42,17 +42,17 @@ var Tutorial = (function() {
 	}];
 
 	// Visual styling.
-	var backgroundColor = "rgba(0, 0, 0, 0.5)";
+	var backgroundColor = "rgba(0,0,0,0.5)";
 	var borderColor = "#FFF";
 	var borderWidth = 2;
 
+	var started = false;
 	var end = false;
 	var timer = 60;
 	var completed = [];
 	var currentMission = 0;
 	var text = "";
 	var event;
-	var started = false;
 
 	/***************************************************************************
 	 * @return {void}

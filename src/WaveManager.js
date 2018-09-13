@@ -2,10 +2,10 @@
 var WaveManager = (function() {
 
     // Vars.
-    var currentWave = 0;
-    var cooldown = 60;
-    var timer = 0;
-    var spawnCount = 30;
+    var currentWave;
+    var cooldown;
+    var timer;
+    var spawnCount;
 
     // Speech flavor.
     var speechFlavor = [
@@ -21,6 +21,8 @@ var WaveManager = (function() {
 	 */
     function init() {
 		currentWave = 0;
+		spawnCount = 30;
+		cooldown = 60;
         timer = cooldown * 60;
     }
 

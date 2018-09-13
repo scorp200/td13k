@@ -17,7 +17,7 @@ var Gui = (function() {
 		elements = [
 			selection,
 			Button(pos, center-24-180, bottom-64, 48, 48, "Satellite (" + Orbital.getCost(ORBITAL_TYPE.SATELLITE, undefined) + " minerals)", sprSatelliteIcon, buildOrbital.bind(null, ORBITAL_TYPE.SATELLITE, undefined)),
-			Button(pos, center-24-120, bottom-64, 48, 48, "Mining Station (" + Orbital.getCost(ORBITAL_TYPE.SATELLITE, undefined) + " minerals)", sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, undefined)),
+			Button(pos, center-24-120, bottom-64, 48, 48, "Mining Station (" + Orbital.getCost(ORBITAL_TYPE.MINING, undefined) + " minerals)", sprMiningStationIcon, buildOrbital.bind(null, ORBITAL_TYPE.MINING, undefined)),
 			Button(pos, center-24-60, bottom-64, 48, 48, "Laser Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER) + " minerals)", sprDefensePlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.LASER)),
 			Button(pos, center-24, bottom-64, 48, 48, "Beam Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM) + " minerals)", sprBeamPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.BEAM)),
 			Button(pos, center+24+12, bottom-64, 48, 48, "Rocket Platform (" + Orbital.getCost(ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET) + " minerals)", sprRocketPlatformIcon, buildOrbital.bind(null, ORBITAL_TYPE.DEFENSE, ORBITAL_MODULE_TYPE.ROCKET)),
@@ -175,7 +175,7 @@ var Gui = (function() {
 		var elements = [];
 
 		// Styling.
-		var backgroundColor = "rgba(0, 0, 0, 0.5)";
+		var backgroundColor = "rgba(0,0,0,0.5)";
 		var borderColor = "#FFF";
 		var borderWidth = 2;
 

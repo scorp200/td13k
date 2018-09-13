@@ -44,7 +44,7 @@ function beamCode(station, level) {
 
 				var grd = ctx.createRadialGradient(station.x, station.y / View.tilt, 100, station.x, station.y / View.tilt, 1000);
 				grd.addColorStop(0, "#FF0");
-				grd.addColorStop(1, "rgba(0, 0, 0, 0)");
+				grd.addColorStop(1, "rgba(0,0,0,0)");
 				ctx.strokeStyle = grd;
 
 				ctx.moveTo(station.x, station.y / View.tilt);
