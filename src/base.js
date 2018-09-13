@@ -24,17 +24,17 @@ var Base = (function(){
 
 	//**************************************************************************
 	// Export.
-    return {
+	return {
 		create: create,
-        get planet() { return planet; },
-        get hp() { return hp; },
-        get mineRate() { return mineRate; },
-        get energyRate() { return energyRate; },
-        get comRange() { return comRange; },
-        get minerals() { return minerals; },
-        get energy() { return energy; },
+		get planet() { return planet; },
+		get hp() { return hp; },
+		get mineRate() { return mineRate; },
+		get energyRate() { return energyRate; },
+		get comRange() { return comRange; },
+		get minerals() { return minerals; },
+		get energy() { return energy; },
 		set minerals(x) { minerals = x; },
-        set energy(x) { energy = x; }
-    }
+		set energy(x) { energy = x; }
+	}
 
 })();

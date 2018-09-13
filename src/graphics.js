@@ -227,12 +227,12 @@ function renderBody(body) {
 
 		// Draw shadow.
 		if (!isSun) {
-            var repeat = body.size;
-            var o = body.size;
-            context.beginPath();
-            context.arc(size, size, body.size, 0, 2*Math.PI, false);
-            context.clip();
-            while (repeat && o > 0) {
+			var repeat = body.size;
+			var o = body.size;
+			context.beginPath();
+			context.arc(size, size, body.size, 0, 2*Math.PI, false);
+			context.clip();
+			while (repeat && o > 0) {
 				context.beginPath();
 				context.globalAlpha = 0.05;
 				context.fillStyle = "#000";
@@ -245,7 +245,7 @@ function renderBody(body) {
 				context.restore();
 				o -= Math.max(body.size/20, 1);
 				repeat -= Math.max(body.size/20, 1);
-            }
+			}
 		}
 	}
 
@@ -324,11 +324,11 @@ function renderComLines() {
 	var lines = getComlines(Base.planet, true);
 
 	ctx.globalAlpha = clamp(0.2 / View.zoom, 0.2, 0.4);
-    ctx.lineWidth = clamp(1 / View.zoom, 2, 5);
-    ctx.strokeStyle = "#0F0";
+	ctx.lineWidth = clamp(1 / View.zoom, 2, 5);
+	ctx.strokeStyle = "#0F0";
 
 	ctx.beginPath();
-    var up = 75 * (View.tilt - 1);
+	var up = 75 * (View.tilt - 1);
 	for (var n=0; n<lines.length; n+=2) {
 		var a = lines[n];
 		var b = lines[n+1];
@@ -353,10 +353,10 @@ function drawDebug() {
 	ctx.fillText("mouse (view): " + Mouse.vx + ", " + Mouse.vy, 20, 200+100);
 	ctx.fillText("planet name: " + hoverName, 20, 200+120);
 
-    ctx.fillText("view x: " + View.x, 20, 200+160);
-    ctx.fillText("view y: " + View.y, 20, 200+180);
-    ctx.fillText("view zoom: " + View.zoom, 20, 200+200);
-    ctx.fillText("view tilt: " + View.tilt, 20, 200+220);
+	ctx.fillText("view x: " + View.x, 20, 200+160);
+	ctx.fillText("view y: " + View.y, 20, 200+180);
+	ctx.fillText("view zoom: " + View.zoom, 20, 200+200);
+	ctx.fillText("view tilt: " + View.tilt, 20, 200+220);
 
 	ctx.fillText("enemies: " + EnemyShip.allInstances.length, 20, 200+260);
 }

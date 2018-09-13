@@ -2,16 +2,16 @@ var View = (function() {
 
 	var x = 0;
 	var y = 0;
-    var xTarget = 0;
-    var yTarget = 0;
-    var anchorX = 0;
-    var anchorY = 0;
-    var anchorMouseX = 0;
-    var anchorMouseY = 0;
+	var xTarget = 0;
+	var yTarget = 0;
+	var anchorX = 0;
+	var anchorY = 0;
+	var anchorMouseX = 0;
+	var anchorMouseY = 0;
 	var zoom = 1;
 	var zoomTarget = 1;
-    var tilt = 2;
-    var smooth = 5;
+	var tilt = 2;
+	var smooth = 5;
 	var drag = false;
 	var dragThreshold = 5;
 
@@ -27,22 +27,22 @@ var View = (function() {
 		x = Base.planet.x;
 		y = Base.planet.y / 2;
 		xTarget = Base.planet.x;
-	    yTarget = Base.planet.y / 2;
+		yTarget = Base.planet.y / 2;
 		zoom = 1;
 		zoomTarget = 1;
-	    tilt = 2;
+		tilt = 2;
 	}
 
 	/**
 	 * Update View.
 	 * @return {void}
 	 */
-    function update() {
-        if (Mouse.scrollDir !== 0) {
-            var shift = Mouse.scrollDir * 0.1;
-            zoomTarget = clamp(zoomTarget-shift, 0.1, 2);
-        }
-        tilt = Math.min(1 + (zoom - 0.1), 2);
+	function update() {
+		if (Mouse.scrollDir !== 0) {
+			var shift = Mouse.scrollDir * 0.1;
+			zoomTarget = clamp(zoomTarget-shift, 0.1, 2);
+		}
+		tilt = Math.min(1 + (zoom - 0.1), 2);
 
 		// Pan with keyboard.
 		var spd = 50;
@@ -52,43 +52,43 @@ var View = (function() {
 		if (keysDown["ARROWRIGHT"] || keysDown["D"]) xTarget += spd;
 
 		// Set anchors for panning.
-        if (Mouse.click) {
-            anchorX = x;
-            anchorY = y;
-            anchorMouseX = Mouse.x;
-            anchorMouseY = Mouse.y;
-        }
+		if (Mouse.click) {
+			anchorX = x;
+			anchorY = y;
+			anchorMouseX = Mouse.x;
+			anchorMouseY = Mouse.y;
+		}
 
 		// Pan when mouse down and threshold passed.
 		var xt = Math.abs(anchorMouseX - Mouse.x) > dragThreshold;
 		var yt = Math.abs(anchorMouseY - Mouse.y) > dragThreshold;
-        if (anchorMouseX !== 0 && Mouse.down && (drag || xt || yt)) {
+		if (anchorMouseX !== 0 && Mouse.down && (drag || xt || yt)) {
 			drag = true;
-            xTarget = anchorX + (anchorMouseX - Mouse.x);
-            yTarget = anchorY + (anchorMouseY - Mouse.y);
+			xTarget = anchorX + (anchorMouseX - Mouse.x);
+			yTarget = anchorY + (anchorMouseY - Mouse.y);
 			Tutorial.complete(TUTORIAL_EVENT.MOUSE);
-        } else {
+		} else {
 			if (drag) {
 				anchorMouseX = 0;
 			}
-            drag = false;
-        }
+			drag = false;
+		}
 
-        var zoomDelta = zoom;
+		var zoomDelta = zoom;
 		zoom += lerp(zoom, zoomTarget, smooth, 0.001);
-        zoomDelta = zoom - zoomDelta;
-        if (Math.abs(zoomDelta) > 0.001) {
-            x += Mouse.vx * zoomDelta;
-            y += Mouse.vy * zoomDelta;
-            xTarget += Mouse.vx * zoomDelta;
-            yTarget += Mouse.vy * zoomDelta;
+		zoomDelta = zoom - zoomDelta;
+		if (Math.abs(zoomDelta) > 0.001) {
+			x += Mouse.vx * zoomDelta;
+			y += Mouse.vy * zoomDelta;
+			xTarget += Mouse.vx * zoomDelta;
+			yTarget += Mouse.vy * zoomDelta;
 			Tutorial.complete(TUTORIAL_EVENT.ZOOM);
-        }
+		}
 
-        x += lerp(x, xTarget, smooth, 0.001);
+		x += lerp(x, xTarget, smooth, 0.001);
 		y += lerp(y, yTarget, smooth, 0.001);
 
-    }
+	}
 
 	function clear() {
 		reset();

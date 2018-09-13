@@ -220,19 +220,19 @@ var Orbital = (function() {
 	 * @return {Object} Orbital.
 	 */
 	 function nearest(x, y) {
- 		var pos = { x: x, y: y };
- 		var minDistance = 999999;
- 		var closest = orbitals[0];
- 		var i = orbitals.length;
- 		while (i--) {
- 			var distance = getDistance(orbitals[i], pos);
- 			if (distance < minDistance) {
- 				minDistance = distance;
- 				closest = i;
- 			}
- 		}
- 		return orbitals[closest];
- 	}
+		var pos = { x: x, y: y };
+		var minDistance = 999999;
+		var closest = orbitals[0];
+		var i = orbitals.length;
+		while (i--) {
+			var distance = getDistance(orbitals[i], pos);
+			if (distance < minDistance) {
+				minDistance = distance;
+				closest = i;
+			}
+		}
+		return orbitals[closest];
+	}
 
 	//**************************************************************************
 	// Export.

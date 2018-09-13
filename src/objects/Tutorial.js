@@ -133,7 +133,7 @@ var Tutorial = (function() {
 		// Text.
 		ctx.fillStyle = "#FFF";
 		ctx.textAlign = "left";
-        ctx.textBaseline = "top";
+		ctx.textBaseline = "top";
 		wrapText(ctx, text, 28, Canvas.height/2-192/2-16, 500-16, 20);
 
 		// Continue prompt.

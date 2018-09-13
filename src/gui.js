@@ -62,13 +62,13 @@ var Gui = (function() {
 		// Wave counter.
 		ctx.globalAlpha = 1;
 		ctx.fillStyle = "#FFF";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
+		ctx.textAlign = "center";
+		ctx.textBaseline = "middle";
 
 		ctx.font = "700 48px monospace";
 		ctx.fillText(~~(WaveManager.timer/60), Canvas.width/2, 96);
 
-        ctx.font = "small-caps 700 24px monospace";
+		ctx.font = "small-caps 700 24px monospace";
 		ctx.fillText("next wave in", cx, 48);
 
 		// Minerals.
@@ -93,7 +93,7 @@ var Gui = (function() {
 
 		// Subtitles.
 		ctx.textAlign = "left";
-        ctx.textBaseline = "bottom";
+		ctx.textBaseline = "bottom";
 		var dy = 20;
 		subtitles.forEach(function(sub) {
 			ctx.fillText('"' + sub.text + '"', 20, Canvas.height-dy);
@@ -105,7 +105,7 @@ var Gui = (function() {
 
 		// FPS.
 		ctx.textAlign = "left";
-        ctx.textBaseline = "bottom";
+		ctx.textBaseline = "bottom";
 		ctx.font = "small-caps 500 12px monospace";
 		ctx.fillText("FPS: " + Fps.fps, 10, 26);
 
