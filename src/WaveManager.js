@@ -23,7 +23,7 @@ var WaveManager = (function() {
 		currentWave = 0;
 		spawnCount = 30;
 		cooldown = 60;
-        timer = cooldown * 60;
+		timer = cooldown * 60;
     }
 
 	/***************************************************************************
